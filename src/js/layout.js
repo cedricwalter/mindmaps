@@ -1,5 +1,5 @@
 // initialize the controls
-function initDrawPanel(savingCallback){
+function initDrawPanel(savingCallback,view){
     window.initImgUrl='images/chicken.jpg';
     $('#right-panel').hide();
     $("#right-button").click(function(){$('#right-panel').toggle();});
@@ -9,6 +9,8 @@ function initDrawPanel(savingCallback){
 
     $("#save-button").click(function(){
         window.savingCallback(drawingCanvas.get(0).toDataURL());
+        view.panel.hide();
+
     });
 
     // set up colour picker

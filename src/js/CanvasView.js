@@ -391,6 +391,10 @@ mindmaps.DefaultCanvasView = function() {
       });
     }
 
+
+    $("<button>Draw</button>").click(function(){window.drawPanel.show();}).appendTo($node).hide();
+
+
     // text caption
     var font = node.text.font;
     var $text = $("<div/>", {
@@ -407,6 +411,8 @@ mindmaps.DefaultCanvasView = function() {
 
     var metrics = textMetrics.getTextMetrics(node, this.zoomFactor);
     $text.css(metrics);
+
+
 
     // node url
     var $url = $("<div/>", {
@@ -471,6 +477,7 @@ mindmaps.DefaultCanvasView = function() {
     $node.remove();
   };
 
+ 
   /**
    * Highlights a node to show that it is selected.
    * 
@@ -479,6 +486,10 @@ mindmaps.DefaultCanvasView = function() {
   this.highlightNode = function(node) {
     var $text = $getNodeCaption(node);
     $text.addClass("selected");
+    $("button",$getNode(node))[0].show();
+    if(!node.isRoot()){
+    drawNodeCanvas(node);
+  }
   };
 
   /**
@@ -489,6 +500,12 @@ mindmaps.DefaultCanvasView = function() {
   this.unhighlightNode = function(node) {
     var $text = $getNodeCaption(node);
     $text.removeClass("selected");
+    console.log('should remove - ');
+    console.log($("button",$getNode(node))[0]);
+    $("button",$getNode(node))[0].hide();
+    if(!node.isRoot()){
+    drawNodeCanvas(node);
+  }
   };
 
   /**

@@ -47,7 +47,7 @@ mindmaps.DrawView = function() {
     // load the images
     loadImages();   
 
-    initDrawPanel (this.imgDataSaving);
+    initDrawPanel (this.imgDataSaving,this);
 
 
 
