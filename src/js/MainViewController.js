@@ -161,6 +161,20 @@ mindmaps.MainViewController = function(eventBus, mindmapModel, commandRegistry) 
     inspectorPanel.show();
     statusbarPresenter.addEntry(inspectorPanel);
 
+    //draw
+
+    var drawView=new mindmaps.DrawView(function(dataString){inspectorView.setImgDataTextAreaContents(dataString)});
+    var drawPresenter = new mindmaps.DrawPresenter(eventBus,
+        mindmapModel, commandRegistry, drawView);
+    var drawPanel=fpf.create("Draw", drawView.getContent());
+    
+
+    drawPanel.show();
+    drawPresenter.go();
+
+    statusbarPresenter.addEntry(drawPanel);
+
+
     // navigator
     var naviView = new mindmaps.NavigatorView();
     var naviPresenter = new mindmaps.NavigatorPresenter(eventBus, naviView,
