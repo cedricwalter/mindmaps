@@ -97,12 +97,16 @@ function setBrush(brushName) {
         }).mouseup(function (event) {
             var newPosition = getMPosition(event, overlayCanvasElement);
             currentBrush.finishDrawing(newPosition);
-
+            //save img
+            window.savingCallback(drawingCanvas.get(0).toDataURL());
+            //
             unbindMouseEvents();
         }).mouseout(function (event) {
             var newPosition = getMPosition(event, overlayCanvasElement);
             currentBrush.finishDrawing(newPosition);
-
+            //save img
+            window.savingCallback(drawingCanvas.get(0).toDataURL());
+            //
             unbindMouseEvents();
         });
     }).css({ cursor: currentBrush.getCursor() });
@@ -194,10 +198,4 @@ function initializeCanvas() {
     setBrush("pencil");
 
     clearDrawing();
-}
-
-// save the content of the canvas to the output image
-function saveCanvasToImage() {
-    var strDataUri = drawingCanvas.get(0).toDataURL();
-    outputImage.src = strDataUri;
 }

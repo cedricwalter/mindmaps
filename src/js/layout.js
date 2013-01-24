@@ -5,10 +5,10 @@ function initDrawPanel(savingCallback){
     $("#right-button").click(function(){$('#right-panel').toggle();});
 
 
+    window.savingCallback=savingCallback;
+
     $("#save-button").click(function(){
-        console.log(drawingCanvas.get(0).toDataURL());
-        console.log(overlayCanvas.get(0).toDataURL());
-        savingCallback(drawingCanvas.get(0).toDataURL());
+        window.savingCallback(drawingCanvas.get(0).toDataURL());
     });
 
     // set up colour picker
