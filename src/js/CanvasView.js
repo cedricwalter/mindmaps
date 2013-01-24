@@ -487,9 +487,7 @@ mindmaps.DefaultCanvasView = function() {
     var $text = $getNodeCaption(node);
     $text.addClass("selected");
     $("button",$getNode(node))[0].show();
-    if(!node.isRoot()){
-    drawNodeCanvas(node);
-  }
+    this.redrawNodeConnectors(node);
   };
 
   /**
@@ -500,12 +498,9 @@ mindmaps.DefaultCanvasView = function() {
   this.unhighlightNode = function(node) {
     var $text = $getNodeCaption(node);
     $text.removeClass("selected");
-    console.log('should remove - ');
-    console.log($("button",$getNode(node))[0]);
     $("button",$getNode(node))[0].hide();
-    if(!node.isRoot()){
-    drawNodeCanvas(node);
-  }
+    this.redrawNodeConnectors(node);
+  
   };
 
   /**
