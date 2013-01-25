@@ -1,3 +1,11 @@
+# This Fork
+This fork is tring to migrate mindmap to mobile platform, saying a html5 browser on pad/tablet. 
+
+- Optimization for touch operation.  
+- Create mindmap by Hand-writing.
+
+---
+
 # mindmaps
 mindmaps is a prototype of an HTML5 based mind mapping application. It lets you create neat looking mind maps in the browser. 
 
