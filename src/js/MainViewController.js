@@ -174,6 +174,9 @@ mindmaps.MainViewController = function(eventBus, mindmapModel, commandRegistry) 
 
     statusbarPresenter.addEntry(drawPanel);
 
+    drawView.panel=drawPanel;
+    window.drawPanel=drawPanel;
+
 
     // navigator
     var naviView = new mindmaps.NavigatorView();

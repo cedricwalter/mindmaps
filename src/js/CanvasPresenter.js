@@ -61,9 +61,11 @@ mindmaps.CanvasPresenter = function(eventBus, commandRegistry, mindmapModel,
    * @param {mindmaps.Node} oldSelectedNode
    */
   var selectNode = function(selectedNode, oldSelectedNode) {
-
+    console.log("oldSelectedNode - ");
+    console.log(oldSelectedNode);
     // deselect old node
     if (oldSelectedNode) {
+
       view.unhighlightNode(oldSelectedNode);
     }
     view.highlightNode(selectedNode);

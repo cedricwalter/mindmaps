@@ -1,4 +1,4 @@
-mindmaps.DrawView = function(savingCallBack) {
+mindmaps.DrawView = function() {
   var self = this;
      
   var $content = $("#template-draw").tmpl();
@@ -47,7 +47,7 @@ mindmaps.DrawView = function(savingCallBack) {
     // load the images
     loadImages();   
 
-    initDrawPanel (this.imgDataSaving);
+    initDrawPanel (this.imgDataSaving,this);
 
 
 
@@ -122,7 +122,7 @@ mindmaps.DrawPresenter = function(eventBus, mindmapModel, commandRegistry, view)
 
 
 view.imgDataSaving = function(data) {
-  console.log("action here");
+  //console.log("action here");
     var action = new mindmaps.action.ChangeImgDataAction(
         mindmapModel.selectedNode, data);
     mindmapModel.executeAction(action);
