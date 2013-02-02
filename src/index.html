@@ -11,6 +11,8 @@
 <meta name="description" content="mindmaps is an HTML5 based mind mapping app. It lets you create neat looking mind maps in the browser." />
 <meta name="keywords" content="mind maps html5 mindmaps offline easy intuitive" />
 <meta name="google" content="notranslate"/>
+<meta name="viewport" 
+  content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>mindmaps</title>
 <link rel="icon" type="image/png" href="img/favicon.png" />
 
@@ -27,6 +29,8 @@
 <link rel="stylesheet" href="css/app.css">
 <link rel="stylesheet" href="css/Aristo/jquery-ui-1.8.7.custom.css" />
 <link rel="stylesheet" href="css/minicolors/jquery.miniColors.css">
+
+
 
 
 <script id="template-float-panel" type="text/x-jquery-tmpl">
@@ -71,7 +75,7 @@
   <span class="cloud-error error"></span>
   <div class="seperator"></div>
   <h1>Local Storage</h1>
-  <p>This is a list of all mind maps that are saved in your browser's local storage. Click on the title of a map to open it.</p>
+  <p>This is a list of all mind maps that are saved in your browser s local storage. Click on the title of a map to open it.</p>
   <table class="localstorage-filelist">
     <thead>
       <tr>
@@ -84,7 +88,7 @@
   </table>
   <div class="seperator"></div>
   <h1>From file</h1>
-  <p>Choose a mind map from your computer's hard drive.</p>
+  <p>Choose a mind map from your computer s hard drive.</p>
   <div class="file-chooser">
     <input type="file" />
   </div>
@@ -351,7 +355,6 @@
           <span class="buttons-left"> </span> <span class="buttons-right">
           </span>
         </div>
-
       </div>
     </div>
     <div id="canvas-container">
@@ -396,6 +399,9 @@
    <script type="text/javascript" src="js/libs/modernizr/modernizr-1.6.min.js"></script>
    <script type="text/javascript" src="js/libs/colorpicker/colorpicker.js"></script>
 
+
+   <script type="text/javascript" src="js/libs/hammer.js"></script>
+   <script type="text/javascript" src="js/libs/jquery.hammer.js"></script>
 
 
    <script type="text/javascript" src="js/brushes.js"></script>
@@ -462,6 +468,11 @@
   <script src="js/AutoSaveController.js"></script>
   <script src="js/FilePicker.js"></script>
 
+<script type="text/javascript">
+  document.body.addEventListener('touchmove', function(event) {
+    event.preventDefault();
+  }, false); 
+</script>
 
 
 

@@ -87,6 +87,19 @@ mindmaps.CanvasPresenter = function(eventBus, commandRegistry, mindmapModel,
     }
   };
 
+
+  view.pinch = function(scale){
+    view.stopEditNodeCaption();
+      zoomController.zoomByScale(scale)
+  };
+
+  view.tow_tap = function(scale){
+    view.stopEditNodeCaption();
+      zoomController.zoomToOne();
+  };
+
+
+  
   /**
    * View callback: Attach creator to node if mouse hovers over node.
    * 

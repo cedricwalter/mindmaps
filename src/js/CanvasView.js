@@ -19,7 +19,7 @@ mindmaps.CanvasView = function() {
 
   /**
    * Returns the element that contains the drawing area.
-   * 
+   * ƒmo
    * @returns {jQuery}
    */
   this.$getContainer = function() {
@@ -247,6 +247,32 @@ mindmaps.DefaultCanvasView = function() {
         self.mouseWheeled(delta);
       }
     });
+
+
+
+    this.$getContainer().hammer({
+        // options...
+     }).bind("transform", function(ev) {
+          console.log(ev)
+          if(self.pinch){
+            self.pinch(ev.scale);
+          }
+     }).bind("dragstart",function(ev){
+        window.xstart=self.$getContainer().scrollLeft();
+        window.ystart=self.$getContainer().scrollTop();
+     }).bind("drag",function(ev){
+          // if(ev.touches.length==2){
+            var con=self.$getContainer()
+            con.scrollLeft(window.xstart-ev.distanceX).scrollTop(window.ystart-ev.distanceY);
+          // }
+     }).bind("doubletap",function(ev){
+    // if(ev.touches.length==2){
+      self.tow_tap();
+   //  }
+   });
+  
+
+
   };
 
   /**
