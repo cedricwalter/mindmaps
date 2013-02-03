@@ -207,6 +207,16 @@ mindmaps.DefaultCanvasView = function() {
       }
     });
 
+
+
+//     $drawingArea.delegate("div.node-caption", "tap", function(e) {
+//       var node = $(this).parent().data("node");
+//       if (self.nodeMouseDown) {
+//         self.nodeMouseDown(node);
+//       }
+//     });
+// 5
+
     $drawingArea.delegate("div.node-caption", "mouseup", function(e) {
       var node = $(this).parent().data("node");
       if (self.nodeMouseUp) {
@@ -260,20 +270,82 @@ mindmaps.DefaultCanvasView = function() {
      }).bind("dragstart",function(ev){
         window.xstart=self.$getContainer().scrollLeft();
         window.ystart=self.$getContainer().scrollTop();
+
+
+        var touches=ev.originalEvent.touches
+        if(touches.length==1){
+          var targ=touches[0].target
+          if(targ && targ.className.search("node-caption")>-1 && targ.className.search("root")<=-1){
+            console.log("on node but no root")
+            //self.nodeMouseDown($(targ).parent().data('node'))
+            //ev.stopPropagation()
+            window.dragOnNode=true;
+            window.dragTarget=targ
+            var nodeContainer=$(targ).parent()
+            window.beginDragX=nodeContainer.position().left
+            window.beginDragY=nodeContainer.position().top
+          }else{
+            window.dragOnNode=false;
+          }
+        }else{
+          window.dragOnNode=false;
+        }
      }).bind("drag",function(ev){
-          // if(ev.touches.length==2){
-            var con=self.$getContainer()
-            con.scrollLeft(window.xstart-ev.distanceX).scrollTop(window.ystart-ev.distanceY);
-          // }
+            if(window.dragOnNode){
+              var nodeContainer=$(window.dragTarget).parent()
+              var node=nodeContainer.data("node")
+              var l=window.beginDragX+ev.distanceX
+              var t=window.beginDragY+ev.distanceY
+              window.draggingLeft=l
+              window.draggingTop=t
+              nodeContainer.css("left",l)
+              nodeContainer.css("top",t)
+              
+              var offsetX = l / self.zoomFactor;
+              var offsetY = t / self.zoomFactor;
+              var color = node.branchColor;
+              var $canvas = $getNodeCanvas(node);
+              var depth=node.getDepth();
+
+
+              drawLineCanvas($canvas, depth, offsetX, offsetY, $getNode(node),
+                  $getNode(node.parent), color);
+
+              if (self.nodeDragging) {
+                self.nodeDragging();
+              }
+
+            }else{
+              var con=self.$getContainer()
+              con.scrollLeft(window.xstart-ev.distanceX).scrollTop(window.ystart-ev.distanceY);
+            }
+     }).bind("dragend",function(ev){
+        if(window.dragOnNode){
+          var nodeContainer=$(window.dragTarget).parent()
+          var node=nodeContainer.data("node")
+          if(self.nodeDragged){
+            var pos = new mindmaps.Point(window.draggingLeft/self.zoomFactor, window.draggingTop/self.zoomFactor);
+            self.nodeDragged(node,pos);
+          }
+          window.dragOnNode=false;
+        }
      }).bind("doubletap",function(ev){
-    // if(ev.touches.length==2){
       self.tow_tap();
-   //  }
-   });
+    }).bind("tap",function(ev){
+      var touches=ev.originalEvent.touches
+      if(touches.length==1){
+        var targ=touches[0].target
+        if(targ && targ.className.search("node-caption")>-1){
+          console.log("on node")
+          self.nodeMouseDown($(targ).parent().data('node'))
+        }
+      }
+    });
   
 
 
   };
+ 
 
   /**
    * Clears the drawing area.
@@ -418,7 +490,7 @@ mindmaps.DefaultCanvasView = function() {
     }
 
 
-    $("<button>Draw</button>").click(function(){window.drawPanel.show();}).appendTo($node).hide();
+   // $("<button>Draw</button>").click(function(){window.drawPanel.show();}).appendTo($node).hide();
 
 
     // text caption
@@ -512,7 +584,6 @@ mindmaps.DefaultCanvasView = function() {
   this.highlightNode = function(node) {
     var $text = $getNodeCaption(node);
     $text.addClass("selected");
-    $("button",$getNode(node))[0].show();
     this.redrawNodeConnectors(node);
   };
 
@@ -524,7 +595,6 @@ mindmaps.DefaultCanvasView = function() {
   this.unhighlightNode = function(node) {
     var $text = $getNodeCaption(node);
     $text.removeClass("selected");
-    $("button",$getNode(node))[0].hide();
     this.redrawNodeConnectors(node);
   
   };
