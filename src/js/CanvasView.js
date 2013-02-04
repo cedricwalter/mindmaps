@@ -259,6 +259,7 @@ mindmaps.DefaultCanvasView = function() {
     });
 
 
+    if (window.onTouchDeviece){
 
     this.$getContainer().hammer({
         // options...
@@ -341,7 +342,7 @@ mindmaps.DefaultCanvasView = function() {
         }
       }
     });
-  
+  }
 
 
   };
@@ -489,8 +490,6 @@ mindmaps.DefaultCanvasView = function() {
       });
     }
 
-
-   // $("<button>Draw</button>").click(function(){window.drawPanel.show();}).appendTo($node).hide();
 
 
     // text caption
