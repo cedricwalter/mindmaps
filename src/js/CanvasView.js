@@ -317,8 +317,12 @@ mindmaps.DefaultCanvasView = function() {
               }
 
             }else{
-              var con=self.$getContainer()
-              con.scrollLeft(window.xstart-ev.distanceX).scrollTop(window.ystart-ev.distanceY);
+              var touches=ev.originalEvent.touches
+              var targ=touches[0].target
+              if(targ.id=="drawing-area"){
+                var con=self.$getContainer()
+                con.scrollLeft(window.xstart-ev.distanceX).scrollTop(window.ystart-ev.distanceY);
+              }
             }
      }).bind("dragend",function(ev){
         if(window.dragOnNode){

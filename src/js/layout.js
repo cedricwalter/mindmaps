@@ -1,6 +1,6 @@
 // initialize the controls
 function initDrawPanel(savingCallback,view){
-    window.initImgUrl='images/chicken.jpg';
+
     $('#right-panel').hide();
     $("#right-button").click(function(){$('#right-panel').toggle();});
 
@@ -12,6 +12,7 @@ function initDrawPanel(savingCallback,view){
         view.panel.hide();
 
     });
+   
 
     // set up colour picker
     var strokeColourPicker = $("#stroke-colour-picker");

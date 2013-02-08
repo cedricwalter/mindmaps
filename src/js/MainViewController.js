@@ -163,19 +163,34 @@ mindmaps.MainViewController = function(eventBus, mindmapModel, commandRegistry) 
 
     //draw
 
-    var drawView=new mindmaps.DrawView(function(dataString){inspectorView.setImgDataTextAreaContents(dataString)});
+    var drawView=new mindmaps.DrawView(
+      function(dataString){
+        inspectorView.setImgDataTextAreaContents(dataString)
+      });
     var drawPresenter = new mindmaps.DrawPresenter(eventBus,
         mindmapModel, commandRegistry, drawView);
     var drawPanel=fpf.create("Draw", drawView.getContent());
     
 
-    drawPanel.show();
+    //drawPanel.show();
     drawPresenter.go();
 
     statusbarPresenter.addEntry(drawPanel);
 
     drawView.panel=drawPanel;
     window.drawPanel=drawPanel;
+
+
+  //drawView.resize(canvasContainer.getContent().width() * 0.95, canvasContainer.getContent().height()*0.95)
+  //TODO for debug, small is cool
+      drawView.resize(500, 500)
+   canvasContainer.subscribe(mindmaps.CanvasContainer.Event.RESIZED, function(size) {
+      //drawView.resize(size.x * 0.9, size.y*0.9)
+      
+      
+    });
+
+
 
 
     // navigator

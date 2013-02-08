@@ -15,29 +15,30 @@ mindmaps.DrawView = function() {
    this.getContent = function() {
     return $content;
   };
-
   
+  this.setCanvasSize=function(width,height){
+    $("#drawingCanvas",$content).attr("width",width).attr("height",height)
+    $("#overlay",$content).attr("width",width).attr("height",height)
+    $("#canvas-panel",$content).width(width).height(height)
+  }
+  
+
+  this.resize=function(width,height){
+    //TODO not cool for debug 
+    var w=width
+    var h=height-$(".ui-dialog-titlebar").height()
+    self.setCanvasSize(w,h)
+    window.drawCanvasW=w
+    window.drawCanvasH=h
+
+    //TODO set size for every part of this panel.
+  }
   /**
    * Initialise
    */
    this.init =  function() {
     var imagesLoaded = $(document).toObservable("images-loaded");
     var cursorsLoaded = $(document).toObservable("cursors-loaded");
-
-    // fade out the splash panel when images and cursors are loaded
-    imagesLoaded.Zip(cursorsLoaded, function (left, right) { return right; })
-    .Delay(1000)
-    .Subscribe(function () {
-      $("#splash").fadeOut("slow");
-    });
-
-    $( "#brush_slider" ).slider( {
-      change: function(e, ui){
-        setBrushSize(ui.value);
-      },
-      min: 1,
-      max: 100,
-    }).slider({value:10});
 
     
 
@@ -48,10 +49,6 @@ mindmaps.DrawView = function() {
     loadImages();   
 
     initDrawPanel (this.imgDataSaving,this);
-
-
-
-    
 
   };
 
@@ -100,12 +97,19 @@ mindmaps.DrawPresenter = function(eventBus, mindmapModel, commandRegistry, view)
 
   function updateView(node){
     self.setImgData(node.imgData)
+    //self.setRelationNavigate(node)
   }
 
-  this.setImgData=function(dataURL){
+  // this.setRelationNavigate=function(node){
+  //   $("#child-button",view.$content).text(mindmapModel.getChildFirst(node)?"Child":"++")
+  //   $("#siblingN-button",view.$content).text(mindmapModel.getSiblingN(node)?"Sibling Next":"++")
+  //   $("#siblingP-button",view.$content).text(mindmapModel.getSiblingP(node)?"Sibling Prev":"++")
+  // }
 
+  this.setImgData=function(dataURL){
+    clearDrawing();
     if(dataURL==""){
-      clearDrawing();
+      return
     }
 
     var canvas =drawingCanvas.get(0)
@@ -121,13 +125,28 @@ mindmaps.DrawPresenter = function(eventBus, mindmapModel, commandRegistry, view)
   }
 
 
-view.imgDataSaving = function(data) {
-  //console.log("action here");
+  view.imgDataSaving = function(data) {
     var action = new mindmaps.action.ChangeImgDataAction(
         mindmapModel.selectedNode, data);
     mindmapModel.executeAction(action);
   }
-
-
+  // /**
+  // * which is 'parent','child','sibliing-next','sibling-prev's
+  // **/
+  // view.requestNode=function(which){
+  //   var current=mindmapModel.selectedNode
+  //   console.log(current)
+  //   //TODO support all distance
+  //   //TODO support auto create node if not existed.
+  //   if(which =="parent"){
+  //     mindmapModel.selectParent(current);
+  //   }else if(which =="child"){
+  //     mindmapModel.selectChildFirst();
+  //   }else if (which =="sibling-next"){
+  //     mindmapModel.selectSiblingN(current)
+  //   }else if (which =="sibling-prev"){
+  //     mindmapModel.selectSiblingP(current)
+  //   }
+  // }
 };
 

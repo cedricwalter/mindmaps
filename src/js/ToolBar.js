@@ -264,9 +264,14 @@ mindmaps.ToolBarPresenter = function(eventBus, commandRegistry, view,
   // populate toolbar
 
   // node buttons
-  var nodeCommands = [ mindmaps.CreateNodeCommand, mindmaps.DeleteNodeCommand ];
+  var nodeCommands = [ mindmaps.CreateNodeCommand, mindmaps.CreateSiblingNodeCommand, mindmaps.DeleteNodeCommand ];
   var nodeButtons = commandsToButtons(nodeCommands);
   view.addButtonGroup(nodeButtons, view.alignLeft);
+
+
+  var moveCommands = [ mindmaps.SelectParentNodeCommand, mindmaps.SelectChildFirstNodeCommand,mindmaps.SelectSiblingNextNodeCommand,mindmaps.SelectSiblingPrevNodeCommand];
+  var moveButtons = commandsToButtons(moveCommands);
+  view.addButtonGroup(moveButtons, view.alignLeft);
 
   // undo buttons
   var undoCommands = [ mindmaps.UndoCommand, mindmaps.RedoCommand ];

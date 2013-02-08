@@ -70,16 +70,50 @@ mindmaps.MindMapModel = function(eventBus, commandRegistry, undoController) {
     var deleteNodeCommand = commandRegistry.get(mindmaps.DeleteNodeCommand);
     deleteNodeCommand.setHandler(this.deleteNode.bind(this));
 
+
+    var selectParentNodeCommand = commandRegistry.get(mindmaps.SelectParentNodeCommand);
+    selectParentNodeCommand.setHandler(this.selectParent.bind(this));
+
+    var selectChildFirstNodeCommand = commandRegistry.get(mindmaps.SelectChildFirstNodeCommand);
+    selectChildFirstNodeCommand.setHandler(this.selectChildFirst.bind(this));
+
+
+    var selectSiblingNextNodeCommand = commandRegistry.get(mindmaps.SelectSiblingNextNodeCommand);
+    selectSiblingNextNodeCommand.setHandler(this.selectSiblingN.bind(this));
+
+
+    var selectSiblingPrevNodeCommand = commandRegistry.get(mindmaps.SelectSiblingPrevNodeCommand);
+    selectSiblingPrevNodeCommand.setHandler(this.selectSiblingP.bind(this));
+
+
     eventBus.subscribe(mindmaps.Event.DOCUMENT_CLOSED, function() {
       createNodeCommand.setEnabled(false);
       createSiblingNodeCommand.setEnabled(false);
       deleteNodeCommand.setEnabled(false);
+      selectParentNodeCommand.setEnabled(false);
+      selectChildFirstNodeCommand.setEnabled(false);
+      selectSiblingNextNodeCommand.setEnabled(false);
+      selectSiblingPrevNodeCommand.setEnabled(false);
     });
 
     eventBus.subscribe(mindmaps.Event.DOCUMENT_OPENED, function() {
       createNodeCommand.setEnabled(true);
       createSiblingNodeCommand.setEnabled(true);
       deleteNodeCommand.setEnabled(true);
+      selectParentNodeCommand.setEnabled(true);
+      selectChildFirstNodeCommand.setEnabled(true);
+      selectSiblingNextNodeCommand.setEnabled(true);
+      selectSiblingPrevNodeCommand.setEnabled(true);
+      
+    });
+
+
+
+    eventBus.subscribe(mindmaps.Event.NODE_SELECTED, function(node) {
+      selectParentNodeCommand.setEnabled(self.getParent(node));
+      selectChildFirstNodeCommand.setEnabled(self.getChildFirst(node));
+      selectSiblingNextNodeCommand.setEnabled(self.getSiblingN(node));
+      selectSiblingPrevNodeCommand.setEnabled(self.getSiblingP(node));
     });
   };
 
@@ -151,6 +185,100 @@ mindmaps.MindMapModel = function(eventBus, commandRegistry, undoController) {
     this.selectedNode = node;
     eventBus.publish(mindmaps.Event.NODE_SELECTED, node, oldSelected);
   };
+
+  this.selectParent = function(){
+    if(self.selectedNode){
+      var node=self.selectedNode
+      var re=self.getParent(node)
+      if(re){
+        self.selectNode(re)
+      }
+    }
+  }
+
+  this.selectChildFirst = function( ){
+    if(self.selectedNode){
+      var node=self.selectedNode
+      var re=self.getChildFirst(node)
+      if(re){
+        self.selectNode(re)
+      }
+    }
+  }
+  this.selectSiblingN = function(){
+    if(self.selectedNode){
+      var node=self.selectedNode
+      var re=self.getSiblingN(node)
+      if(re){
+        self.selectNode(re)
+      }
+    }
+  }
+
+  this.selectSiblingP = function(){
+    if(self.selectedNode){
+      var node=self.selectedNode
+      var re=self.getSiblingP(node)
+      if(re){
+        self.selectNode(re)
+      }
+    }
+  }
+
+
+  this.getParent=function(node){
+    return node.parent
+  }
+
+  this.getChildFirst=function(node){
+    if(node.children && node.children.count>0){
+      var ch=node.children.nodes[node.children.indexes[0]]
+      return ch
+    }
+    return null
+  }
+
+  this.getChildLast=function(node){
+    if(node.children && node.children.count>0){
+      var ch=node.children.nodes[node.children.indexes[node.children.indexes.length-1]]
+      return ch
+    }
+    return null
+  }
+
+  this.getSiblingN=function(node){
+    if(node.parent){
+      var p=node.parent
+      if(p.children && p.children.count>0){
+        //find my self
+        var order=p.children.indexes.indexOf(node.id)
+        if(order>=0 && order <p.children.count-1){
+          var s=p.children.nodes[p.children.indexes[order+1]]
+          return s
+        } 
+      }
+    }
+    return null
+  }
+
+  this.getSiblingP = function(node){
+    if(node.parent){
+      var p=node.parent
+      if(p.children && p.children.count>0){
+        //find my self
+        var order=p.children.indexes.indexOf(node.id)
+        if(order>0) {
+          var s=p.children.nodes[p.children.indexes[order-1]]
+          return s
+        } 
+      }
+    }
+    return null
+  }
+
+
+
+
 
   /**
    * Changes the caption for the passed node or for the selected one if node
