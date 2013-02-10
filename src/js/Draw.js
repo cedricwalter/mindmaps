@@ -24,7 +24,6 @@ mindmaps.DrawView = function() {
   
 
   this.resize=function(width,height){
-    //TODO not cool for debug 
     var w=width
     var h=height-$(".ui-dialog-titlebar").height()
     self.setCanvasSize(w,h)
@@ -49,7 +48,7 @@ mindmaps.DrawView = function() {
     loadImages();   
 
     initDrawPanel (this.imgDataSaving,this);
-
+    self.getContent().css("opacity",0.75);
   };
 
   
@@ -100,11 +99,6 @@ mindmaps.DrawPresenter = function(eventBus, mindmapModel, commandRegistry, view)
     //self.setRelationNavigate(node)
   }
 
-  // this.setRelationNavigate=function(node){
-  //   $("#child-button",view.$content).text(mindmapModel.getChildFirst(node)?"Child":"++")
-  //   $("#siblingN-button",view.$content).text(mindmapModel.getSiblingN(node)?"Sibling Next":"++")
-  //   $("#siblingP-button",view.$content).text(mindmapModel.getSiblingP(node)?"Sibling Prev":"++")
-  // }
 
   this.setImgData=function(dataURL){
     clearDrawing();
@@ -130,23 +124,5 @@ mindmaps.DrawPresenter = function(eventBus, mindmapModel, commandRegistry, view)
         mindmapModel.selectedNode, data);
     mindmapModel.executeAction(action);
   }
-  // /**
-  // * which is 'parent','child','sibliing-next','sibling-prev's
-  // **/
-  // view.requestNode=function(which){
-  //   var current=mindmapModel.selectedNode
-  //   console.log(current)
-  //   //TODO support all distance
-  //   //TODO support auto create node if not existed.
-  //   if(which =="parent"){
-  //     mindmapModel.selectParent(current);
-  //   }else if(which =="child"){
-  //     mindmapModel.selectChildFirst();
-  //   }else if (which =="sibling-next"){
-  //     mindmapModel.selectSiblingN(current)
-  //   }else if (which =="sibling-prev"){
-  //     mindmapModel.selectSiblingP(current)
-  //   }
-  // }
 };
 

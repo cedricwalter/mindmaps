@@ -169,7 +169,8 @@ mindmaps.MainViewController = function(eventBus, mindmapModel, commandRegistry) 
       });
     var drawPresenter = new mindmaps.DrawPresenter(eventBus,
         mindmapModel, commandRegistry, drawView);
-    var drawPanel=fpf.create("Draw", drawView.getContent());
+    var drawPanel=fpf.bigPanel("Draw",drawView.getContent(),drawView);
+    //var drawPanel=fpf.create("Draw",drawView.getContent());
     
 
     //drawPanel.show();
@@ -181,14 +182,14 @@ mindmaps.MainViewController = function(eventBus, mindmapModel, commandRegistry) 
     window.drawPanel=drawPanel;
 
 
-  //drawView.resize(canvasContainer.getContent().width() * 0.95, canvasContainer.getContent().height()*0.95)
-  //TODO for debug, small is cool
-      drawView.resize(500, 500)
-   canvasContainer.subscribe(mindmaps.CanvasContainer.Event.RESIZED, function(size) {
-      //drawView.resize(size.x * 0.9, size.y*0.9)
+    // drawView.resize(canvasContainer.getContent().width() * 0.95, canvasContainer.getContent().height()*0.95)
+
+    // //TODO for debug, small is cool
+    // // drawView.resize(500, 500)
+    // canvasContainer.subscribe(mindmaps.CanvasContainer.Event.RESIZED, function(size) {
+    //   drawView.resize(size.x * 0.9, size.y*0.9)
       
-      
-    });
+    // });
 
 
 

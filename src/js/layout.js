@@ -2,16 +2,16 @@
 function initDrawPanel(savingCallback,view){
 
     $('#right-panel').hide();
-    $("#right-button").click(function(){$('#right-panel').toggle();});
+    //$("#right-button").click(function(){$('#right-panel').toggle();});
 
 
     window.savingCallback=savingCallback;
 
-    $("#save-button").click(function(){
-        window.savingCallback(drawingCanvas.get(0).toDataURL());
-        view.panel.hide();
+    // $("#save-button").click(function(){
+    //     window.savingCallback(drawingCanvas.get(0).toDataURL());
+    //     view.panel.hide();
 
-    });
+    // });
    
 
     // set up colour picker
