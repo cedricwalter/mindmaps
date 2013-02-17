@@ -153,7 +153,7 @@ function setBrush(brushName) {
             });
         }).css({ cursor: currentBrush.getCursor() });
     //}else{
-    if(window.onTouchDeviece){
+    if(mindmaps.responsive.onTouchDeviece){
         var ca=overlayCanvas.get(0)
          ca.addEventListener("touchstart", touchHandler, true);
         ca.addEventListener("touchmove", touchHandler, true);

@@ -48,8 +48,8 @@ mindmaps.FloatPanelFactory = function(container) {
   };
 
 
-  this.bigPanel = function(caption, $content,view) {
-    var dialog = new mindmaps.BigPanel(caption,$container, $content,view);
+  this.bigPanel = function(caption, $content,view,showCallBack,hidCallBack) {
+    var dialog = new mindmaps.BigPanel(caption,$container, $content,view,showCallBack,hidCallBack);
     setPosition(dialog);
     dialogs.push(dialog);
     return dialog;
@@ -268,13 +268,15 @@ mindmaps.FloatPanel = function(caption, $container, $content) {
 
 
 
-mindmaps.BigPanel = function(caption,$container, $content,drawView) {
+mindmaps.BigPanel = function(caption,$container, $content,drawView,showCallBack,hideCallBack) {
   var self = this;
   var animating = false;
   this.caption=caption;
   this.visible = false;
   this.animationDuration = 400;
   this.$container=$container;
+    this.showCallBack=showCallBack;
+    this.hideCallBack=hideCallBack;
   /**
    * Replaces the content in the panel.
    * 
@@ -326,6 +328,7 @@ mindmaps.BigPanel = function(caption,$container, $content,drawView) {
         this.transfer(this.$widget, this.$hideTarget);
       }
     }
+    if(this.hideCallBack) this.hideCallBack();
   };
 
   /**
@@ -342,6 +345,7 @@ mindmaps.BigPanel = function(caption,$container, $content,drawView) {
         this.transfer(this.$hideTarget, this.$widget);
       }
     }
+    if(this.showCallBack) this.showCallBack();
   };
 
   /**
@@ -432,27 +436,6 @@ mindmaps.BigPanel = function(caption,$container, $content,drawView) {
     var h=self.$container.height()
     drawView.resize(w * 0.95, h*0.95)
     self.setPosition(self.$container.offset().left+w*0.02,self.$container.offset().top+h*0.02)
-    // var cw = $container.outerWidth();
-    // var ch = $container.outerHeight();
-    // var col = $container.offset().left;
-    // var cot = $container.offset().top;
-    // var dw = this.width();
-    // var dh = this.height();
-    // var dol = this.offset().left;
-    // var dot = this.offset().top;
-
-    // // window width is too small for current dialog position but bigger than
-    // // dialog width
-    // if (cw + col < dw + dol && cw >= dw) {
-    //   this.setPosition(cw + col - dw, dot);
-    // }
-
-    // // window height is too small for current dialog position but bigger
-    // // than dialog height
-    // if (ch + cot < dh + dot && ch >= dh) {
-    //   this.setPosition(dol, ch + cot - dh);
-    // }
-
 
 
   };

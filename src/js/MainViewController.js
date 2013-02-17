@@ -169,11 +169,7 @@ mindmaps.MainViewController = function(eventBus, mindmapModel, commandRegistry) 
       });
     var drawPresenter = new mindmaps.DrawPresenter(eventBus,
         mindmapModel, commandRegistry, drawView);
-    var drawPanel=fpf.bigPanel("Draw",drawView.getContent(),drawView);
-    //var drawPanel=fpf.create("Draw",drawView.getContent());
-    
-
-    //drawPanel.show();
+    var drawPanel=fpf.bigPanel("Draw",drawView.getContent(),drawView,function(){mindmaps.mode.inHD=true;},function(){mindmaps.mode.inHD=false;});
     drawPresenter.go();
 
     statusbarPresenter.addEntry(drawPanel);
