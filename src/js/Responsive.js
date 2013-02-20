@@ -7,8 +7,22 @@
  */
 
 
-var Responsive = function () {
-    var onTouchDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
+mindmaps.Responsive = function () {
+    //TODO use eventbus to publish responsive properties changed
+    var self=this
+    this.isTouchDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
+    this.isMiddleDevice= function() {
+        var w= self.inEm($(window).width())
+        //TODO w<117 and w>???
+        return w<117;
+    }
+    this.font_size=parseFloat($("body").css("font-size"));
+    this.inEm=function(px){
+        return px/this.font_size;
+    }
+
+
 }
 
-mindmaps.responsive = new Responsive();
+mindmaps.responsive=new mindmaps.Responsive();
+

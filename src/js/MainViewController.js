@@ -34,7 +34,6 @@ mindmaps.CanvasContainer = function() {
    * Set up the container to accept drag and drop of files from the desktop.
    */
   this.acceptFileDrop = function() {
-
     function ignore(e) {
       e.originalEvent.stopPropagation();
       e.originalEvent.preventDefault();
@@ -132,7 +131,7 @@ mindmaps.MainViewController = function(eventBus, mindmapModel, commandRegistry) 
     // toolbar
     var toolbar = new mindmaps.ToolBarView();
     var toolbarPresenter = new mindmaps.ToolBarPresenter(eventBus,
-        commandRegistry, toolbar, mindmapModel);
+        commandRegistry, toolbar, mindmapModel,canvasContainer);
     toolbarPresenter.go();
 
     // canvas
@@ -199,5 +198,9 @@ mindmaps.MainViewController = function(eventBus, mindmapModel, commandRegistry) 
     var navigatorPanel = fpf.create("Navigator", naviView.getContent());
     navigatorPanel.show();
     statusbarPresenter.addEntry(navigatorPanel);
+
+
+
+
   };
 };

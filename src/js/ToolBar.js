@@ -5,9 +5,16 @@
  */
 mindmaps.ToolBarView = function() {
   var self = this;
-
+  this. buttons=[];
+    this.menus=[];
   this.init = function() {
+
   };
+    this.ensureResponsive=function(){
+        var short=mindmaps.responsive.isMiddleDevice()
+        self.buttons.forEach(function(bu){bu.setSmall(short)})
+        self.menus.forEach(function(menu){menu.setSmall(short)})
+    }
 
   /**
    * Adds a button to the toolbar with the given align function.
@@ -17,6 +24,7 @@ mindmaps.ToolBarView = function() {
    */
   this.addButton = function(button, alignFunc) {
     // var $button = this.createButton(button);
+      self.buttons.push(button)
     alignFunc(button.asJquery());
   };
 
@@ -30,6 +38,7 @@ mindmaps.ToolBarView = function() {
     var $buttonset = $("<span/>");
     buttons.forEach(function(button) {
       // var $button = self.createButton(button);
+        self.buttons.push(button)
       $buttonset.append(button.asJquery());
     });
     $buttonset.buttonset();
@@ -42,6 +51,7 @@ mindmaps.ToolBarView = function() {
    * @param {mindmaps.ToolBarMenu} menu
    */
   this.addMenu = function(menu) {
+      this.menus.push(menu);
     this.alignRight(menu.getContent());
   };
 
@@ -169,6 +179,12 @@ mindmaps.ToolBarButton.prototype.asJquery = function() {
     $button.button(enabled ? "enable" : "disable");
   };
 
+  this.setSmall = function( small ){
+      $button.button({
+          label : small ? this.getTitle().substr(0,1): this.getTitle()
+      })
+  }
+
   return $button;
 };
 
@@ -181,6 +197,7 @@ mindmaps.ToolBarButton.prototype.asJquery = function() {
  */
 mindmaps.ToolBarMenu = function(title, icon) {
   var self = this;
+  this.buttons=[];
   this.$menuWrapper = $("<span/>", {
     "class" : "menu-wrapper"
   }).hover(function() {
@@ -188,7 +205,11 @@ mindmaps.ToolBarMenu = function(title, icon) {
   }, function() {
     self.$menu.hide();
   });
-
+    //TODO split responsive aspect out.
+    this.setSmall = function(small){
+        self.$menuButton.button({label: small ? title.substr(0,1):title})
+        self.buttons.forEach(function(bu){bu.setSmall(small)})
+    }
   this.$menuButton = $("<button/>").button({
     label : title,
     icons : {
@@ -218,6 +239,7 @@ mindmaps.ToolBarMenu = function(title, icon) {
       var $button = button.asJquery().removeClass("ui-corner-all")
           .addClass("menu-item");
       this.$menu.append($button);
+      this.buttons.push(button)
     }, this);
 
     // last item gets rounded corners
@@ -245,7 +267,7 @@ mindmaps.ToolBarMenu = function(title, icon) {
  * @param {mindmaps.MindMapModel} mindmapModel
  */
 mindmaps.ToolBarPresenter = function(eventBus, commandRegistry, view,
-    mindmapModel) {
+    mindmapModel,canvasContainer) {
   /**
    * Returns a button that registers with a command of the given commandType
    * 
@@ -299,5 +321,13 @@ mindmaps.ToolBarPresenter = function(eventBus, commandRegistry, view,
 
   this.go = function() {
     view.init();
+      view.ensureResponsive();
   };
+  function bind(){
+      canvasContainer.subscribe(mindmaps.CanvasContainer.Event.RESIZED,function(){
+
+          view.ensureResponsive();
+      })
+  }
+  bind();
 };

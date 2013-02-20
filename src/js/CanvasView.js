@@ -257,7 +257,7 @@ mindmaps.DefaultCanvasView = function () {
         });
 
 
-        if (mindmaps.responsive.onTouchDeviece) {
+        if (mindmaps.responsive.isTouchDevice) {
 
             this.$getContainer().hammer({
                 // options...
