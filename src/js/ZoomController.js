@@ -76,6 +76,28 @@ mindmaps.ZoomController = function(eventBus, commandRegistry) {
     return this.zoomFactor;
   };
 
+
+  this.zoomByScale=function(scale){
+    scale = scale || 1
+
+    this.zoomFactor *= scale;
+    if (this.zoomFactor < this.MIN_ZOOM) {
+      this.zoomFactor =this.MIN_ZOOM;
+    } else if(this.zoomFactor>this.MAX_ZOOM){
+      this.zoomFactor=this.MAX_ZOOM;
+    }
+    eventBus.publish(mindmaps.Event.ZOOM_CHANGED, this.zoomFactor);
+    
+
+    return this.zoomFactor;
+  }
+
+  this.zoomToOne=function(){
+    this.zoomFactor=1
+    eventBus.publish(mindmaps.Event.ZOOM_CHANGED, this.zoomFactor);
+    return this.zoomFactor;
+  }
+
   /**
    * Reset zoom factor when document was closed.
    * 

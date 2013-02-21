@@ -6,6 +6,7 @@
  */
 mindmaps.NodeMap = function() {
   this.nodes = {};
+  this.indexes=[];
   this.count = 0;
 };
 
@@ -28,6 +29,7 @@ mindmaps.NodeMap.prototype.get = function(nodeId) {
 mindmaps.NodeMap.prototype.add = function(node) {
   if (!this.nodes.hasOwnProperty(node.id)) {
     this.nodes[node.id] = node;
+    this.indexes.push(node.id)
     this.count++;
     return true;
   }
@@ -43,6 +45,10 @@ mindmaps.NodeMap.prototype.add = function(node) {
 mindmaps.NodeMap.prototype.remove = function(node) {
   if (this.nodes.hasOwnProperty(node.id)) {
     delete this.nodes[node.id];
+    var a = this.indexes.indexOf(node.id); 
+    if (a >= 0) { 
+      this.indexes.splice(a, 1); 
+    }
     this.count--;
     return true;
   }
