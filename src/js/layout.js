@@ -1,17 +1,18 @@
 // initialize the controls
 function initDrawPanel(savingCallback,view){
-    window.initImgUrl='images/chicken.jpg';
+
     $('#right-panel').hide();
-    $("#right-button").click(function(){$('#right-panel').toggle();});
+    //$("#right-button").click(function(){$('#right-panel').toggle();});
 
 
     window.savingCallback=savingCallback;
 
-    $("#save-button").click(function(){
-        window.savingCallback(drawingCanvas.get(0).toDataURL());
-        view.panel.hide();
+    // $("#save-button").click(function(){
+    //     window.savingCallback(drawingCanvas.get(0).toDataURL());
+    //     view.panel.hide();
 
-    });
+    // });
+   
 
     // set up colour picker
     var strokeColourPicker = $("#stroke-colour-picker");

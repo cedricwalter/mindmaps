@@ -34,7 +34,6 @@ mindmaps.CanvasContainer = function() {
    * Set up the container to accept drag and drop of files from the desktop.
    */
   this.acceptFileDrop = function() {
-
     function ignore(e) {
       e.originalEvent.stopPropagation();
       e.originalEvent.preventDefault();
@@ -132,7 +131,7 @@ mindmaps.MainViewController = function(eventBus, mindmapModel, commandRegistry) 
     // toolbar
     var toolbar = new mindmaps.ToolBarView();
     var toolbarPresenter = new mindmaps.ToolBarPresenter(eventBus,
-        commandRegistry, toolbar, mindmapModel);
+        commandRegistry, toolbar, mindmapModel,canvasContainer);
     toolbarPresenter.go();
 
     // canvas
@@ -163,19 +162,31 @@ mindmaps.MainViewController = function(eventBus, mindmapModel, commandRegistry) 
 
     //draw
 
-    var drawView=new mindmaps.DrawView(function(dataString){inspectorView.setImgDataTextAreaContents(dataString)});
+    var drawView=new mindmaps.DrawView(
+      function(dataString){
+        inspectorView.setImgDataTextAreaContents(dataString)
+      });
     var drawPresenter = new mindmaps.DrawPresenter(eventBus,
         mindmapModel, commandRegistry, drawView);
-    var drawPanel=fpf.create("Draw", drawView.getContent());
-    
-
-    drawPanel.show();
+    var drawPanel=fpf.bigPanel("Draw",drawView.getContent(),drawView,function(){mindmaps.mode.inHD=true;},function(){mindmaps.mode.inHD=false;});
     drawPresenter.go();
 
     statusbarPresenter.addEntry(drawPanel);
 
     drawView.panel=drawPanel;
     window.drawPanel=drawPanel;
+
+
+    // drawView.resize(canvasContainer.getContent().width() * 0.95, canvasContainer.getContent().height()*0.95)
+
+    // //TODO for debug, small is cool
+    // // drawView.resize(500, 500)
+    // canvasContainer.subscribe(mindmaps.CanvasContainer.Event.RESIZED, function(size) {
+    //   drawView.resize(size.x * 0.9, size.y*0.9)
+      
+    // });
+
+
 
 
     // navigator
@@ -187,5 +198,9 @@ mindmaps.MainViewController = function(eventBus, mindmapModel, commandRegistry) 
     var navigatorPanel = fpf.create("Navigator", naviView.getContent());
     navigatorPanel.show();
     statusbarPresenter.addEntry(navigatorPanel);
+
+
+
+
   };
 };

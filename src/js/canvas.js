@@ -2,8 +2,10 @@ var canvasOffsetLeft,   // the left offset for the canvas elements
     canvasOffsetTop,    // the top offset for the canvas elements
     drawingCanvas,      // canvas element for the drawing canvas
     drawingCanvasCxt,   // 2D drawing context for the drawing canvas
+    //Only used for events?
     overlayCanvas,      // canvas element for the overlay canvas
     overlayCanvasCxt,   // 2D drawing context for the overlay canvas
+    //
     outputImage,        // output image
     currentBrush,       // the brush selected to paint on the drawing canvas
     strokeColour,       // the span element showing the current stroke colour
@@ -36,14 +38,25 @@ function unbindMouseEvents() {
 // clear the drawing panel
 function clearDrawing() {
     drawingCanvasCxt.fillStyle = backgroundColour;
-    drawingCanvasCxt.fillRect(0, 0, drawingCanvas.width(), drawingCanvas.height());
-    var img = new Image();
-    //img.src = 'images/chicken.jpg';
-    //img.src = initImgUrl;
-    img.onload = function(){
-        drawingCanvasCxt.drawImage(img, 0,0);
-        img = null;
-    };
+    drawingCanvasCxt.fillRect(0, 0, drawingCanvas.width() || window.drawCanvasW, drawingCanvas.height()||window.drawCanvasH );
+
+
+//     // Store the current transformation matrix
+// ctx.save();
+
+// // Use the identity matrix while clearing the canvas
+// ctx.setTransform(1, 0, 0, 1, 0, 0);
+// ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+// // Restore the transform
+// ctx.restore();
+//     // var img = new Image();
+    // //img.src = 'images/chicken.jpg';
+    // //img.src = initImgUrl;
+    // img.onload = function(){
+    //     drawingCanvasCxt.drawImage(img, 0,0);
+    //     img = null;
+    // };
 }
 
 // work out the element left and top offset by recursively going through its
@@ -74,6 +87,34 @@ function getMPosition(mouseEvent, element) {
     return { X: x - canvasOffsetLeft, Y: y - canvasOffsetTop };
 }
 
+
+function touchHandler(event)
+{
+    var touches = event.changedTouches,
+        first = touches[0],
+        type = "";
+         switch(event.type)
+    {
+        case "touchstart": type = "mousedown"; break;
+        case "touchmove":  type="mousemove"; break;        
+        case "touchend":   type="mouseup"; break;
+        default: return;
+    }
+
+             //initMouseEvent(type, canBubble, cancelable, view, clickCount, 
+    //           screenX, screenY, clientX, clientY, ctrlKey, 
+    //           altKey, shiftKey, metaKey, button, relatedTarget);
+
+    var simulatedEvent = document.createEvent("MouseEvent");
+    simulatedEvent.initMouseEvent(type, true, true, window, 1, 
+                              first.screenX, first.screenY, 
+                              first.clientX, first.clientY, false, 
+                              false, false, false, 0/*left*/, null);
+
+    first.target.dispatchEvent(simulatedEvent);
+    event.preventDefault();
+}
+
 // use the specified brush as the current brush
 function setBrush(brushName) {
     currentBrush = brushes[brushName];
@@ -83,34 +124,45 @@ function setBrush(brushName) {
 
     // start drawing when the mousedown event fires, and attach handlers to 
     // draw a line to wherever the mouse moves to
-    overlayCanvas.unbind("mousedown").mousedown(function (mouseEvent) {
-        setCanvasOffsets();
-        var overlayCanvasElement = overlayCanvas.get(0);
-        var position = getMPosition(mouseEvent, overlayCanvasElement);
+    //if(!window.onTouchDeviece){
+        overlayCanvas.unbind("mousedown").mousedown(function (mouseEvent) {
+            setCanvasOffsets();
+            var overlayCanvasElement = overlayCanvas.get(0);
+            var position = getMPosition(mouseEvent, overlayCanvasElement);
 
-        currentBrush.startDrawing(position);
+            currentBrush.startDrawing(position);
 
-        // attach event handlers
-        $(this).mousemove(function (event) {
-            var newPosition = getMPosition(event, overlayCanvasElement);
-            currentBrush.draw(newPosition);
-        }).mouseup(function (event) {
-            var newPosition = getMPosition(event, overlayCanvasElement);
-            currentBrush.finishDrawing(newPosition);
-            //save img
-            window.savingCallback(drawingCanvas.get(0).toDataURL());
-            //
-            unbindMouseEvents();
-        }).mouseout(function (event) {
-            var newPosition = getMPosition(event, overlayCanvasElement);
-            currentBrush.finishDrawing(newPosition);
-            //save img
-            window.savingCallback(drawingCanvas.get(0).toDataURL());
-            //
-            unbindMouseEvents();
-        });
-    }).css({ cursor: currentBrush.getCursor() });
+            // attach event handlers
+            $(this).mousemove(function (event) {
+                var newPosition = getMPosition(event, overlayCanvasElement);
+                currentBrush.draw(newPosition);
+            }).mouseup(function (event) {
+                var newPosition = getMPosition(event, overlayCanvasElement);
+                currentBrush.finishDrawing(newPosition);
+                //save img
+                window.savingCallback(drawingCanvas.get(0).toDataURL());
+                //
+                unbindMouseEvents();
+            }).mouseout(function (event) {
+                var newPosition = getMPosition(event, overlayCanvasElement);
+                currentBrush.finishDrawing(newPosition);
+                //save img
+                window.savingCallback(drawingCanvas.get(0).toDataURL());
+                //
+                unbindMouseEvents();
+            });
+        }).css({ cursor: currentBrush.getCursor() });
+    //}else{
+    if(mindmaps.responsive.isTouchDevice){
+        var ca=overlayCanvas.get(0)
+         ca.addEventListener("touchstart", touchHandler, true);
+        ca.addEventListener("touchmove", touchHandler, true);
+        ca.addEventListener("touchend", touchHandler, true);
+        ca.addEventListener("touchcancel", touchHandler, true);    
+    }
 }
+
+
 
 // set the cursor for the specified element to the cursor associated with the
 // current brush, e.g. pencil cursor for the pencil brush, etc.

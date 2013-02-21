@@ -15,29 +15,29 @@ mindmaps.DrawView = function() {
    this.getContent = function() {
     return $content;
   };
-
   
+  this.setCanvasSize=function(width,height){
+    $("#drawingCanvas",$content).attr("width",width).attr("height",height)
+    $("#overlay",$content).attr("width",width).attr("height",height)
+    $("#canvas-panel",$content).width(width).height(height)
+  }
+  
+
+  this.resize=function(width,height){
+    var w=width
+    var h=height-$(".ui-dialog-titlebar").height()
+    self.setCanvasSize(w,h)
+    window.drawCanvasW=w
+    window.drawCanvasH=h
+
+    //TODO set size for every part of this panel.
+  }
   /**
    * Initialise
    */
    this.init =  function() {
     var imagesLoaded = $(document).toObservable("images-loaded");
     var cursorsLoaded = $(document).toObservable("cursors-loaded");
-
-    // fade out the splash panel when images and cursors are loaded
-    imagesLoaded.Zip(cursorsLoaded, function (left, right) { return right; })
-    .Delay(1000)
-    .Subscribe(function () {
-      $("#splash").fadeOut("slow");
-    });
-
-    $( "#brush_slider" ).slider( {
-      change: function(e, ui){
-        setBrushSize(ui.value);
-      },
-      min: 1,
-      max: 100,
-    }).slider({value:10});
 
     
 
@@ -48,11 +48,7 @@ mindmaps.DrawView = function() {
     loadImages();   
 
     initDrawPanel (this.imgDataSaving,this);
-
-
-
-    
-
+    self.getContent().css("opacity",0.75);
   };
 
   
@@ -100,12 +96,14 @@ mindmaps.DrawPresenter = function(eventBus, mindmapModel, commandRegistry, view)
 
   function updateView(node){
     self.setImgData(node.imgData)
+    //self.setRelationNavigate(node)
   }
 
-  this.setImgData=function(dataURL){
 
+  this.setImgData=function(dataURL){
+    clearDrawing();
     if(dataURL==""){
-      clearDrawing();
+      return
     }
 
     var canvas =drawingCanvas.get(0)
@@ -121,13 +119,10 @@ mindmaps.DrawPresenter = function(eventBus, mindmapModel, commandRegistry, view)
   }
 
 
-view.imgDataSaving = function(data) {
-  //console.log("action here");
+  view.imgDataSaving = function(data) {
     var action = new mindmaps.action.ChangeImgDataAction(
         mindmapModel.selectedNode, data);
     mindmapModel.executeAction(action);
   }
-
-
 };
 

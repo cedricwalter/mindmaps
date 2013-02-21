@@ -97,8 +97,8 @@ EventEmitter.mixin(mindmaps.Command);
 mindmaps.CreateNodeCommand = function() {
   this.id = "CREATE_NODE_COMMAND";
   this.shortcut = "tab";
-  this.label = "Add";
-  this.icon = "ui-icon-plusthick";
+  this.label = "Child";
+  this.icon = "ui-icon-plus";
   this.description = "Creates a new node";
 };
 mindmaps.CreateNodeCommand.prototype = new mindmaps.Command();
@@ -112,11 +112,56 @@ mindmaps.CreateNodeCommand.prototype = new mindmaps.Command();
 mindmaps.CreateSiblingNodeCommand = function() {
   this.id = "CREATE_SIBLING_NODE_COMMAND";
   this.shortcut = "shift+tab";
-  this.label = "Add";
-  this.icon = "ui-icon-plusthick";
+  this.label = "Silibing";
+  this.icon = "ui-icon-plus";
   this.description = "Creates a new sibling node";
 };
 mindmaps.CreateSiblingNodeCommand.prototype = new mindmaps.Command();
+
+
+
+
+mindmaps.SelectParentNodeCommand = function() {
+  this.id = "SELECT_PARENT_NODE_COMMAND";
+  //this.shortcut = "shift+tab";
+  this.label = "Parent";
+  this.icon = "ui-icon-arrowthick-1-w";
+  this.description = "Go to parent";
+};
+mindmaps.SelectParentNodeCommand.prototype = new mindmaps.Command();
+
+
+mindmaps.SelectChildFirstNodeCommand = function() {
+  this.id = "SELECT_CHILD_FIRST_NODE_COMMAND";
+  //this.shortcut = "shift+tab";
+  this.label = "First";
+  this.icon = "ui-icon-arrowthick-1-e";
+  this.description = "Go to first child";
+};
+mindmaps.SelectChildFirstNodeCommand.prototype = new mindmaps.Command();
+
+mindmaps.SelectSiblingNextNodeCommand = function() {
+  this.id = "SELECT_SIBLING_NEXT_NODE_COMMAND";
+  //this.shortcut = "shift+tab";
+  this.label = "Next";
+  this.icon = "ui-icon-arrowthick-1-s";
+  this.description = "Go to next sibling";
+};
+mindmaps.SelectSiblingNextNodeCommand.prototype = new mindmaps.Command();
+
+mindmaps.SelectSiblingPrevNodeCommand = function() {
+  this.id = "SELECT_SIBLING_PREV_NODE_COMMAND";
+  //this.shortcut = "shift+tab";
+  this.label = "Prev";
+  this.icon = "ui-icon-arrowthick-1-n";
+  this.description = "Go to prev sibling";
+};
+mindmaps.SelectSiblingPrevNodeCommand.prototype = new mindmaps.Command();
+
+
+
+
+
 
 /**
  * Creates a new DeleteNodeCommand.
@@ -127,8 +172,8 @@ mindmaps.CreateSiblingNodeCommand.prototype = new mindmaps.Command();
 mindmaps.DeleteNodeCommand = function() {
   this.id = "DELETE_NODE_COMMAND";
   this.shortcut = ["del", "backspace"];
-  this.label = "Delete";
-  this.icon = "ui-icon-minusthick";
+  this.label = "Node";
+  this.icon = "ui-icon-minus";
   this.description = "Deletes a new node";
 };
 mindmaps.DeleteNodeCommand.prototype = new mindmaps.Command();
