@@ -134,7 +134,15 @@ mindmaps.MainViewController = function(eventBus, mindmapModel, commandRegistry) 
         commandRegistry, toolbar, mindmapModel,canvasContainer);
     toolbarPresenter.go();
 
-    // canvas
+
+      // draw-toolbar
+      var drawToolbar = new mindmaps.DrawToolBarView();
+      var drawToolbarPresenter = new mindmaps.DrawToolBarPresenter(eventBus,
+          commandRegistry, drawToolbar, mindmapModel,canvasContainer);
+      drawToolbarPresenter.go();
+
+
+      // canvas
     var canvas = new mindmaps.DefaultCanvasView();
     var canvasPresenter = new mindmaps.CanvasPresenter(eventBus,
         commandRegistry, mindmapModel, canvas, zoomController);

@@ -1,7 +1,7 @@
 // initialize the controls
 function initDrawPanel(savingCallback,view){
 
-    $('#right-panel').hide();
+    //$('#right-panel').hide();
     //$("#right-button").click(function(){$('#right-panel').toggle();});
 
 

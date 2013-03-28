@@ -24,8 +24,8 @@ mindmaps.DrawView = function() {
   
 
   this.resize=function(width,height){
-    var w=width
-    var h=height-$(".ui-dialog-titlebar").height()
+    var w=width*0.5
+    var h=(height-$(".ui-dialog-titlebar").height())*0.5
     self.setCanvasSize(w,h)
     window.drawCanvasW=w
     window.drawCanvasH=h

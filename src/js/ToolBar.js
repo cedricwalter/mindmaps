@@ -291,6 +291,9 @@ mindmaps.ToolBarPresenter = function(eventBus, commandRegistry, view,
   view.addButtonGroup(nodeButtons, view.alignLeft);
 
 
+
+
+
   var moveCommands = [ mindmaps.SelectParentNodeCommand, mindmaps.SelectChildFirstNodeCommand,mindmaps.SelectSiblingNextNodeCommand,mindmaps.SelectSiblingPrevNodeCommand];
   var moveButtons = commandsToButtons(moveCommands);
   view.addButtonGroup(moveButtons, view.alignLeft);
