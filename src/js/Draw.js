@@ -48,7 +48,7 @@ mindmaps.DrawView = function() {
     loadImages();   
 
     initDrawPanel (this.imgDataSaving,this);
-    self.getContent().css("opacity",0.75);
+    self.getContent().css("opacity",0.80);
   };
 
   
