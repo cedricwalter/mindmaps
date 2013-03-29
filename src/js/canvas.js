@@ -141,14 +141,14 @@ function setBrush(brushName) {
                 var newPosition = getMPosition(event, overlayCanvasElement);
                 currentBrush.finishDrawing(newPosition);
                 //save img
-                window.savingCallback(drawingCanvas.get(0).toDataURL());
+               // window.savingCallback(drawingCanvas.get(0).toDataURL());
                 //
                 unbindMouseEvents();
             }).mouseout(function (event) {
                 var newPosition = getMPosition(event, overlayCanvasElement);
                 currentBrush.finishDrawing(newPosition);
                 //save img
-                window.savingCallback(drawingCanvas.get(0).toDataURL());
+              // window.savingCallback(drawingCanvas.get(0).toDataURL());
                 //
                 unbindMouseEvents();
             });

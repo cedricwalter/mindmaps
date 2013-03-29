@@ -17,11 +17,32 @@ mindmaps.DrawView = function() {
   };
   
   this.setCanvasSize=function(width,height){
+    var can=$("#drawingCanvas",$content)[0]
+    var imageData=can.toDataURL()
+
     $("#drawingCanvas",$content).attr("width",width).attr("height",height)
+      self.setImgData(imageData)
     $("#overlay",$content).attr("width",width).attr("height",height)
     $("#canvas-panel",$content).width(width).height(height)
   }
-  
+
+    this.setImgData=function(dataURL){
+        clearDrawing();
+        if(dataURL==""){
+            return
+        }
+
+        var canvas =drawingCanvas.get(0)
+        var context = canvas.getContext('2d');
+
+        // load image from data url
+        var imageObj = new Image();
+        imageObj.onload = function() {
+            context.drawImage(this, 0, 0);
+        };
+
+        imageObj.src = dataURL;
+    }
 
   this.resize=function(width,height){
     var w=width
@@ -47,7 +68,7 @@ mindmaps.DrawView = function() {
     // load the images
     loadImages();   
 
-    initDrawPanel (this.imgDataSaving,this);
+    initDrawPanel (this);
     self.getContent().css("opacity",0.80);
   };
 
@@ -85,8 +106,19 @@ mindmaps.DrawView = function() {
 
 mindmaps.DrawPresenter = function(eventBus, mindmapModel, commandRegistry, view) {
   var self = this;
+  var currentNode=null;
+  this.saveImage=function(){
+      if(currentNode){
+          var action = new mindmaps.action.ChangeImgDataAction(
+              currentNode, drawingCanvas.get(0).toDataURL());
+          mindmapModel.executeAction(action);
+      }
 
+  }
+    //FIXME call saveImage when save/autosave etc.
   eventBus.subscribe(mindmaps.Event.NODE_SELECTED, function(node) {
+        self.saveImage()
+      currentNode=node
       updateView(node);
     });
 
@@ -95,34 +127,13 @@ mindmaps.DrawPresenter = function(eventBus, mindmapModel, commandRegistry, view)
   };
 
   function updateView(node){
-    self.setImgData(node.imgData)
-    //self.setRelationNavigate(node)
+    view.setImgData(node.imgData)
   }
 
 
-  this.setImgData=function(dataURL){
-    clearDrawing();
-    if(dataURL==""){
-      return
-    }
-
-    var canvas =drawingCanvas.get(0)
-    var context = canvas.getContext('2d');
-
-    // load image from data url
-    var imageObj = new Image();
-    imageObj.onload = function() {
-      context.drawImage(this, 0, 0);
-    };
-
-    imageObj.src = dataURL;
-  }
 
 
-  view.imgDataSaving = function(data) {
-    var action = new mindmaps.action.ChangeImgDataAction(
-        mindmapModel.selectedNode, data);
-    mindmapModel.executeAction(action);
-  }
+
+
 };
 
