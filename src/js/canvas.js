@@ -31,6 +31,7 @@ function setBrushSize(size){
         brushes[brush].setSize(size);
     }
 }
+
 function unbindMouseEvents() {
     overlayCanvas.unbind("mousemove").unbind("mouseup").unbind("mouseout");
 }
@@ -96,7 +97,7 @@ function touchHandler(event)
          switch(event.type)
     {
         case "touchstart": type = "mousedown"; break;
-        case "touchmove":  type="mousemove"; break;        
+        case "touchmove":  type="mousemove"; break;
         case "touchend":   type="mouseup"; break;
         default: return;
     }
@@ -140,14 +141,14 @@ function setBrush(brushName) {
                 var newPosition = getMPosition(event, overlayCanvasElement);
                 currentBrush.finishDrawing(newPosition);
                 //save img
-                window.savingCallback(drawingCanvas.get(0).toDataURL());
+               // window.savingCallback(drawingCanvas.get(0).toDataURL());
                 //
                 unbindMouseEvents();
             }).mouseout(function (event) {
                 var newPosition = getMPosition(event, overlayCanvasElement);
                 currentBrush.finishDrawing(newPosition);
                 //save img
-                window.savingCallback(drawingCanvas.get(0).toDataURL());
+              // window.savingCallback(drawingCanvas.get(0).toDataURL());
                 //
                 unbindMouseEvents();
             });
@@ -223,21 +224,14 @@ function initializeCanvas() {
         setCanvasOffsets();
     });
 
-    var pencilBrush = new PencilBrush(10, drawingCanvasCxt),
-        sprayBrush = new SprayBrush(10, 15, drawingCanvasCxt),
-        eraserBrush = new EraserBrush(10, drawingCanvasCxt),
-        paintBrush = new PaintBrush(50, drawingCanvasCxt),
-        colourPicker = new ColourPicker(drawingCanvasCxt, function (colour) {
-            setColour(colour);
-        });
+    var pencilBrush = new PencilBrush(3, drawingCanvasCxt,drawingCanvas[0],overlayCanvas[0]),
+        eraserBrush = new EraserBrush(10, drawingCanvasCxt,drawingCanvas[0],overlayCanvas[0])
+
 
     // define the available brushes
     brushes = {
         "pencil": pencilBrush,
-        "spray": sprayBrush,
-        "eraser": eraserBrush,
-        "paint": paintBrush,
-        "colour-picker": colourPicker
+        "eraser": eraserBrush
     };
 
     // set default colour to black
