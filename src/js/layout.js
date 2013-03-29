@@ -1,11 +1,11 @@
 // initialize the controls
-function initDrawPanel(savingCallback,view){
+function initDrawPanel(view){
 
     $('#right-panel').hide();
     //$("#right-button").click(function(){$('#right-panel').toggle();});
 
 
-    window.savingCallback=savingCallback;
+    //window.savingCallback=savingCallback;
 
     // $("#save-button").click(function(){
     //     window.savingCallback(drawingCanvas.get(0).toDataURL());
