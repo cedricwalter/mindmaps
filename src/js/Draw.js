@@ -19,7 +19,6 @@ mindmaps.DrawView = function() {
   this.setCanvasSize=function(width,height){
     var can=$("#drawingCanvas",$content)[0]
     var imageData=can.toDataURL()
-
     $("#drawingCanvas",$content).attr("width",width).attr("height",height)
       self.setImgData(imageData)
     $("#overlay",$content).attr("width",width).attr("height",height)
@@ -27,6 +26,7 @@ mindmaps.DrawView = function() {
   }
 
     this.setImgData=function(dataURL){
+        //FIXME will fail when call this continuously.
         clearDrawing();
         if(dataURL==""){
             return
@@ -38,6 +38,7 @@ mindmaps.DrawView = function() {
         // load image from data url
         var imageObj = new Image();
         imageObj.onload = function() {
+            //
             context.drawImage(this, 0, 0);
         };
 
@@ -47,9 +48,9 @@ mindmaps.DrawView = function() {
   this.resize=function(width,height){
     var w=width
     var h=height-$(".ui-dialog-titlebar").height()
-    self.setCanvasSize(w,h-100)
+    self.setCanvasSize(w,h-50)
     window.drawCanvasW=w
-    window.drawCanvasH=h-100
+    window.drawCanvasH=h-50
 
     //TODO set size for every part of this panel.
   }

@@ -362,7 +362,9 @@ html,body {
   -o-transition: none;
   -webkit-border-radius: none
 }
-
+.on-top{
+    z-index: 20000;
+}
 .float-panel.ui-dialog {
   min-width: 200px;
   min-height: 150px;
@@ -371,6 +373,9 @@ html,body {
   z-index: 1000;
   width: auto !important;
 }
+
+
+
 
 .float-panel div.ui-dialog-titlebar {
   padding: 0.4em 0.5em 0.3em;

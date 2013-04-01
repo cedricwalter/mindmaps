@@ -72,7 +72,7 @@ mindmaps.FloatPanel = function(caption, $container, $content) {
 
   this.caption = caption;
   this.visible = false;
-  this.animationDuration = 400;
+  this.animationDuration = 200;
 
   /**
    * Replaces the content in the panel.
@@ -273,7 +273,7 @@ mindmaps.BigPanel = function(caption,$container, $content,drawView,showCallBack,
   var animating = false;
   this.caption=caption;
   this.visible = false;
-  this.animationDuration = 400;
+  this.animationDuration = 200;
   this.$container=$container;
     this.showCallBack=showCallBack;
     this.hideCallBack=hideCallBack;
