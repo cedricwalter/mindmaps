@@ -14,6 +14,7 @@ var PencilBrush = new Class({
 
         this.setColour = function (colour) {
             drawingCxt.fillStyle = drawingCxt.strokeStyle = colour;
+            over_ctx.fillStyle=over_ctx.strokeStyle=colour;
             drawingCxt.lineWidth = this.lineWidth;
             over_ctx.lineWidth=this.lineWidth
 
@@ -123,9 +124,10 @@ var PencilBrush = new Class({
 // define an eraser brush which clears part of the canvas with rectangles
 var EraserBrush = new Class({
     Extends: PencilBrush,
-    initialize: function (lineWidth, drawingCxt,canvas,sketch) {
+    initialize: function (lineWidth, drawingCxt,canvas,overlayCanvas) {
         // invoke the base constructor
-        this.parent(lineWidth, drawingCxt,canvas,sketch);
+        this.parent(lineWidth, drawingCxt,canvas,overlayCanvas);
+        var over_ctx = overlayCanvas.getContext('2d');
 
         // get the cursor associated with the pencil brush
         this.getCursor = function () {
@@ -134,6 +136,8 @@ var EraserBrush = new Class({
 
         this.setColour = function (colour) {
             drawingCxt.fillStyle = drawingCxt.strokeStyle = backgroundColour;
+            over_ctx.fillStyle=over_ctx.strokeStyle=backgroundColour;
+
             drawingCxt.lineWidth = this.lineWidth;
             drawingCxt.lineCap = "round";
             drawingCxt.lineJoin = "round";

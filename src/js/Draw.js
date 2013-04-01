@@ -47,9 +47,9 @@ mindmaps.DrawView = function() {
   this.resize=function(width,height){
     var w=width
     var h=height-$(".ui-dialog-titlebar").height()
-    self.setCanvasSize(w,h)
+    self.setCanvasSize(w,h-100)
     window.drawCanvasW=w
-    window.drawCanvasH=h
+    window.drawCanvasH=h-100
 
     //TODO set size for every part of this panel.
   }
@@ -66,7 +66,7 @@ mindmaps.DrawView = function() {
     initializeCanvas();
 
     // load the images
-    loadImages();   
+    //loadImages();
 
     initDrawPanel (this);
     self.getContent().css("opacity",0.80);
@@ -74,33 +74,33 @@ mindmaps.DrawView = function() {
 
   
 
-  function loadImages() {
-    var images = ["images/tools_panel_colour_picker_button.png",
-    "images/tools_panel_delete_button.png",
-    "images/tools_panel_eraser_button.png",
-    "images/tools_panel_paint_button.png",
-    "images/tools_panel_pencil_button.png",
-    "images/tools_panel_spray_button.png"],
-    cursors = ["cursors/colour_picker_cursor.cur",
-    "cursors/eraser_cursor.cur",
-    "cursors/paint_cursor.cur",
-    "cursors/pencil_cursor.cur",
-    "cursors/spray_cursor.cur"];
-
-    // fire the images-loaded event when all images are loaded
-    Asset.images(images, {
-      onComplete: function () {
-        $(document).trigger("images-loaded");
-      }
-    });
-
-    // fire the cursors-loaded event when all cursors are loaded
-    Asset.images(cursors, {
-      onComplete: function () {
-        $(document).trigger("cursors-loaded");
-      }
-    });
-  }
+//  function loadImages() {
+//    var images = ["images/tools_panel_colour_picker_button.png",
+//    "images/tools_panel_delete_button.png",
+//    "images/tools_panel_eraser_button.png",
+//    "images/tools_panel_paint_button.png",
+//    "images/tools_panel_pencil_button.png",
+//    "images/tools_panel_spray_button.png"],
+//    cursors = ["cursors/colour_picker_cursor.cur",
+//    "cursors/eraser_cursor.cur",
+//    "cursors/paint_cursor.cur",
+//    "cursors/pencil_cursor.cur",
+//    "cursors/spray_cursor.cur"];
+//
+//    // fire the images-loaded event when all images are loaded
+//    Asset.images(images, {
+//      onComplete: function () {
+//        $(document).trigger("images-loaded");
+//      }
+//    });
+//
+//    // fire the cursors-loaded event when all cursors are loaded
+//    Asset.images(cursors, {
+//      onComplete: function () {
+//        $(document).trigger("cursors-loaded");
+//      }
+//    });
+//  }
 }
 
 
