@@ -225,7 +225,7 @@ function initializeCanvas() {
     });
 
     var pencilBrush = new PencilBrush(3, drawingCanvasCxt,drawingCanvas[0],overlayCanvas[0]),
-        eraserBrush = new EraserBrush(10, drawingCanvasCxt,drawingCanvas[0],overlayCanvas[0])
+        eraserBrush = new EraserBrush(20, drawingCanvasCxt,drawingCanvas[0],overlayCanvas[0])
 
 
     // define the available brushes

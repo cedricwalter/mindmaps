@@ -31,6 +31,9 @@
 <link rel="stylesheet" href="css/Aristo/jquery-ui-1.8.7.custom.css"/>
 <link rel="stylesheet" href="css/minicolors/jquery.miniColors.css">
 
+<link rel="stylesheet" href="css/font-awesome.min.css">
+
+
 
 <script id="template-float-panel" type="text/x-jquery-tmpl">
     <div class="ui-widget ui-dialog ui-corner-all ui-widget-content float-panel no-select">
@@ -330,24 +333,25 @@
                 <canvas id="overlay" width="500" height="500"
                         onSelectStart="setCursor(this); return false;"></canvas>
             </div>
+
         </div>
         <div id="right-panel">
             <div id="stroke-colour-picker"></div>
             <div id="tools-panel" class="block">
                 <ul>
-                    <li class="tool-panel-button tool-button selected">
-                        <img id="pencil-tool" src="images/tools_panel_pencil_button.png" class="block, fill"/>
+                    <li class="tool-panel-button tool-button pencil-tool selected ">
+                        <i class="icon-pencil icon-3x"></i>
                     </li>
-                    <li class="tool-panel-button tool-button">
+                    <li class="tool-panel-button tool-button eraser-tool">
+                        <i class="icon-tint icon-3x"></i>
+                    </li>
+
+                    <li class="tool-panel-button tool-button delete-tool">
+                        <i class="icon-trash icon-3x"></i>
+                    </li>
 
                     <li class="tool-panel-button tool-button">
-                        <img id="eraser-tool" src="images/tools_panel_eraser_button.png" class="block, fill"/>
-                    </li>
-                    <li class="tool-panel-button tool-button">
-                        <img id="undo-tool" src="images/tools_panel_undo_button.png" class="block, fill"/>
-                    </li>
-                    <li class="tool-panel-button tool-button">
-                        <img id="delete-tool" src="images/tools_panel_delete_button.png" class="block, fill"/>
+                        <input class="brush-color"/>
                     </li>
                 </ul>
             </div>
@@ -427,7 +431,6 @@
 <script type="text/javascript" src="js/libs/mootools/mootools-core-1.4.5-full-compat-yc.js"></script>
 <script type="text/javascript" src="js/libs/mootools/mootools-more-1.4.0.1.js"></script>
 <script type="text/javascript" src="js/libs/modernizr/modernizr-1.6.min.js"></script>
-<script type="text/javascript" src="js/libs/colorpicker/colorpicker.js"></script>
 
 
 <script type="text/javascript" src="js/libs/hammer.js"></script>
@@ -451,12 +454,14 @@
 <script src="js/libs/events.js"></script>
 <script src="js/libs/jquery.ie.cors.js"></script>
 
-
 <script src="js/MindMaps.js"></script>
 
 
 <script type="text/javascript" src="js/Responsive.js"></script>
 <script type="text/javascript" src="js/Mode.js"></script>
+
+<script src="js/jquery.colorPicker.js"></script>
+
 
 <script src="js/Config.js"></script>
 <script src="js/Command.js"></script>
