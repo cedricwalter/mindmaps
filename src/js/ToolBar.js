@@ -325,7 +325,6 @@ mindmaps.ToolBarPresenter = function(eventBus, commandRegistry, view,
   };
   function bind(){
       canvasContainer.subscribe(mindmaps.CanvasContainer.Event.RESIZED,function(){
-
           view.ensureResponsive();
       })
   }

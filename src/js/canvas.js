@@ -42,22 +42,6 @@ function clearDrawing() {
     drawingCanvasCxt.fillRect(0, 0, drawingCanvas.width() || window.drawCanvasW, drawingCanvas.height()||window.drawCanvasH );
 
 
-//     // Store the current transformation matrix
-// ctx.save();
-
-// // Use the identity matrix while clearing the canvas
-// ctx.setTransform(1, 0, 0, 1, 0, 0);
-// ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-// // Restore the transform
-// ctx.restore();
-//     // var img = new Image();
-    // //img.src = 'images/chicken.jpg';
-    // //img.src = initImgUrl;
-    // img.onload = function(){
-    //     drawingCanvasCxt.drawImage(img, 0,0);
-    //     img = null;
-    // };
 }
 
 // work out the element left and top offset by recursively going through its
@@ -102,9 +86,6 @@ function touchHandler(event)
         default: return;
     }
 
-             //initMouseEvent(type, canBubble, cancelable, view, clickCount, 
-    //           screenX, screenY, clientX, clientY, ctrlKey, 
-    //           altKey, shiftKey, metaKey, button, relatedTarget);
 
     var simulatedEvent = document.createEvent("MouseEvent");
     simulatedEvent.initMouseEvent(type, true, true, window, 1, 
@@ -156,7 +137,7 @@ function setBrush(brushName) {
     //}else{
     if(mindmaps.responsive.isTouchDevice){
         var ca=overlayCanvas.get(0)
-         ca.addEventListener("touchstart", touchHandler, true);
+        ca.addEventListener("touchstart", touchHandler, true);
         ca.addEventListener("touchmove", touchHandler, true);
         ca.addEventListener("touchend", touchHandler, true);
         ca.addEventListener("touchcancel", touchHandler, true);    
