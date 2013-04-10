@@ -84,3 +84,11 @@ aside
 	margin: 47.5% 47.5%;
 	position: absolute;
 }
+
+
+#gesture-div{
+    width: 200px;
+    height: 200px;
+    border: 5px;
+
+}

@@ -160,12 +160,21 @@ mindmaps.MainViewController = function(eventBus, mindmapModel, commandRegistry) 
     inspectorPanel.show();
     statusbarPresenter.addEntry(inspectorPanel);
 
+      //gesture
+
+
+     var gestureView=new mindmaps.GestureView();
+      var gesturePresenter=new mindmaps.GesturePresenter(eventBus,mindmapModel,commandRegistry,gestureView)
+      gesturePresenter.go();
+      var gesturePanel=fpf.create("Gesture",gestureView.getContent());
+      //gesturePanel.show();
+      //gesturePanel.$widget.addClass("on-top");
+      gesturePanel.$widget.css("z-index","20000");
+      statusbarPresenter.addEntry(gesturePanel);
+
     //draw
 
-    var drawView=new mindmaps.DrawView(
-      function(dataString){
-        inspectorView.setImgDataTextAreaContents(dataString)
-      });
+    var drawView=new mindmaps.DrawView();
     var drawPresenter = new mindmaps.DrawPresenter(eventBus,
         mindmapModel, commandRegistry, drawView);
     var drawPanel=fpf.bigPanel("Draw",drawView.getContent(),drawView,function(){

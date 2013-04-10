@@ -144,46 +144,4 @@ var EraserBrush = new Class({
         };
     }
 });
-//
-//(function() {
-//
-//    var canvas = document.querySelector('#paint');
-//    var ctx = canvas.getContext('2d');
-//
-//    var sketch = document.querySelector('#sketch');
-//    var sketch_style = getComputedStyle(sketch);
-//    canvas.width = parseInt(sketch_style.getPropertyValue('width'));
-//    canvas.height = parseInt(sketch_style.getPropertyValue('height'));
-//
-//
-//
-//
-//    /* Mouse Capturing Work */
-//    tmp_canvas.addEventListener('mousemove', function(e) {
-//        mouse.x = typeof e.offsetX !== 'undefined' ? e.offsetX : e.layerX;
-//        mouse.y = typeof e.offsetY !== 'undefined' ? e.offsetY : e.layerY;
-//    }, false);
-//
-//
-//
-//
-//    tmp_canvas.addEventListener('mousedown', function(e) {
-//        tmp_canvas.addEventListener('mousemove', onPaint, false);
-//
-//        mouse.x = typeof e.offsetX !== 'undefined' ? e.offsetX : e.layerX;
-//        mouse.y = typeof e.offsetY !== 'undefined' ? e.offsetY : e.layerY;
-//
-//        ppts.push({x: mouse.x, y: mouse.y});
-//
-//        onPaint();
-//    }, false);
-//
-//    tmp_canvas.addEventListener('mouseup', function() {
-//        tmp_canvas.removeEventListener('mousemove', onPaint, false);
-//
-//
-//    }, false);
-//
-//
-//
-//}());
+
