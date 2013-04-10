@@ -38,6 +38,7 @@ function unbindMouseEvents() {
 
 // clear the drawing panel
 function clearDrawing() {
+
     drawingCanvasCxt.fillStyle = backgroundColour;
     drawingCanvasCxt.fillRect(0, 0, drawingCanvas.width() || window.drawCanvasW, drawingCanvas.height() || window.drawCanvasH);
 

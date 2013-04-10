@@ -31,6 +31,8 @@ mindmaps.FloatPanelFactory = function(container) {
 
     dialog.setPosition(ccw - dw - paddingRight, hh + paddingTop
         + heightOffset);
+    //dialog.ensurePosition();
+
   }
 
   /**
@@ -43,8 +45,9 @@ mindmaps.FloatPanelFactory = function(container) {
   this.create = function(caption, $content) {
     var dialog = new mindmaps.FloatPanel(caption, $container, $content);
     setPosition(dialog);
-    dialogs.push(dialog);
-    return dialog;
+
+      dialogs.push(dialog);
+      return dialog;
   };
 
 
@@ -234,7 +237,9 @@ mindmaps.FloatPanel = function(caption, $container, $content) {
    * @private
    */
   this.ensurePosition = function() {
-    var cw = $container.outerWidth();
+      console.log(this.$widget.offset().left)
+
+      var cw = $container.outerWidth();
     var ch = $container.outerHeight();
     var col = $container.offset().left;
     var cot = $container.offset().top;

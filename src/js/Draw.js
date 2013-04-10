@@ -45,6 +45,7 @@ mindmaps.DrawView = function () {
     this.resize = function (width, height) {
         var w = width
         var h = height - $(".ui-dialog-titlebar").height()
+        if(drawingCanvasCxt)
         self.setCanvasSize(w, h - 50)
         window.drawCanvasW = w
         window.drawCanvasH = h - 50
@@ -57,14 +58,7 @@ mindmaps.DrawView = function () {
     this.init = function () {
         var imagesLoaded = $(document).toObservable("images-loaded");
         var cursorsLoaded = $(document).toObservable("cursors-loaded");
-
-
-        // initialize the canvas
         initializeCanvas();
-
-        // load the images
-        //loadImages();
-
         initDrawPanel(this);
         self.getContent().css("opacity", 0.80);
     };
