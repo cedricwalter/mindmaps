@@ -2,10 +2,10 @@ var canvasOffsetLeft,   // the left offset for the canvas elements
     canvasOffsetTop,    // the top offset for the canvas elements
     drawingCanvas,      // canvas element for the drawing canvas
     drawingCanvasCxt,   // 2D drawing context for the drawing canvas
-    //Only used for events?
+//Only used for events?
     overlayCanvas,      // canvas element for the overlay canvas
     overlayCanvasCxt,   // 2D drawing context for the overlay canvas
-    //
+//
     outputImage,        // output image
     currentBrush,       // the brush selected to paint on the drawing canvas
     strokeColour,       // the span element showing the current stroke colour
@@ -26,8 +26,8 @@ function setColour(colour) {
     $("#stroke-colour-picker").ColorPickerSetColor(colour);
 }
 
-function setBrushSize(size){
-    for(brush in brushes){
+function setBrushSize(size) {
+    for (brush in brushes) {
         brushes[brush].setSize(size);
     }
 }
@@ -39,7 +39,7 @@ function unbindMouseEvents() {
 // clear the drawing panel
 function clearDrawing() {
     drawingCanvasCxt.fillStyle = backgroundColour;
-    drawingCanvasCxt.fillRect(0, 0, drawingCanvas.width() || window.drawCanvasW, drawingCanvas.height()||window.drawCanvasH );
+    drawingCanvasCxt.fillRect(0, 0, drawingCanvas.width() || window.drawCanvasW, drawingCanvas.height() || window.drawCanvasH);
 
 
 }
@@ -73,25 +73,30 @@ function getMPosition(mouseEvent, element) {
 }
 
 
-function touchHandler(event)
-{
+function touchHandler(event) {
     var touches = event.changedTouches,
         first = touches[0],
         type = "";
-         switch(event.type)
-    {
-        case "touchstart": type = "mousedown"; break;
-        case "touchmove":  type="mousemove"; break;
-        case "touchend":   type="mouseup"; break;
-        default: return;
+    switch (event.type) {
+        case "touchstart":
+            type = "mousedown";
+            break;
+        case "touchmove":
+            type = "mousemove";
+            break;
+        case "touchend":
+            type = "mouseup";
+            break;
+        default:
+            return;
     }
 
 
     var simulatedEvent = document.createEvent("MouseEvent");
-    simulatedEvent.initMouseEvent(type, true, true, window, 1, 
-                              first.screenX, first.screenY, 
-                              first.clientX, first.clientY, false, 
-                              false, false, false, 0/*left*/, null);
+    simulatedEvent.initMouseEvent(type, true, true, window, 1,
+        first.screenX, first.screenY,
+        first.clientX, first.clientY, false,
+        false, false, false, 0/*left*/, null);
 
     first.target.dispatchEvent(simulatedEvent);
     event.preventDefault();
@@ -107,43 +112,42 @@ function setBrush(brushName) {
     // start drawing when the mousedown event fires, and attach handlers to 
     // draw a line to wherever the mouse moves to
     //if(!window.onTouchDeviece){
-        overlayCanvas.unbind("mousedown").mousedown(function (mouseEvent) {
-            setCanvasOffsets();
-            var overlayCanvasElement = overlayCanvas.get(0);
-            var position = getMPosition(mouseEvent, overlayCanvasElement);
+    overlayCanvas.unbind("mousedown").mousedown(function (mouseEvent) {
+        setCanvasOffsets();
+        var overlayCanvasElement = overlayCanvas.get(0);
+        var position = getMPosition(mouseEvent, overlayCanvasElement);
 
-            currentBrush.startDrawing(position);
+        currentBrush.startDrawing(position);
 
-            // attach event handlers
-            $(this).mousemove(function (event) {
-                var newPosition = getMPosition(event, overlayCanvasElement);
-                currentBrush.draw(newPosition);
-            }).mouseup(function (event) {
+        // attach event handlers
+        $(this).mousemove(function (event) {
+            var newPosition = getMPosition(event, overlayCanvasElement);
+            currentBrush.draw(newPosition);
+        }).mouseup(function (event) {
                 var newPosition = getMPosition(event, overlayCanvasElement);
                 currentBrush.finishDrawing(newPosition);
                 //save img
-               // window.savingCallback(drawingCanvas.get(0).toDataURL());
+                // window.savingCallback(drawingCanvas.get(0).toDataURL());
                 //
                 unbindMouseEvents();
             }).mouseout(function (event) {
                 var newPosition = getMPosition(event, overlayCanvasElement);
                 currentBrush.finishDrawing(newPosition);
                 //save img
-              // window.savingCallback(drawingCanvas.get(0).toDataURL());
+                // window.savingCallback(drawingCanvas.get(0).toDataURL());
                 //
                 unbindMouseEvents();
             });
-        }).css({ cursor: currentBrush.getCursor() });
+    }).css({ cursor: currentBrush.getCursor() });
     //}else{
-    if(mindmaps.responsive.isTouchDevice){
-        var ca=overlayCanvas.get(0)
+    if (mindmaps.responsive.isTouchDevice) {
+        var ca = overlayCanvas.get(0)
         ca.addEventListener("touchstart", touchHandler, true);
         ca.addEventListener("touchmove", touchHandler, true);
         ca.addEventListener("touchend", touchHandler, true);
-        ca.addEventListener("touchcancel", touchHandler, true);    
+        ca.addEventListener("touchcancel", touchHandler, true);
     }
 }
-
 
 
 // set the cursor for the specified element to the cursor associated with the
@@ -159,28 +163,29 @@ function setCanvasOffsets() {
     canvasOffsetTop = canvasOffset.OffsetTop;
 }
 
-function undoBackup(){
-    undoArr[undoIndex%undoMaxLength] = drawingCanvasCxt.getImageData(0, 0, 500, 500);;
+function undoBackup() {
+    undoArr[undoIndex % undoMaxLength] = drawingCanvasCxt.getImageData(0, 0, 500, 500);
+    ;
     undoIndex++;
-    if(undoLength<=undoMaxLength){
+    if (undoLength <= undoMaxLength) {
         undoLength++;
     }
 }
 
-function undo(){
-    if(undoLength > 0){
+function undo() {
+    if (undoLength > 0) {
         undoIndex--;
         undoLength--;
-        drawingCanvasCxt.putImageData(undoArr[(undoIndex)%undoMaxLength], 0,0);
-        undoArr[(undoIndex)%undoMaxLength]=null;
+        drawingCanvasCxt.putImageData(undoArr[(undoIndex) % undoMaxLength], 0, 0);
+        undoArr[(undoIndex) % undoMaxLength] = null;
     }
 }
 
 function initializeCanvas() {
-    undoArr=[];
-    undoIndex=0;
-    undoLength=0;
-    undoMaxLength=30;
+    undoArr = [];
+    undoIndex = 0;
+    undoLength = 0;
+    undoMaxLength = 30;
     // get references to the canvas element as well as the 2D drawing context
     drawingCanvas = $("#drawingCanvas");
     drawingCanvasCxt = drawingCanvas.get(0).getContext("2d");
@@ -192,8 +197,8 @@ function initializeCanvas() {
     var img = new Image();
 //    img.src = 'images/chicken.jpg';
     //img.src=initImgUrl;
-    img.onload = function(){
-        drawingCanvasCxt.drawImage(img, 0,0);
+    img.onload = function () {
+        drawingCanvasCxt.drawImage(img, 0, 0);
         img = null;
     };
     strokeColour = $("#stroke-colour");
@@ -205,8 +210,8 @@ function initializeCanvas() {
         setCanvasOffsets();
     });
 
-    var pencilBrush = new PencilBrush(3, drawingCanvasCxt,drawingCanvas[0],overlayCanvas[0]),
-        eraserBrush = new EraserBrush(20, drawingCanvasCxt,drawingCanvas[0],overlayCanvas[0])
+    var pencilBrush = new PencilBrush(3, drawingCanvasCxt, drawingCanvas[0], overlayCanvas[0]),
+        eraserBrush = new EraserBrush(20, drawingCanvasCxt, drawingCanvas[0], overlayCanvas[0])
 
 
     // define the available brushes

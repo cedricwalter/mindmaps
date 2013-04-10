@@ -19,7 +19,7 @@ mindmaps.GestureView = function () {
      */
     this.init = function () {
 
-        var ca=this.getContent().get(0)
+        var ca = this.getContent().get(0)
         ca.addEventListener("touchstart", touchHandler, true);
         ca.addEventListener("touchmove", touchHandler, true);
         ca.addEventListener("touchend", touchHandler, true);

@@ -313,8 +313,9 @@ mindmaps.CanvasPresenter = function (eventBus, commandRegistry, mindmapModel, vi
                 view.updateNode(currentNode);
                 currentNode = currentNode.getParent();
             }
-            // in HD mode, will not edit caption
-            if (!mindmaps.mode.inHD) {
+            // in HD mode or on a device using soft keyboard, will not edit caption
+            //TODO all touch device use soft keyboad?
+            if (!(mindmaps.responsive.isTouchDevice || mindmaps.mode.inHD)) {
                 // edit node caption immediately if requested
 
                 if (node.shouldEditCaption) {
