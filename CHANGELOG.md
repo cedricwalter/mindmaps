@@ -1,5 +1,9 @@
 # Changelog
 
+## 2013-4-11
+- See ./mindmap.json, open it by THIS program.
+- Will not update Changelog.
+
 ## 2012-06-24
 - Added integration with Dropbox and other cloud storage services (finally!)
 
@@ -16,3 +20,5 @@
 ## 2011-08-09
 - Implemented PNG export
 - Added support for printing the mind map
+
+

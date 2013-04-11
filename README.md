@@ -4,6 +4,8 @@ This fork is tring to migrate mindmap to mobile platform, saying a html5 browser
 - Optimization for touch operation.  
 - Create mindmap by Hand-writing.
 
+For details, see ./mindmap.json, open it by THIS program.
+
 ---
 
 # mindmaps
