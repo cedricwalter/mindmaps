@@ -112,10 +112,18 @@
         <div class="seperator"></div>
         <h1>From storage server</h1>
 
-        <p>Load your mind map from a storage server.</p>
-        <button id="button-open-storageserver">Open</button>
-        <span class="storageserver-loading">Loading...</span>
-        <span class="storageserver-error error"></span>
+        <p>This is a list of all mind maps that are saved in your server. Click on the title of a map
+            to open it.</p>
+        <table class="server-filelist">
+            <thead>
+            <tr>
+                <th class="title">Title</th>
+                <th class="modified">Last Modified</th>
+                <th class="delete"></th>
+            </tr>
+            </thead>
+            <tbody class="server-document-list"></tbody>
+        </table>
     </div>
 </script>
 
@@ -159,6 +167,9 @@
         <td><a class="delete" href="#">delete</a></td>
     </tr>
 </script>
+
+
+
 
 <script id="template-urls-multi-url-display" type="text/x-jquery-tmpl">
     <div>
