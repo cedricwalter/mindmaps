@@ -9,16 +9,7 @@
 	margin: 0px auto;
 }
 
-#drawingCanvas, #overlay 
-{
-	position: absolute;
-}
 
-#drawingCanvas
-{
-	background: white;
-	z-index: 1;
-}
 
 #overlay {
 	background: rgba(0, 0, 0, 0);
