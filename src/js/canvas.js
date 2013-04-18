@@ -149,7 +149,7 @@ function setBrush(brushName) {
 // set the cursor for the specified element to the cursor associated with the
 // current brush, e.g. pencil cursor for the pencil brush, etc.
 function setCursor(element) {
-    element.style.cursor = currentBrush.getCursor();
+    //element.style.cursor = currentBrush.getCursor();
 }
 
 function setCanvasOffsets() {
