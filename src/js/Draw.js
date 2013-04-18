@@ -14,42 +14,19 @@ mindmaps.DrawView = function () {
     };
 
 
-    this.setImgData = function (dataURL) {
-//        //FIXME will fail when call this continuously.
-//        clearDrawing();
-//        if (dataURL == "") {
-//            return
-//        }
-//
-//        var canvas = drawingCanvas.get(0)
-//        var context = canvas.getContext('2d');
-//
-//        // load image from data url
-//        var imageObj = new Image();
-//        imageObj.onload = function () {
-//            //
-//            context.drawImage(this, 0, 0);
-//        };
-//
-//        imageObj.src = dataURL;
-    }
-
     this.resize = function (width, height) {
         var w = width
         var h = height - $(".ui-dialog-titlebar").height()
-//        self.setCanvasSize(w, h - 50)
-//        window.drawCanvasW = w
-//        window.drawCanvasH = h - 50
         self.can.isDrawingMode = false
         self.can.calcOffset()
 
         self.can.setWidth(w)
-        self.can.setHeight(h)
+        self.can.setHeight(h-50)
         self.can.renderAll()
         //self.can.calcOffset()
         self.can.calcOffset()
 
-        $("#canvas-panel", $content).width(w).height(h)
+        $("#canvas-panel", $content).width(w).height(h-50)
 
         self.can.isDrawingMode = true
 
@@ -61,31 +38,34 @@ mindmaps.DrawView = function () {
     this.init = function () {
 
 
-        // initialize the canvas
-        //initializeCanvas();
+        //fabric.isTouchSupported=true
+
         self.can = new fabric.Canvas('drawingCanvas')
-        self.can.add(
-            new fabric.Rect({ top: 100, left: 100, width: 50, height: 50, fill: '#f55' }),
-            new fabric.Circle({ top: 140, left: 230, radius: 75, fill: 'green' }),
-            new fabric.Triangle({ top: 300, left: 210, width: 100, height: 100, fill: 'blue' })
-        );
+
         self.can.freeDrawingBrush = new fabric["PencilBrush"](self.can)
         //self.can.freeDrawingBrush.color = "rgba(0,0,0,1)"
         self.can.freeDrawingBrush.width = 5
         initDrawPanel(this);
         self.can.calcOffset()
-
+        self.can.on('path:created', function (e) {
+            self.onDrawChanged(self.can.toJSON())
+        })
         self.getContent().css("opacity", 0.80);
     };
+    this.setImgData = function (data) {
+        self.can.clear()
+        self.can.loadFromJSON(data)
+    }
     function initDrawPanel(view) {
 
 
         $(".delete-tool").click(function () {
             self.can.clear()
+            self.onDrawChanged(self.can.toJSON())
         });
 
         $(".pencil-tool").click(function () {
-            self.erasing=false
+            self.erasing = false
             self.can.freeDrawingBrush.color = self.color || "000"
             self.can.freeDrawingBrush.width = 5
             $(".tool-button").removeClass("selected");
@@ -94,7 +74,7 @@ mindmaps.DrawView = function () {
 
 
         $(".eraser-tool").click(function () {
-            self.erasing=true
+            self.erasing = true
             self.can.freeDrawingBrush.color = "fff"
             self.can.freeDrawingBrush.width = 25
             $(".tool-button").removeClass("selected");
@@ -106,8 +86,8 @@ mindmaps.DrawView = function () {
             //console.log($(this).val())
             currentColour = $(this).val()
             self.color = currentColour
-            if(!self.erasing)
-            self.can.freeDrawingBrush.color = self.color || "fff"
+            if (!self.erasing)
+                self.can.freeDrawingBrush.color = self.color || "fff"
         })
     }
 
@@ -117,23 +97,22 @@ mindmaps.DrawView = function () {
 mindmaps.DrawPresenter = function (eventBus, mindmapModel, commandRegistry, view) {
     var self = this;
     var currentNode = null;
-    this.saveImage = function () {
-//        if (currentNode) {
-//            var action = new mindmaps.action.ChangeImgDataAction(
-//                currentNode, drawingCanvas.get(0).toDataURL());
-//            mindmapModel.executeAction(action);
-//        }
+    this.saveImage = function (data) {
+        if (currentNode) {
+            var action = new mindmaps.action.ChangeImgDataAction(
+                currentNode, data);
+            mindmapModel.executeAction(action);
+        }
 
     }
-    //FIXME call saveImage when save/autosave etc.
     eventBus.subscribe(mindmaps.Event.NODE_SELECTED, function (node) {
-        self.saveImage()
         currentNode = node
         updateView(node);
     });
 
     this.go = function () {
         view.init();
+        view.onDrawChanged = this.saveImage
     };
 
     function updateView(node) {

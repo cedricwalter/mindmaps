@@ -9019,7 +9019,7 @@ fabric.PatternBrush = fabric.util.createClass(fabric.PencilBrush, /** @scope fab
       fabric.isTouchSupported && addListener(fabric.document, 'touchmove', this._onMouseMove);
 
       !fabric.isTouchSupported && removeListener(this.upperCanvasEl, 'mousemove', this._onMouseMove);
-      fabric.isTouchSupported && removeListener(this.upperCanvasEl, 'touchmove', this._onMouseMove);
+      //fabric.isTouchSupported && removeListener(this.upperCanvasEl, 'touchmove', this._onMouseMove);
     },
 
     /**
@@ -9036,7 +9036,7 @@ fabric.PatternBrush = fabric.util.createClass(fabric.PencilBrush, /** @scope fab
       fabric.isTouchSupported && removeListener(fabric.document, 'touchmove', this._onMouseMove);
 
       !fabric.isTouchSupported && addListener(this.upperCanvasEl, 'mousemove', this._onMouseMove);
-      fabric.isTouchSupported && addListener(this.upperCanvasEl, 'touchmove', this._onMouseMove);
+      //fabric.isTouchSupported && addListener(this.upperCanvasEl, 'touchmove', this._onMouseMove);
     },
 
     /**
@@ -9044,6 +9044,7 @@ fabric.PatternBrush = fabric.util.createClass(fabric.PencilBrush, /** @scope fab
      * @private
      */
     _onMouseMove: function (e) {
+      console.log(e)
       e.preventDefault && e.preventDefault();
       this.__onMouseMove(e);
     },
