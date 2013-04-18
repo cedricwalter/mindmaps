@@ -54,7 +54,9 @@ mindmaps.DrawView = function () {
     };
     this.setImgData = function (data) {
         self.can.clear()
+        try{
         self.can.loadFromJSON(data)
+        }catch(e){}
     }
     function initDrawPanel(view) {
 
