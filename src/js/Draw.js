@@ -69,7 +69,7 @@ mindmaps.DrawView = function () {
         self.can.freeDrawingBrush = new fabric["PencilBrush"](self.can)
         self.can.freeDrawingBrush.color = "#000"
         self.can.freeDrawingBrush.width = 5
-        //initDrawPanel(this);
+        initDrawPanel(this);
         self.getContent().css("opacity", 0.80);
     };
 
