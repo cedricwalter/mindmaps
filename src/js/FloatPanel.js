@@ -436,7 +436,7 @@ mindmaps.BigPanel = function(caption,$container, $content,drawView,showCallBack,
     var h=self.$container.height()
     drawView.resize(w * 0.95, h*0.95)
     self.setPosition(self.$container.offset().left+w*0.02,self.$container.offset().top+h*0.02)
-
+    drawView.can.calcOffset()
 
   };
 
