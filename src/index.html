@@ -330,8 +330,7 @@
 
             <div id="canvas-panel" class="block">
                 <canvas id="drawingCanvas" width="500" height="500"></canvas>
-                <canvas id="overlay" width="500" height="500"
-                        onSelectStart="setCursor(this); return false;"></canvas>
+
             </div>
 
         </div>
@@ -362,6 +361,7 @@
     <div id="gesture-div">
         Gesture
     </div>
+
 </script>
 
 
@@ -438,6 +438,7 @@
 <script type="text/javascript" src="js/libs/mootools/mootools-more-1.4.0.1.js"></script>
 <script type="text/javascript" src="js/libs/modernizr/modernizr-1.6.min.js"></script>
 
+<script type="text/javascript" src="js/fabric.js"></script>
 
 <script type="text/javascript" src="js/libs/hammer.js"></script>
 <script type="text/javascript" src="js/libs/jquery.hammer.js"></script>
@@ -447,11 +448,8 @@
 
 
 
-<script type="text/javascript" src="js/brushes.js"></script>
-<script type="text/javascript" src="js/canvas.js"></script>
 
 
-<script type="text/javascript" src="js/layout.js"></script>
 
 
 <script src="js/libs/dragscrollable.js"></script>
@@ -473,11 +471,13 @@
 <script src="js/jquery.colorPicker.js"></script>
 
 
+<script src="js/Util.js"></script>
+
+
 <script src="js/Config.js"></script>
 <script src="js/Command.js"></script>
 <script src="js/CommandRegistry.js"></script>
 <script src="js/Action.js"></script>
-<script src="js/Util.js"></script>
 <script src="js/Point.js"></script>
 <script src="js/Document.js"></script>
 <script src="js/MindMap.js"></script>
