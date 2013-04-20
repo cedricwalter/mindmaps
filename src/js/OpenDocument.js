@@ -301,6 +301,7 @@ mindmaps.OpenDocumentPresenter = function (eventBus, mindmapModel, view, filePic
             start: function () {
             },
             error: function () {
+                view.showOpenDialog(docs,[])
             }
         })
 
