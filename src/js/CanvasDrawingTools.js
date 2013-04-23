@@ -316,7 +316,7 @@ mindmaps.TextMetrics = (function() {
       $div.css({
         "font-size" : zoomFactor * font.size,
         "min-width" : zoomFactor * minWidth,
-        "max-width" : zoomFactor * maxWidth,
+        //"max-width" : zoomFactor * maxWidth,
         "font-weight" : font.weight
       }).text(text);
 
