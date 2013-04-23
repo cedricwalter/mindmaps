@@ -9044,7 +9044,6 @@ fabric.PatternBrush = fabric.util.createClass(fabric.PencilBrush, /** @scope fab
      * @private
      */
     _onMouseMove: function (e) {
-      console.log(e)
       e.preventDefault && e.preventDefault();
       this.__onMouseMove(e);
     },
