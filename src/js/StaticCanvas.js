@@ -44,7 +44,7 @@ mindmaps.StaticCanvasRenderer = function() {
     var root = mindmap.getRoot().clone();
 
     function addProps(node) {
-      var lineWidth = mindmaps.CanvasDrawingUtil.getLineWidth(zoomFactor,
+      var lineWidth = mindmaps.CanvasDrawingUtil.getLineWidth(node,zoomFactor,
           node.getDepth());
       var metrics = mindmaps.TextMetrics.getTextMetrics(node, zoomFactor);
 

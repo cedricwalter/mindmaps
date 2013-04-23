@@ -5,24 +5,44 @@ mindmaps.CanvasDrawingUtil = {
    * @param {Integer} depth the depth of the node
    * @returns {Number}
    */
-  getLineWidth : function($node, zoomFactor, depth) {
-    // var width = this.zoomFactor * (10 - depth);
-    var width = zoomFactor * (12 - depth * 2);
+//  getLineWidth : function($node, zoomFactor, depth) {
+//    // var width = this.zoomFactor * (10 - depth);
+//
+//    var width = zoomFactor * (12 - depth * 2);
+//
+//    var offset = 0
+//    if ($node.data().node !== undefined) {
+//      offset = $node.data().node.getLineWidthOffset();
+//    }
+//
+//    width += offset
+//
+//    if (width < 2) {
+//      width = 2;
+//    }
+//
+//    return width;
+//  },
+ getLineWidth: function($node, zoomFactor, depth) {
+     // var width = this.zoomFactor * (10 - depth);
+     var node=$node
+     if ($node.data) node=$node.data().node
 
-    var offset = 0
-    if ($node.data().node !== undefined) {
-      offset = $node.data().node.getLineWidthOffset();
-    }
+     var width = zoomFactor * (12 - depth * 2);
 
-    width += offset
+     var offset = 0
+     if (node !== undefined) {
+         offset = node.getLineWidthOffset();
+     }
 
-    if (width < 2) {
-      width = 2;
-    }
+     width += offset
 
-    return width;
-  },
+     if (width < 2) {
+         width = 2;
+     }
 
+     return width;
+ },
   /**
    * Draws a rounded rectangle
    * @param ctx

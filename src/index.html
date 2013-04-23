@@ -112,10 +112,18 @@
         <div class="seperator"></div>
         <h1>From storage server</h1>
 
-        <p>Load your mind map from a storage server.</p>
-        <button id="button-open-storageserver">Open</button>
-        <span class="storageserver-loading">Loading...</span>
-        <span class="storageserver-error error"></span>
+        <p>This is a list of all mind maps that are saved in your server. Click on the title of a map
+            to open it.</p>
+        <table class="server-filelist">
+            <thead>
+            <tr>
+                <th class="title">Title</th>
+                <th class="modified">Last Modified</th>
+                <th class="delete"></th>
+            </tr>
+            </thead>
+            <tbody class="server-document-list"></tbody>
+        </table>
     </div>
 </script>
 
@@ -159,6 +167,9 @@
         <td><a class="delete" href="#">delete</a></td>
     </tr>
 </script>
+
+
+
 
 <script id="template-urls-multi-url-display" type="text/x-jquery-tmpl">
     <div>
@@ -330,8 +341,7 @@
 
             <div id="canvas-panel" class="block">
                 <canvas id="drawingCanvas" width="500" height="500"></canvas>
-                <canvas id="overlay" width="500" height="500"
-                        onSelectStart="setCursor(this); return false;"></canvas>
+
             </div>
 
         </div>
@@ -362,6 +372,7 @@
     <div id="gesture-div">
         Gesture
     </div>
+
 </script>
 
 
@@ -438,6 +449,7 @@
 <script type="text/javascript" src="js/libs/mootools/mootools-more-1.4.0.1.js"></script>
 <script type="text/javascript" src="js/libs/modernizr/modernizr-1.6.min.js"></script>
 
+<script type="text/javascript" src="js/fabric.js"></script>
 
 <script type="text/javascript" src="js/libs/hammer.js"></script>
 <script type="text/javascript" src="js/libs/jquery.hammer.js"></script>
@@ -447,11 +459,8 @@
 
 
 
-<script type="text/javascript" src="js/brushes.js"></script>
-<script type="text/javascript" src="js/canvas.js"></script>
 
 
-<script type="text/javascript" src="js/layout.js"></script>
 
 
 <script src="js/libs/dragscrollable.js"></script>
@@ -473,11 +482,13 @@
 <script src="js/jquery.colorPicker.js"></script>
 
 
+<script src="js/Util.js"></script>
+
+
 <script src="js/Config.js"></script>
 <script src="js/Command.js"></script>
 <script src="js/CommandRegistry.js"></script>
 <script src="js/Action.js"></script>
-<script src="js/Util.js"></script>
 <script src="js/Point.js"></script>
 <script src="js/Document.js"></script>
 <script src="js/MindMap.js"></script>

@@ -20,10 +20,14 @@ mindmaps.GestureView = function () {
     this.init = function () {
 
         var ca = this.getContent().get(0)
-        ca.addEventListener("touchstart", touchHandler, true);
-        ca.addEventListener("touchmove", touchHandler, true);
-        ca.addEventListener("touchend", touchHandler, true);
-        ca.addEventListener("touchcancel", touchHandler, true);
+        ca.addEventListener("touchstart",
+            mindmaps.Util.touchHandler, true);
+        ca.addEventListener("touchmove",
+            mindmaps.Util.touchHandler, true);
+        ca.addEventListener("touchend",
+            mindmaps.Util.touchHandler, true);
+        ca.addEventListener("touchcancel",
+            mindmaps.Util.touchHandler, true);
 
         var gstr = new Moousture.TopedLevenMatcher(2);
         _(self.gestures).each(function (v) {
@@ -48,6 +52,8 @@ mindmaps.GestureView = function () {
 
 
         self.getContent().css("opacity", 0.80);
+
+
     };
 
 
