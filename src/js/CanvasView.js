@@ -251,11 +251,12 @@ mindmaps.DefaultCanvasView = function () {
 
         // mouse wheel listener
         //FIXME, tuning wheel on Mac pad instead of disable this.
-//        this.$getContainer().bind("mousewheel", function (e, delta) {
-//            if (self.mouseWheeled) {
-//                self.mouseWheeled(delta);
-//            }
-//        });
+        this.$getContainer().bind("mousewheel", function (e) {
+            var delta = e.originalEvent.wheelDelta || -e.originalEvent.detail;
+            if (self.mouseWheeled) {
+                self.mouseWheeled(delta);
+            }
+        });
 
 
         if (mindmaps.responsive.isTouchDevice) {

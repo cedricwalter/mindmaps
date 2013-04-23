@@ -80,9 +80,9 @@ mindmaps.CanvasPresenter = function (eventBus, commandRegistry, mindmapModel, vi
         view.stopEditNodeCaption();
 
         if (delta > 0) {
-            zoomController.zoomIn();
-        } else {
-            zoomController.zoomOut();
+            zoomController.zoomIn(0.1);
+        } else if(delta<0){
+            zoomController.zoomOut(0.1);
         }
     };
 
