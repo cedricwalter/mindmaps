@@ -119,7 +119,8 @@ mindmaps.DrawPresenter = function (eventBus, mindmapModel, commandRegistry, view
     };
 
     function updateView(node) {
-        view.setImgData(node.imgData)
+        if (node.pluginData.draw)
+            view.setImgData(node.getPluginData("draw","imgData"))
     }
 
 
@@ -127,14 +128,15 @@ mindmaps.DrawPresenter = function (eventBus, mindmapModel, commandRegistry, view
 
 
 mindmaps.plugins["draw"] = {
-    onUIInit: function (eventBus,mindmapModel,commandRegistry) {
+    onUIInit: function (eventBus, mindmapModel, commandRegistry) {
 
-        mindmaps.Event.NODE_NOTES_CHANGED="NodeImgDataChangedEvent"
+        mindmaps.Event.NODE_IMGDATA_CHANGED = "NodeImgDataChangedEvent"
 
 
-        mindmaps.action.ChangeImgDataAction = function(node, text) {
-            this.execute = function() {
-                node.imgData = text;
+        mindmaps.action.ChangeImgDataAction = function (node, text) {
+            this.execute = function () {
+                node.setPluginData("draw","imgData",text)
+
             };
 
             this.event = [ mindmaps.Event.NODE_IMGDATA_CHANGED, node ];
@@ -164,7 +166,7 @@ mindmaps.plugins["draw"] = {
 
         drawPresenter.go();
 
-        mindmaps.ui.statusbarPresenter.addEntryN([drawPanel,gesturePanel],"Drawing");
+        mindmaps.ui.statusbarPresenter.addEntryN([drawPanel, gesturePanel], "Drawing");
     }
 }
 

@@ -248,3 +248,5 @@ function getSimpleMap() {
 
     return mm;
 }
+
+
