@@ -205,7 +205,7 @@ mindmaps.InspectorView = function() {
 //    });
 
 
-      branchColorPicker.colorPicker({pickerDefault: mindmaps.Util.colors10[0], colors: mindmaps.Util.colors10})
+      branchColorPicker.colorPicker({pickerDefault: mindmaps.Util.colors20[0], colors: mindmaps.Util.colors20})
       branchColorPicker.change(function () {
           var currentColour = $(this).val()
           if(currentColour)
@@ -214,7 +214,7 @@ mindmaps.InspectorView = function() {
           }
       })
 
-      fontColorPicker.colorPicker({pickerDefault: mindmaps.Util.colors10[0], colors: mindmaps.Util.colors10})
+      fontColorPicker.colorPicker({pickerDefault: mindmaps.Util.colors20[0], colors: mindmaps.Util.colors20})
       fontColorPicker.change(function () {
           var currentColour = $(this).val()
           if(currentColour)
