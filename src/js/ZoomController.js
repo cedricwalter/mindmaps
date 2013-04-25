@@ -49,10 +49,11 @@ mindmaps.ZoomController = function(eventBus, commandRegistry) {
    * 
    * @returns {Number} the new zoomFactor.
    */
-  this.zoomIn = function() {
-    this.zoomFactor += this.ZOOM_STEP;
+  this.zoomIn = function(step) {
+      step=step || this.ZOOM_STEP;
+    this.zoomFactor += step
     if (this.zoomFactor > this.MAX_ZOOM) {
-      this.zoomFactor -= this.ZOOM_STEP;
+      this.zoomFactor -= step
     } else {
       eventBus.publish(mindmaps.Event.ZOOM_CHANGED, this.zoomFactor);
     }
@@ -65,10 +66,11 @@ mindmaps.ZoomController = function(eventBus, commandRegistry) {
    * 
    * @returns {Number} the new zoomFactor.
    */
-  this.zoomOut = function() {
-    this.zoomFactor -= this.ZOOM_STEP;
+  this.zoomOut = function(step) {
+      step=step || this.ZOOM_STEP;
+    this.zoomFactor -= step;
     if (this.zoomFactor < this.MIN_ZOOM) {
-      this.zoomFactor += this.ZOOM_STEP;
+      this.zoomFactor += step;
     } else {
       eventBus.publish(mindmaps.Event.ZOOM_CHANGED, this.zoomFactor);
     }

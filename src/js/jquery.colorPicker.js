@@ -108,7 +108,7 @@
             //newPalette.find('.colorPicker_hexWrap').append(newHexField);
 
             $("body").append(newPalette);
-
+            newPalette.addClass("inspector")
             newPalette.hide();
 
 

@@ -54,7 +54,7 @@ mindmaps.InspectorView = function() {
     });
 
     $allColorpickers.forEach(function($colorpicker) {
-      $colorpicker.miniColors("disabled", !enabled);
+      $colorpicker.attr('disabled',enabled)
     });
   };
 
@@ -100,7 +100,7 @@ mindmaps.InspectorView = function() {
    * @param {String} color
    */
   this.setBranchColorPickerColor = function(color) {
-    branchColorPicker.miniColors("value", color);
+    branchColorPicker.val(color).change();
   };
 
   /**
@@ -109,9 +109,8 @@ mindmaps.InspectorView = function() {
    * @param {String} color
    */
   this.setFontColorPickerColor = function(color) {
-    fontColorPicker.miniColors("value", color);
-  };
-
+      fontColorPicker.val(color).change();
+  }
   /**
    * Sets the contents of the notes text area.
    * 
@@ -184,45 +183,64 @@ mindmaps.InspectorView = function() {
         self.fontLinethroughCheckboxClicked(checked);
       }
     });
+//
+//    branchColorPicker.miniColors({
+//      hide : function(hex) {
+//        // dont emit event if picker was hidden due to disable
+//        if (this.attr('disabled')) {
+//          return;
+//        }
+//
+//        console.log("hide branch", hex);
+//        if (self.branchColorPicked) {
+//          self.branchColorPicked(hex);
+//        }
+//      },
+//
+//      move : function(hex) {
+//        if (self.branchColorPreview) {
+//          self.branchColorPreview(hex);
+//        }
+//      }
+//    });
 
-    branchColorPicker.miniColors({
-      hide : function(hex) {
-        // dont emit event if picker was hidden due to disable
-        if (this.attr('disabled')) {
-          return;
-        }
 
-        console.log("hide branch", hex);
-        if (self.branchColorPicked) {
-          self.branchColorPicked(hex);
-        }
-      },
+      branchColorPicker.colorPicker({pickerDefault: mindmaps.Util.colors20[0], colors: mindmaps.Util.colors20})
+      branchColorPicker.change(function () {
+          var currentColour = $(this).val()
+          if(currentColour)
+          if (self.branchColorPicked) {
+              self.branchColorPicked(currentColour);
+          }
+      })
 
-      move : function(hex) {
-        if (self.branchColorPreview) {
-          self.branchColorPreview(hex);
-        }
-      }
-    });
+      fontColorPicker.colorPicker({pickerDefault: mindmaps.Util.colors20[0], colors: mindmaps.Util.colors20})
+      fontColorPicker.change(function () {
+          var currentColour = $(this).val()
+          if(currentColour)
+          if (self.fontColorPicked) {
+              self.fontColorPicked(currentColour);
+          }
+      })
 
-    fontColorPicker.miniColors({
-      hide : function(hex) {
-        // dont emit event if picker was hidden due to disable
-        if (this.attr('disabled')) {
-          return;
-        }
-        console.log("font", hex);
-        if (self.fontColorPicked) {
-          self.fontColorPicked(hex);
-        }
-      },
-
-      move: function(hex) {
-        if (self.fontColorPreview) {
-          self.fontColorPreview(hex);
-        }
-      }
-    });
+//    fontColorPicker.miniColors({
+//      hide : function(hex) {
+//        // dont emit event if picker was hidden due to disable
+//        if (this.attr('disabled')) {
+//          return;
+//        }
+//        console.log("font", hex);
+//        if (self.fontColorPicked) {
+//          self.fontColorPicked(hex);
+//        }
+//      },
+//
+//      move: function(hex) {
+//        if (self.fontColorPreview) {
+//          self.fontColorPreview(hex);
+//        }
+//      }
+//    });
 
     $branchColorChildrenButton.click(function() {
       if (self.branchColorChildrenButtonClicked) {

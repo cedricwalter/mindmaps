@@ -17,6 +17,7 @@ mindmaps.DrawView = function () {
     this.resize = function (width, height) {
         var w = width
         var h = height - $(".ui-dialog-titlebar").height()
+
         self.can.isDrawingMode = false
         self.can.calcOffset()
 
@@ -30,12 +31,14 @@ mindmaps.DrawView = function () {
 
         self.can.isDrawingMode = true
 
+
         //TODO set size for every part of this panel.
     }
     /**
      * Initialise
      */
     this.init = function () {
+
 
 
         //fabric.isTouchSupported=true
@@ -45,6 +48,7 @@ mindmaps.DrawView = function () {
         self.can.freeDrawingBrush = new fabric["PencilBrush"](self.can)
         //self.can.freeDrawingBrush.color = "rgba(0,0,0,1)"
         self.can.freeDrawingBrush.width = 5
+
         initDrawPanel(this);
         self.can.calcOffset()
         self.can.on('path:created', function (e) {

@@ -291,8 +291,7 @@
                 </tr>
                 <tr>
                     <td>Font color:</td>
-                    <td><input type="hidden" id="inspector-font-color-picker"
-                               class="colorpicker"/></td>
+                    <td><input type="text" id="inspector-font-color-picker"/></td>
                 </tr>
                 <tr>
                     <td>Line width:</td>
@@ -306,8 +305,7 @@
                 </tr>
                 <tr>
                     <td>Branch color:</td>
-                    <td><input type="hidden" id="inspector-branch-color-picker"
-                               class="colorpicker"/>
+                    <td><input type="text" id="inspector-branch-color-picker"/>
                         <button id="inspector-button-branch-color-children" title="Apply branch color to all children"
                                 class="right buttons-small buttons-less-padding">Inherit
                         </button>
@@ -458,7 +456,11 @@
 <script src="js/libs/iPhoneProbe.js"></script>
 
 
-
+<script type="text/javascript">
+    document.body.addEventListener('touchmove', function (event) {
+        event.preventDefault();
+    }, false);
+</script>
 
 
 

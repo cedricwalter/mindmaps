@@ -384,6 +384,9 @@ mindmaps.action.SetFontDecorationAction.prototype = new mindmaps.action.Action()
 mindmaps.action.SetFontColorAction = function(node, fontColor) {
   var oldColor = node.text.font.color;
   this.execute = function() {
+      if (fontColor === node.text.font.color) {
+          return false;
+      }
     node.text.font.color = fontColor;
   };
 
