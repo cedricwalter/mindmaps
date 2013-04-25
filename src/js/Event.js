@@ -159,7 +159,6 @@ mindmaps.Event = {
   NODE_NOTES_CHANGED: "NodeNotesChangedEvent",
 
 
-  NODE_IMGDATA_CHANGED:"NodeImgDataChangedEvent"
 };
 
 /**

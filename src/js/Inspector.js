@@ -30,7 +30,6 @@ mindmaps.InspectorView = function() {
       $linethroughCheckbox, $branchColorChildrenButton, $openURLDialogButton ];
   var $allColorpickers = [ branchColorPicker, fontColorPicker ];
   var $notesTextArea = $("#inspector-notes-textarea", $content);
-    var $imgDataTextArea = $("#inspector-imgData-textarea", $content);
 
 
   /**
@@ -118,10 +117,6 @@ mindmaps.InspectorView = function() {
    */
   this.setNotesTextAreaContents = function(text) {
     $notesTextArea.val(text)
-  };
-
-  this.setImgDataTextAreaContents = function(text) {
-    $imgDataTextArea.val(text)
   };
 
   /**
@@ -266,9 +261,7 @@ mindmaps.InspectorView = function() {
       self.notesTextAreaChanged($notesTextArea.val());
     });
 
-     $imgDataTextArea.bind('change keyup', function(changeEvent) {
-      self.imgDataTextAreaChanged($imgDataTextArea.val());
-    })
+
   };
 };
 
