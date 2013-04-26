@@ -457,18 +457,6 @@ mindmaps.action.SetChildrenBranchColorAction.prototype = new mindmaps.action.Com
 
 
 
-/**
-* Changes a node's note.
-*/
-
-mindmaps.action.ChangeNotesAction = function(node, text) {
-  this.execute = function() {
-    node.notes = text;
-  };
-
-  this.event = [ mindmaps.Event.NODE_NOTES_CHANGED, node ];
-}
-
 
 
 

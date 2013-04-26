@@ -27,7 +27,6 @@ mindmaps.InspectorView = function () {
         $boldCheckbox, $italicCheckbox, $underlineCheckbox,
         $linethroughCheckbox, $branchColorChildrenButton ];
     var $allColorpickers = [ branchColorPicker, fontColorPicker ];
-    var $notesTextArea = $("#inspector-notes-textarea", $content);
 
 
     /**
@@ -116,14 +115,7 @@ mindmaps.InspectorView = function () {
     this.setFontColorPickerColor = function (color) {
         fontColorPicker.val(color).change();
     }
-    /**
-     * Sets the contents of the notes text area.
-     *
-     * @param {String} text
-     */
-    this.setNotesTextAreaContents = function (text) {
-        $notesTextArea.val(text)
-    };
+
 
     /**
      * Initialise
@@ -214,9 +206,7 @@ mindmaps.InspectorView = function () {
 
 
 
-        $notesTextArea.bind('change keyup', function (changeEvent) {
-            self.notesTextAreaChanged($notesTextArea.val());
-        });
+
 
 
         _.chain(mindmaps.plugins).sortBy("startOrder").each(function (v, k) {
@@ -324,11 +314,7 @@ mindmaps.InspectorPresenter = function (eventBus, mindmapModel, commandRegistry,
     }
 
 
-    view.notesTextAreaChanged = function (text) {
-        var action = new mindmaps.action.ChangeNotesAction(
-            mindmapModel.selectedNode, text);
-        mindmapModel.executeAction(action);
-    }
+
 
 
     /**
@@ -378,7 +364,6 @@ mindmaps.InspectorPresenter = function (eventBus, mindmapModel, commandRegistry,
         view.setLinethroughCheckboxState(font.decoration === "line-through");
         view.setFontColorPickerColor(font.color);
         view.setBranchColorPickerColor(node.branchColor);
-        view.setNotesTextAreaContents(node.notes);
 
 
     }

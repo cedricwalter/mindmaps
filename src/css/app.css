@@ -497,10 +497,7 @@ html,body {
   text-decoration: line-through;
 }
 
-#inspector-notes {
-  padding: 4px 0px;
-  border-bottom: 1px solid #E5E5E5;
-}
+
 
 #inspector-imgData {
   padding: 4px 0px;
