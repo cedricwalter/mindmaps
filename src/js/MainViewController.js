@@ -140,14 +140,22 @@ mindmaps.MainViewController = function (eventBus, mindmapModel, commandRegistry)
             commandRegistry, mindmapModel, canvas, zoomController);
         canvasPresenter.go();
 
+        mindmaps.ui.canvasView=canvas
+
         // statusbar
         var statusbar = new mindmaps.StatusBarView();
         var statusbarPresenter = new mindmaps.StatusBarPresenter(eventBus,
             statusbar);
         statusbarPresenter.go();
 
+        mindmaps.ui.statusbarPresenter=statusbarPresenter
+
+
         // floating Panels
         var fpf = new mindmaps.FloatPanelFactory(canvasContainer);
+
+        mindmaps.ui.floatPanelFactory=fpf
+
 
         // inspector
         var inspectorView = new mindmaps.InspectorView();
@@ -160,45 +168,6 @@ mindmaps.MainViewController = function (eventBus, mindmapModel, commandRegistry)
         //inspectorPanel.show();
         statusbarPresenter.addEntry(inspectorPanel);
 
-        //gesture
-
-
-        var gestureView = new mindmaps.GestureView();
-        var gesturePresenter = new mindmaps.GesturePresenter(eventBus, mindmapModel, commandRegistry, gestureView)
-        gesturePresenter.go();
-        var gesturePanel = fpf.create("Gesture", gestureView.getContent());
-        //gesturePanel.show();
-        //gesturePanel.$widget.addClass("on-top");
-        gesturePanel.$widget.css("z-index", "20000");
-        statusbarPresenter.addEntry(gesturePanel);
-
-        //draw
-
-        var drawView = new mindmaps.DrawView();
-        drawView.panel = drawPanel;
-        window.drawPanel = drawPanel;
-        var drawPresenter = new mindmaps.DrawPresenter(eventBus,
-            mindmapModel, commandRegistry, drawView);
-
-        var drawPanel = fpf.bigPanel("Draw", drawView.getContent(), drawView, function () {
-            mindmaps.mode.inHD = true;
-        }, function () {
-            mindmaps.mode.inHD = false;
-        });
-
-        drawPresenter.go();
-
-        statusbarPresenter.addEntry(drawPanel);
-
-
-        // drawView.resize(canvasContainer.getContent().width() * 0.95, canvasContainer.getContent().height()*0.95)
-
-        // //TODO for debug, small is cool
-        // // drawView.resize(500, 500)
-        // canvasContainer.subscribe(mindmaps.CanvasContainer.Event.RESIZED, function(size) {
-        //   drawView.resize(size.x * 0.9, size.y*0.9)
-
-        // });
 
 
         // navigator
@@ -210,6 +179,8 @@ mindmaps.MainViewController = function (eventBus, mindmapModel, commandRegistry)
         var navigatorPanel = fpf.create("Navigator", naviView.getContent());
         //navigatorPanel.show();
         statusbarPresenter.addEntry(navigatorPanel);
+
+
 
 
     };

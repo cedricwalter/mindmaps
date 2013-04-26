@@ -39,6 +39,15 @@ mindmaps.Document.fromObject = function (obj) {
     doc.id = obj.id;
     doc.title = obj.title;
     doc.mindmap = mindmaps.MindMap.fromObject(obj.mindmap);
+    //do with plugin data
+    doc.pluginData=obj.pluginData || {}
+    _(doc.pluginData).each(function(data,pluginName){
+        _(data).each(function(d,nodeId){
+            var pld=doc.mindmap.nodes.get(nodeId).pluginData || {}
+            pld[pluginName]=d
+            doc.mindmap.nodes.get(nodeId).pluginData=pld
+        })
+    })
     doc.dates = {
         created: new Date(obj.dates.created),
         modified: obj.dates.modified ? new Date(obj.dates.modified) : null
@@ -64,14 +73,24 @@ mindmaps.Document.prototype.toJSON = function () {
     if (this.dates.modified) {
         dates.modified = this.dates.modified.getTime();
     }
+    var pluginData={}
+    var pureMindMap= $.extend(true,{},this.mindmap)
+    pureMindMap.nodes.each(function(n){
+        _(n.pluginData).each(function(d,pluginName){
+            pluginData[pluginName]=pluginData[pluginName] ||{}
+            pluginData[pluginName][n.id]=d
+        })
+        delete n["pluginData"]
+    })
 
     return {
         id: this.id,
         title: this.title,
-        mindmap: this.mindmap,
+        mindmap: pureMindMap,
         dates: dates,
         dimensions: this.dimensions,
-        autosave: this.autosave
+        autosave: this.autosave,
+        pluginData:pluginData
     };
 };
 

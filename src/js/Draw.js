@@ -22,12 +22,12 @@ mindmaps.DrawView = function () {
         self.can.calcOffset()
 
         self.can.setWidth(w)
-        self.can.setHeight(h-50)
+        self.can.setHeight(h - 50)
         self.can.renderAll()
         //self.can.calcOffset()
         self.can.calcOffset()
 
-        $("#canvas-panel", $content).width(w).height(h-50)
+        $("#canvas-panel", $content).width(w).height(h - 50)
 
         self.can.isDrawingMode = true
 
@@ -38,10 +38,6 @@ mindmaps.DrawView = function () {
      * Initialise
      */
     this.init = function () {
-
-
-
-        //fabric.isTouchSupported=true
 
         self.can = new fabric.Canvas('drawingCanvas')
 
@@ -58,9 +54,10 @@ mindmaps.DrawView = function () {
     };
     this.setImgData = function (data) {
         self.can.clear()
-        try{
-        self.can.loadFromJSON(data)
-        }catch(e){}
+        try {
+            self.can.loadFromJSON(data)
+        } catch (e) {
+        }
     }
     function initDrawPanel(view) {
 
@@ -109,8 +106,8 @@ mindmaps.DrawPresenter = function (eventBus, mindmapModel, commandRegistry, view
                 currentNode, data);
             mindmapModel.executeAction(action);
         }
-
     }
+
     eventBus.subscribe(mindmaps.Event.NODE_SELECTED, function (node) {
         currentNode = node
         updateView(node);
@@ -122,9 +119,80 @@ mindmaps.DrawPresenter = function (eventBus, mindmapModel, commandRegistry, view
     };
 
     function updateView(node) {
-        view.setImgData(node.imgData)
+        if (node.pluginData.draw)
+            view.setImgData(node.getPluginData("draw", "imgData"))
     }
 
 
 };
+
+
+mindmaps.plugins["draw"] = {
+    startOrder: 1000,
+    onUIInit: function (eventBus, mindmapModel) {
+
+        mindmaps.Event.PLUGIN_NODE_IMGDATA_CHANGED = "NodeImgDataChangedEvent"
+
+
+        mindmaps.action.ChangeImgDataAction = function (node, text) {
+            this.execute = function () {
+                node.setPluginData("draw", "imgData", text)
+
+            };
+
+            this.event = [ mindmaps.Event.PLUGIN_NODE_IMGDATA_CHANGED, node ];
+        }
+
+        eventBus.subscribe(mindmaps.Event.PLUGIN_NODE_IMGDATA_CHANGED, function (node) {
+            mindmaps.ui.canvasView.updateNode(node);
+        });
+
+        // gesture
+        var gestureView = new mindmaps.GestureView();
+        var gesturePresenter = new mindmaps.GesturePresenter(eventBus, mindmapModel, mindmaps.ui.commandRegistry, gestureView)
+        gesturePresenter.go();
+        var gesturePanel = mindmaps.ui.floatPanelFactory.create("Gesture", gestureView.getContent());
+
+        gesturePanel.$widget.css("z-index", "20000");
+
+        //draw
+
+        var drawView = new mindmaps.DrawView();
+        drawView.panel = drawPanel;
+        window.drawPanel = drawPanel;
+        var drawPresenter = new mindmaps.DrawPresenter(eventBus,
+            mindmapModel, mindmaps.ui.commandRegistry, drawView);
+
+        var drawPanel = mindmaps.ui.floatPanelFactory.bigPanel("Draw", drawView.getContent(), drawView, function () {
+            mindmaps.mode.inHD = true;
+        }, function () {
+            mindmaps.mode.inHD = false;
+        });
+
+        drawPresenter.go();
+
+        mindmaps.ui.statusbarPresenter.addEntryN([drawPanel, gesturePanel], "Drawing");
+    },
+    onCreateNode: function (node) {
+        var $drawIcon = $("<div>", {
+            id: "node-drawIcon-" + node.id
+        })
+        if (node.getPluginData("draw", "imgData") && node.getPluginData("draw", "imgData").objects && node.getPluginData("draw", "imgData").objects.length > 0)
+            $drawIcon.append($('<i class="icon-edit"></i>'))
+        mindmaps.util.plugins.ui.addToPluginIcons($drawIcon, node)
+    },
+    onNodeUpdate: function (node) {
+        var $drawIcon = $("#node-drawIcon-" + node.id)
+        $drawIcon.empty()
+
+        if (node.getPluginData("draw", "imgData") && node.getPluginData("draw", "imgData").objects && node.getPluginData("draw", "imgData").objects.length > 0)
+            $drawIcon.append($('<i class="icon-edit"></i>'))
+
+
+    }
+
+
+}
+
+
 
