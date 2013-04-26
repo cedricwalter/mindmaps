@@ -125,7 +125,6 @@ mindmaps.MainViewController = function (eventBus, mindmapModel, commandRegistry)
 
     this.go = function () {
         canvasContainer.init();
-        mindmaps.ui = mindmaps.ui || {}
 
         // init all presenters
 

@@ -7,6 +7,9 @@ mindmaps.ApplicationController = function () {
     var eventBus = new mindmaps.EventBus();
     var shortcutController = new mindmaps.ShortcutController();
     var commandRegistry = new mindmaps.CommandRegistry(shortcutController);
+    mindmaps.ui = mindmaps.ui || {}
+
+    mindmaps.ui.commandRegistry=commandRegistry;
     var undoController = new mindmaps.UndoController(eventBus, commandRegistry);
     var mindmapModel = new mindmaps.MindMapModel(eventBus, commandRegistry, undoController);
     var clipboardController = new mindmaps.ClipboardController(eventBus,
@@ -66,14 +69,7 @@ mindmaps.ApplicationController = function () {
         presenter.go();
     }
 
-    /**
-     * Handles the edit URLs command.
-     */
-    function doEditURLs() {
-        var presenter = new mindmaps.EditURLsPresenter(eventBus,
-            mindmapModel, new mindmaps.EditURLsView());
-        presenter.go();
-    }
+
 
     /**
      * Initializes the controller, registers for all commands and subscribes to
@@ -101,9 +97,7 @@ mindmaps.ApplicationController = function () {
         var exportCommand = commandRegistry.get(mindmaps.ExportCommand);
         exportCommand.setHandler(doExportDocument);
 
-        var editURLsCommand = commandRegistry
-            .get(mindmaps.EditURLsCommand);
-        editURLsCommand.setHandler(doEditURLs);
+
 
         eventBus.subscribe(mindmaps.Event.DOCUMENT_CLOSED, function () {
             saveDocumentCommand.setEnabled(false);
@@ -128,7 +122,7 @@ mindmaps.ApplicationController = function () {
 
 
         _.chain(mindmaps.plugins).sortBy("startOrder").each(function (v, k) {
-            v.onUIInit(eventBus, mindmapModel, commandRegistry)
+            v.onUIInit(eventBus, mindmapModel)
         })
 
 

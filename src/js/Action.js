@@ -455,45 +455,7 @@ mindmaps.action.SetChildrenBranchColorAction = function(node) {
 }
 mindmaps.action.SetChildrenBranchColorAction.prototype = new mindmaps.action.CompositeAction();
 
-/**
-* Changes the URLs of a node.
-*/
 
-mindmaps.action.ChangeURLsAction = function(node, url) {
-  this.execute = function() {
-    node.urls = [ url ];
-  };
-
-  this.event = [ mindmaps.Event.NODE_URLS_CHANGED, node ];
-}
-
-/**
-* Adds a URL to a note.
-*/
-
-mindmaps.action.AddURLsAction = function(node, url) {
-  this.execute = function() {
-    if (url !== "") {
-      node.urls.push(url);
-    }
-  };
-
-  this.event = [ mindmaps.Event.NODE_URLS_ADDED, node ];
-}
-
-/**
-* Removes a URL from a note.
-*/
-
-mindmaps.action.RemoveURLsAction = function(node, urlToRemove) {
-  this.execute = function() {
-    node.urls = node.urls.filter(function(url) {
-      return url !== urlToRemove;
-    })
-  };
-
-  this.event = [ mindmaps.Event.NODE_URLS_REMOVED, node ];
-}
 
 /**
 * Changes a node's note.

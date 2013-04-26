@@ -37,7 +37,6 @@ mindmaps.StaticCanvasRenderer = function() {
    * Adds some information to each node which are needed for rendering.
    * 
    * @param mindmap
-   * @returns
    */
   function prepareNodes(mindmap) {
     // clone tree since we modify it

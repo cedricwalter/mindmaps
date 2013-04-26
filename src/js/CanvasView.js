@@ -513,16 +513,16 @@ mindmaps.DefaultCanvasView = function () {
         $text.css(metrics);
 
 
-        // node url
-        var $url = $("<div/>", {
-            id:"node-urls-" + node.id,
-            "class":"node-urls"
-        }).css({
-                "position":"absolute",
-                "top":0,
-                "left":$node.width() * 1.05,
-                "z-index":100
-            }).appendTo($node);
+
+
+
+        // node pluginIcons
+        var $pluginIcons = $("<div/>", {
+            id:"node-pluginIcons-" + node.id,
+            "class":"node-pluginIcons"
+        }).css("width","100%")
+
+        mindmaps.util.plugins.ui.createOnNode($pluginIcons, node)
 
         // create fold button for parent if he hasn't one already
         var parentAlreadyHasFoldButton = $parent.data("foldButton");
@@ -786,7 +786,6 @@ mindmaps.DefaultCanvasView = function () {
     this.updateNode = function (node) {
         var $node = $getNode(node);
         var $text = $getNodeCaption(node);
-        var $urls = $getNodeUrls(node);
         var font = node.text.font;
 
         var lineWidth = this.getLineWidth($node, node.getDepth())
@@ -806,36 +805,11 @@ mindmaps.DefaultCanvasView = function () {
             "text-decoration":font.decoration
         }).css(metrics);
 
-        $urls.empty();
 
-        var i = 0;
-        var linkString = '<p>';
-        while (i < node.urls.length) {
-            var url = node.urls[i];
 
-            linkString += '<a href="' + url + '" target="_blank">' + (i + 1) + '</a>';
 
-            if (i + 1 < node.urls.length) {
-                linkString += ", ";
-            }
-
-            i += 1;
-        }
-        linkString += "</p>";
-        $urls.append($(linkString));
-
-        if (node.isRoot()) {
-            $urls.css({
-                "left":$text.width() * 0.8,
-                "width":$text.width()
-            });
-        }
-        else {
-            $urls.css({
-                "left":$text.width() * 1.2,
-                "width":$text.width()
-            });
-        }
+        var $pluginIcons=$("node-pluginIcons-"+node.id)
+        mindmaps.util.plugins.ui.placeOnNode($pluginIcons, node);
 
 
         _.chain(mindmaps.plugins).sortBy("startOrder").each(function (v, k) {
@@ -909,10 +883,13 @@ mindmaps.DefaultCanvasView = function () {
             $text.css(metrics);
             //TODO redraw for plugin's divs
 
+            var $pluginIcons=$("#node-pluginIcons-"+node.id)
+            mindmaps.util.plugins.ui.placeOnNode($pluginIcons, node);
+            $pluginIcons.css({
+                "font-size": zoomFactor * 100 + "%"
+            });
 
-            _.chain(mindmaps.plugins).sortBy("startOrder").each(function (v, k) {
-                v.onScale(node,zoomFactor)
-            })
+
             // redraw canvas to parent
             drawNodeCanvas(node);
 

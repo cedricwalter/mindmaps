@@ -20,7 +20,6 @@ mindmaps.Node = function() {
       color : "#000000"
     }
   };
-  this.urls = [];
   this.notes = "";
   this.lineWidthOffset = 0;
   this.offset = new mindmaps.Point();
@@ -50,7 +49,6 @@ mindmaps.Node.prototype.clone = function() {
 
   clone.pluginData= $.extend(true,{},this.pluginData)
 
-  clone.urls = this.urls.map(function(element) { return element });
   clone.notes = this.notes;
   clone.lineWidthOffset = this.lineWidthOffset;
   clone.offset = this.offset.clone();
@@ -85,7 +83,6 @@ mindmaps.Node.fromObject = function(obj) {
   var node = new mindmaps.Node();
   node.id = obj.id;
   node.text = obj.text;
-  node.urls = obj.urls;
   node.notes = obj.notes;
   node.pluginData=obj.pluginData || {}
   node.lineWidthOffset = obj.lineWidthOffset;
@@ -126,7 +123,6 @@ mindmaps.Node.prototype.toJSON = function() {
     // store parent as id since we have to avoid circular references
     parentId : this.parent ? this.parent.id : null,
     text : this.text,
-    urls : this.urls,
     notes : this.notes,
     pluginData:this.pluginData,
     lineWidthOffset : this.lineWidthOffset,

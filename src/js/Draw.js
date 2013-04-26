@@ -129,7 +129,7 @@ mindmaps.DrawPresenter = function (eventBus, mindmapModel, commandRegistry, view
 
 mindmaps.plugins["draw"] = {
     startOrder: 1000,
-    onUIInit: function (eventBus, mindmapModel, commandRegistry) {
+    onUIInit: function (eventBus, mindmapModel) {
 
         mindmaps.Event.PLUGIN_NODE_IMGDATA_CHANGED = "NodeImgDataChangedEvent"
 
@@ -149,7 +149,7 @@ mindmaps.plugins["draw"] = {
 
         // gesture
         var gestureView = new mindmaps.GestureView();
-        var gesturePresenter = new mindmaps.GesturePresenter(eventBus, mindmapModel, commandRegistry, gestureView)
+        var gesturePresenter = new mindmaps.GesturePresenter(eventBus, mindmapModel, mindmaps.ui.commandRegistry, gestureView)
         gesturePresenter.go();
         var gesturePanel = mindmaps.ui.floatPanelFactory.create("Gesture", gestureView.getContent());
 
@@ -161,7 +161,7 @@ mindmaps.plugins["draw"] = {
         drawView.panel = drawPanel;
         window.drawPanel = drawPanel;
         var drawPresenter = new mindmaps.DrawPresenter(eventBus,
-            mindmapModel, commandRegistry, drawView);
+            mindmapModel, mindmaps.ui.commandRegistry, drawView);
 
         var drawPanel = mindmaps.ui.floatPanelFactory.bigPanel("Draw", drawView.getContent(), drawView, function () {
             mindmaps.mode.inHD = true;
@@ -176,27 +176,22 @@ mindmaps.plugins["draw"] = {
     onCreateNode: function (node) {
         var $drawIcon = $("<div>", {
             id: "node-drawIcon-" + node.id
-        }).text("D")
-        mindmaps.util.plugins.ui.createOnNode($drawIcon, node)
+        })
+        if (node.getPluginData("draw", "imgData") && node.getPluginData("draw", "imgData").objects && node.getPluginData("draw", "imgData").objects.length > 0)
+            $drawIcon.append($('<i class="icon-edit"></i>'))
+        mindmaps.util.plugins.ui.addToPluginIcons($drawIcon, node)
     },
     onNodeUpdate: function (node) {
         var $drawIcon = $("#node-drawIcon-" + node.id)
         $drawIcon.empty()
 
-        mindmaps.util.plugins.ui.placeOnNode($drawIcon, node);
         if (node.getPluginData("draw", "imgData") && node.getPluginData("draw", "imgData").objects && node.getPluginData("draw", "imgData").objects.length > 0)
             $drawIcon.append($('<i class="icon-edit"></i>'))
 
-    },
-
-    onScale: function (node, zoomFactor) {
-        var $drawIcon = $("#node-drawIcon-" + node.id)
-        mindmaps.util.plugins.ui.placeOnNode($drawIcon, node);
-        $drawIcon.css({
-            "font-size": zoomFactor * 100 + "%"
-        });
 
     }
+
+
 }
 
 
