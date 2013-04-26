@@ -559,6 +559,12 @@ mindmaps.DefaultCanvasView = function () {
         node.forEachChild(function (child) {
             self.createNode(child, $node, depth + 1);
         });
+
+        _.chain(mindmaps.plugins).sortBy("startOrder").each(function (v, k) {
+            v.onCreateNode(node)
+        })
+
+
     };
 
     /**
@@ -831,6 +837,11 @@ mindmaps.DefaultCanvasView = function () {
             });
         }
 
+
+        _.chain(mindmaps.plugins).sortBy("startOrder").each(function (v, k) {
+            v.onNodeUpdate(node)
+        })
+
         this.redrawNodeConnectors(node);
     };
 
@@ -896,7 +907,12 @@ mindmaps.DefaultCanvasView = function () {
 
             var metrics = textMetrics.getTextMetrics(node, self.zoomFactor);
             $text.css(metrics);
+            //TODO redraw for plugin's divs
 
+
+            _.chain(mindmaps.plugins).sortBy("startOrder").each(function (v, k) {
+                v.onScale(node,zoomFactor)
+            })
             // redraw canvas to parent
             drawNodeCanvas(node);
 

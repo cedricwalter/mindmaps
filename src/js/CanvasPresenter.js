@@ -60,8 +60,7 @@ mindmaps.CanvasPresenter = function (eventBus, commandRegistry, mindmapModel, vi
      * @param {mindmaps.Node} oldSelectedNode
      */
     var selectNode = function (selectedNode, oldSelectedNode) {
-        console.log("oldSelectedNode - ");
-        console.log(oldSelectedNode);
+
         // deselect old node
         if (oldSelectedNode) {
 

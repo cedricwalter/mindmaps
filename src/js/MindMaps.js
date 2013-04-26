@@ -30,7 +30,6 @@
 var mindmaps = mindmaps || {};
 mindmaps.VERSION = "0.7.2";
 
-mindmaps.plugins = mindmaps.plugins || {}
 
 
 

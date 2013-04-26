@@ -127,7 +127,7 @@ mindmaps.ApplicationController = function () {
         viewController.go();
 
 
-        _(mindmaps.plugins).each(function (v, k) {
+        _.chain(mindmaps.plugins).sortBy("startOrder").each(function (v, k) {
             v.onUIInit(eventBus, mindmapModel, commandRegistry)
         })
 

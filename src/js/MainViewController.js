@@ -141,6 +141,8 @@ mindmaps.MainViewController = function (eventBus, mindmapModel, commandRegistry)
             commandRegistry, mindmapModel, canvas, zoomController);
         canvasPresenter.go();
 
+        mindmaps.ui.canvasView=canvas
+
         // statusbar
         var statusbar = new mindmaps.StatusBarView();
         var statusbarPresenter = new mindmaps.StatusBarPresenter(eventBus,
