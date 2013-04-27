@@ -31,6 +31,8 @@ mindmaps.FloatPanelFactory = function(container) {
 
     dialog.setPosition(ccw - dw - paddingRight, hh + paddingTop
         + heightOffset);
+    //dialog.ensurePosition();
+
   }
 
   /**
@@ -43,8 +45,9 @@ mindmaps.FloatPanelFactory = function(container) {
   this.create = function(caption, $content) {
     var dialog = new mindmaps.FloatPanel(caption, $container, $content);
     setPosition(dialog);
-    dialogs.push(dialog);
-    return dialog;
+
+      dialogs.push(dialog);
+      return dialog;
   };
 
 
@@ -72,7 +75,7 @@ mindmaps.FloatPanel = function(caption, $container, $content) {
 
   this.caption = caption;
   this.visible = false;
-  this.animationDuration = 400;
+  this.animationDuration = 200;
 
   /**
    * Replaces the content in the panel.
@@ -234,7 +237,9 @@ mindmaps.FloatPanel = function(caption, $container, $content) {
    * @private
    */
   this.ensurePosition = function() {
-    var cw = $container.outerWidth();
+      console.log(this.$widget.offset().left)
+
+      var cw = $container.outerWidth();
     var ch = $container.outerHeight();
     var col = $container.offset().left;
     var cot = $container.offset().top;
@@ -273,7 +278,7 @@ mindmaps.BigPanel = function(caption,$container, $content,drawView,showCallBack,
   var animating = false;
   this.caption=caption;
   this.visible = false;
-  this.animationDuration = 400;
+  this.animationDuration = 200;
   this.$container=$container;
     this.showCallBack=showCallBack;
     this.hideCallBack=hideCallBack;
@@ -436,7 +441,7 @@ mindmaps.BigPanel = function(caption,$container, $content,drawView,showCallBack,
     var h=self.$container.height()
     drawView.resize(w * 0.95, h*0.95)
     self.setPosition(self.$container.offset().left+w*0.02,self.$container.offset().top+h*0.02)
-
+    drawView.can.calcOffset()
 
   };
 

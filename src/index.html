@@ -31,6 +31,9 @@
 <link rel="stylesheet" href="css/Aristo/jquery-ui-1.8.7.custom.css"/>
 <link rel="stylesheet" href="css/minicolors/jquery.miniColors.css">
 
+<link rel="stylesheet" href="css/font-awesome.min.css">
+
+
 
 <script id="template-float-panel" type="text/x-jquery-tmpl">
     <div class="ui-widget ui-dialog ui-corner-all ui-widget-content float-panel no-select">
@@ -109,10 +112,18 @@
         <div class="seperator"></div>
         <h1>From storage server</h1>
 
-        <p>Load your mind map from a storage server.</p>
-        <button id="button-open-storageserver">Open</button>
-        <span class="storageserver-loading">Loading...</span>
-        <span class="storageserver-error error"></span>
+        <p>This is a list of all mind maps that are saved in your server. Click on the title of a map
+            to open it.</p>
+        <table class="server-filelist">
+            <thead>
+            <tr>
+                <th class="title">Title</th>
+                <th class="modified">Last Modified</th>
+                <th class="delete"></th>
+            </tr>
+            </thead>
+            <tbody class="server-document-list"></tbody>
+        </table>
     </div>
 </script>
 
@@ -156,6 +167,9 @@
         <td><a class="delete" href="#">delete</a></td>
     </tr>
 </script>
+
+
+
 
 <script id="template-urls-multi-url-display" type="text/x-jquery-tmpl">
     <div>
@@ -277,8 +291,7 @@
                 </tr>
                 <tr>
                     <td>Font color:</td>
-                    <td><input type="hidden" id="inspector-font-color-picker"
-                               class="colorpicker"/></td>
+                    <td><input type="text" id="inspector-font-color-picker"/></td>
                 </tr>
                 <tr>
                     <td>Line width:</td>
@@ -292,26 +305,14 @@
                 </tr>
                 <tr>
                     <td>Branch color:</td>
-                    <td><input type="hidden" id="inspector-branch-color-picker"
-                               class="colorpicker"/>
+                    <td><input type="text" id="inspector-branch-color-picker"/>
                         <button id="inspector-button-branch-color-children" title="Apply branch color to all children"
                                 class="right buttons-small buttons-less-padding">Inherit
                         </button>
                     </td>
                 </tr>
-                <tr id="inspector-urls-row">
-                    <td>URLs:</td>
-                    <td>
-                        <button id="inspector-button-urls" title="Open URL dialog"
-                                class="buttons-small buttons-less-padding">Edit URLs
-                        </button>
-                    </td>
-                </tr>
+
             </table>
-            <div id="inspector-notes">
-                <p>Notes:</p>
-                <textarea id="inspector-notes-textarea" rows="4"/>
-            </div>
 
 
         </div>
@@ -327,45 +328,38 @@
 
             <div id="canvas-panel" class="block">
                 <canvas id="drawingCanvas" width="500" height="500"></canvas>
-                <canvas id="overlay" width="500" height="500"
-                        onSelectStart="setCursor(this); return false;"></canvas>
-            </div>
-        </div>
-        <div id="right-panel">
-            <div id="stroke-colour-picker"></div>
-            <div id="brush-panel">
-                <span>Brush Size:</span>
 
-                <div id="brush_slider"></div>
             </div>
+
+        </div>
+        <div id="bottom-panel">
             <div id="tools-panel" class="block">
                 <ul>
-                    <li class="tool-panel-button tool-button selected">
-                        <img id="pencil-tool" src="images/tools_panel_pencil_button.png" class="block, fill"/>
+                    <li class="tool-panel-button tool-button pencil-tool selected ">
+                        <i class="icon-pencil icon-3x"></i>
                     </li>
-                    <li class="tool-panel-button tool-button">
-                        <img id="spray-tool" src="images/tools_panel_spray_button.png" class="block, fill"/>
+                    <li class="tool-panel-button tool-button eraser-tool">
+                        <i class="icon-tint icon-3x"></i>
                     </li>
-                    <li class="tool-panel-button tool-button">
-                        <img id="paint-tool" src="images/tools_panel_paint_button.png" class="block, fill"/>
+
+                    <li class="tool-panel-button tool-button delete-tool">
+                        <i class="icon-trash icon-3x"></i>
                     </li>
+
                     <li class="tool-panel-button tool-button">
-                        <img id="colour-picker-tool" src="images/tools_panel_colour_picker_button.png"
-                             class="block, fill"/>
-                    </li>
-                    <li class="tool-panel-button tool-button">
-                        <img id="eraser-tool" src="images/tools_panel_eraser_button.png" class="block, fill"/>
-                    </li>
-                    <li class="tool-panel-button tool-button">
-                        <img id="undo-tool" src="images/tools_panel_undo_button.png" class="block, fill"/>
-                    </li>
-                    <li class="tool-panel-button tool-button">
-                        <img id="delete-tool" src="images/tools_panel_delete_button.png" class="block, fill"/>
+                        <input class="brush-color"/>
                     </li>
                 </ul>
             </div>
         </div>
     </div>
+</script>
+
+<script id="template-gesture" type="text/x-jquery-tmpl">
+    <div id="gesture-div">
+        Gesture
+    </div>
+
 </script>
 
 
@@ -432,7 +426,8 @@
 
 
 <script type="text/javascript" src="js/libs/jquery/jquery-1.8.3.js"></script>
-<script type="text/javascript" src="js/libs/jquery/jquery-ui-1.9.1.custom.min.js"></script>
+<script src="js/libs/underscore-min.js"></script>
+<script type="text/javascript" src="js/libs/jquery/jquery-ui-1.9.2.custom.min.js"></script>
 
 
 <script type="text/javascript" src="js/libs/rxjs/rx.js"></script>
@@ -440,18 +435,23 @@
 <script type="text/javascript" src="js/libs/mootools/mootools-core-1.4.5-full-compat-yc.js"></script>
 <script type="text/javascript" src="js/libs/mootools/mootools-more-1.4.0.1.js"></script>
 <script type="text/javascript" src="js/libs/modernizr/modernizr-1.6.min.js"></script>
-<script type="text/javascript" src="js/libs/colorpicker/colorpicker.js"></script>
 
+<script type="text/javascript" src="js/fabric.js"></script>
 
 <script type="text/javascript" src="js/libs/hammer.js"></script>
 <script type="text/javascript" src="js/libs/jquery.hammer.js"></script>
 
+<script src="js/Moousture.js"></script>
+<script src="js/libs/iPhoneProbe.js"></script>
 
-<script type="text/javascript" src="js/brushes.js"></script>
-<script type="text/javascript" src="js/canvas.js"></script>
+
+<script type="text/javascript">
+    document.body.addEventListener('touchmove', function (event) {
+        event.preventDefault();
+    }, false);
+</script>
 
 
-<script type="text/javascript" src="js/layout.js"></script>
 
 
 <script src="js/libs/dragscrollable.js"></script>
@@ -464,18 +464,22 @@
 <script src="js/libs/events.js"></script>
 <script src="js/libs/jquery.ie.cors.js"></script>
 
-
 <script src="js/MindMaps.js"></script>
 
 
 <script type="text/javascript" src="js/Responsive.js"></script>
 <script type="text/javascript" src="js/Mode.js"></script>
 
+<script src="js/jquery.colorPicker.js"></script>
+
+
+<script src="js/Util.js"></script>
+
+
 <script src="js/Config.js"></script>
 <script src="js/Command.js"></script>
 <script src="js/CommandRegistry.js"></script>
 <script src="js/Action.js"></script>
-<script src="js/Util.js"></script>
 <script src="js/Point.js"></script>
 <script src="js/Document.js"></script>
 <script src="js/MindMap.js"></script>
@@ -491,19 +495,17 @@
 <script src="js/Navigator.js"></script>
 <script src="js/Inspector.js"></script>
 
-<script type="text/javascript" src="js/Draw.js"></script>
+
 
 <script src="js/ToolBar.js"></script>
 <script src="js/StatusBar.js"></script>
 <script src="js/CanvasDrawingTools.js"></script>
 <script src="js/CanvasView.js"></script>
 <script src="js/CanvasPresenter.js"></script>
-<script src="js/ApplicationController.js"></script>
 <script src="js/MindMapModel.js"></script>
 <script src="js/NewDocument.js"></script>
 <script src="js/OpenDocument.js"></script>
 <script src="js/SaveDocument.js"></script>
-<script src="js/EditURLs.js"></script>
 <script src="js/MainViewController.js"></script>
 <script src="js/Storage.js"></script>
 <script src="js/Event.js"></script>
@@ -513,6 +515,20 @@
 <script src="js/ExportMap.js"></script>
 <script src="js/AutoSaveController.js"></script>
 <script src="js/FilePicker.js"></script>
+
+<script src="js/Plugin.js"></script>
+
+<!-- plugins -->
+<script src="js/Gesture.js"></script>
+<script src="js/Draw.js"></script>
+
+
+<script src="js/EditURLs.js"></script>
+
+
+
+
+<script src="js/ApplicationController.js"></script>
 
 <script type="text/javascript">
     document.body.addEventListener('touchmove', function (event) {

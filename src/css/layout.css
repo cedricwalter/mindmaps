@@ -9,16 +9,7 @@
 	margin: 0px auto;
 }
 
-#drawingCanvas, #overlay 
-{
-	position: absolute;
-}
 
-#drawingCanvas
-{
-	background: white;
-	z-index: 1;
-}
 
 #overlay {
 	background: rgba(0, 0, 0, 0);
@@ -30,20 +21,18 @@
  ************************/
 #tools-panel
 {
-    width: 336px;
-    height: 124px;
+    /*width: 336px;*/
+    /*height: 124px;*/
     margin: 5px 5px;
     padding: 10px 10px;
     display: block;
-    background: #dfe9f5; /* fallback */
-	background: -moz-linear-gradient(top, #dfe9f5, #dce7f5);
-    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#dfe9f5), to(#dce7f5));
+    /*background: #dfe9f5; *//* fallback */
+	/*background: -moz-linear-gradient(top, #dfe9f5, #dce7f5);*/
+    /*background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#dfe9f5), to(#dce7f5));*/
 }
 
 #tools-panel *
 {
-	font-size: 8px;
-    font-weight: bold;
     text-align: center;
     color: black;
 }
@@ -56,8 +45,8 @@
 #tools-panel .tool-panel-button
 {
 	float: left;
-    height: 54px;
-    width: 54px;
+    /*height: 54px;*/
+    /*width: 54px;*/
     margin: 2px;
 }
 
@@ -176,3 +165,4 @@
 {
 	margin-top: 10px;
 }
+

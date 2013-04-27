@@ -31,6 +31,8 @@ var mindmaps = mindmaps || {};
 mindmaps.VERSION = "0.7.2";
 
 
+
+
 // experimental app cache invalidator. from:
 // http://www.html5rocks.com/en/tutorials/appcache/beginner/#toc-updating-cache/
 // Check if a new cache is available on page load.

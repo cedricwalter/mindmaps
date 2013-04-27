@@ -60,8 +60,7 @@ mindmaps.CanvasPresenter = function (eventBus, commandRegistry, mindmapModel, vi
      * @param {mindmaps.Node} oldSelectedNode
      */
     var selectNode = function (selectedNode, oldSelectedNode) {
-        console.log("oldSelectedNode - ");
-        console.log(oldSelectedNode);
+
         // deselect old node
         if (oldSelectedNode) {
 
@@ -80,9 +79,9 @@ mindmaps.CanvasPresenter = function (eventBus, commandRegistry, mindmapModel, vi
         view.stopEditNodeCaption();
 
         if (delta > 0) {
-            zoomController.zoomIn();
-        } else {
-            zoomController.zoomOut();
+            zoomController.zoomIn(0.1);
+        } else if(delta<0){
+            zoomController.zoomOut(0.1);
         }
     };
 
@@ -285,17 +284,7 @@ mindmaps.CanvasPresenter = function (eventBus, commandRegistry, mindmapModel, vi
             view.redrawNodeConnectors(node);
         });
 
-        eventBus.subscribe(mindmaps.Event.NODE_URLS_CHANGED, function (node) {
-            view.updateNode(node);
-        });
 
-        eventBus.subscribe(mindmaps.Event.NODE_URLS_ADDED, function (node) {
-            view.updateNode(node);
-        });
-
-        eventBus.subscribe(mindmaps.Event.NODE_URLS_REMOVED, function (node) {
-            view.updateNode(node);
-        });
 
         eventBus.subscribe(mindmaps.Event.NODE_LINE_WIDTH_CHANGED, function (node) {
             var currentNode = node;
@@ -313,8 +302,9 @@ mindmaps.CanvasPresenter = function (eventBus, commandRegistry, mindmapModel, vi
                 view.updateNode(currentNode);
                 currentNode = currentNode.getParent();
             }
-            // in HD mode, will not edit caption
-            if (!mindmaps.mode.inHD) {
+            // in HD mode or on a device using soft keyboard, will not edit caption
+            //TODO all touch device use soft keyboad?
+            if (!(mindmaps.responsive.isTouchDevice || mindmaps.mode.inHD)) {
                 // edit node caption immediately if requested
 
                 if (node.shouldEditCaption) {

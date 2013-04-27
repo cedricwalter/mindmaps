@@ -37,14 +37,13 @@ mindmaps.StaticCanvasRenderer = function() {
    * Adds some information to each node which are needed for rendering.
    * 
    * @param mindmap
-   * @returns
    */
   function prepareNodes(mindmap) {
     // clone tree since we modify it
     var root = mindmap.getRoot().clone();
 
     function addProps(node) {
-      var lineWidth = mindmaps.CanvasDrawingUtil.getLineWidth(zoomFactor,
+      var lineWidth = mindmaps.CanvasDrawingUtil.getLineWidth(node,zoomFactor,
           node.getDepth());
       var metrics = mindmaps.TextMetrics.getTextMetrics(node, zoomFactor);
 

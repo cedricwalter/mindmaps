@@ -395,16 +395,3 @@ mindmaps.ExportCommand = function() {
 };
 mindmaps.ExportCommand.prototype = new mindmaps.Command();
 
-/**
- * Creates a new EditURLsCommand.
- * 
- * @constructor
- * @augments mindmaps.Command
- */
-mindmaps.EditURLsCommand = function() {
-  this.id = "EDIT_URLS_COMMAND";
-  this.label = "Edit URLs...";
-  this.shortcut = [];
-  this.description = "Open the edit URLs dialog";
-};
-mindmaps.EditURLsCommand.prototype = new mindmaps.Command();

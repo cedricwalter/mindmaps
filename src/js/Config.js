@@ -8,13 +8,15 @@ mindmaps.Config = (function() {
    */
   return {
     // The URL of the storage server used in ServerStorage.
-    storageServerAddress: "http://localhost:3000/",
+      MindMapAddress: "../mm",
+      MindMapListAddress:"../mms",
 
     // Methods of attaching URLs to a node. Deactive all to disallow attaching
     // URLs to nodes.
     activateDirectUrlInput: true,
-    activateUrlsFromServerWithoutSearch: true,
-    activateUrlsFromServerWithSearch: true,
+      //TODO url from server is cool, think about how to use this.
+    activateUrlsFromServerWithoutSearch: false,
+    activateUrlsFromServerWithSearch: false,
 
     // Can multiple URLs be attached to a node?
     allowMultipleUrls: true,

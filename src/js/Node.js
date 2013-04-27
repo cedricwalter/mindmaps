@@ -7,7 +7,9 @@ mindmaps.Node = function() {
   this.id = mindmaps.Util.getId();
   this.parent = null;
   this.children = new mindmaps.NodeMap();
-  this.text = {
+  this.pluginData={}
+
+    this.text = {
     caption : "New Idea",
     font : {
       style : "normal",
@@ -18,9 +20,6 @@ mindmaps.Node = function() {
       color : "#000000"
     }
   };
-  this.urls = [];
-  this.notes = "";
-  this.imgData="";
   this.lineWidthOffset = 0;
   this.offset = new mindmaps.Point();
   this.foldChildren = false;
@@ -46,9 +45,9 @@ mindmaps.Node.prototype.clone = function() {
   };
   text.font = font;
   clone.text = text;
-  clone.urls = this.urls.map(function(element) { return element });
-  clone.notes = this.notes;
-  clone.imgData=this.imgData;
+
+  clone.pluginData= $.extend(true,{},this.pluginData)
+
   clone.lineWidthOffset = this.lineWidthOffset;
   clone.offset = this.offset.clone();
   clone.foldChildren = this.foldChildren;
@@ -82,9 +81,7 @@ mindmaps.Node.fromObject = function(obj) {
   var node = new mindmaps.Node();
   node.id = obj.id;
   node.text = obj.text;
-  node.urls = obj.urls;
-  node.notes = obj.notes;
-  node.imgData=obj.imgData;
+  node.pluginData=obj.pluginData || {}
   node.lineWidthOffset = obj.lineWidthOffset;
   node.offset = mindmaps.Point.fromObject(obj.offset);
   node.foldChildren = obj.foldChildren;
@@ -123,9 +120,7 @@ mindmaps.Node.prototype.toJSON = function() {
     // store parent as id since we have to avoid circular references
     parentId : this.parent ? this.parent.id : null,
     text : this.text,
-    urls : this.urls,
-    notes : this.notes,
-    imgData:this.imgData,
+    pluginData:this.pluginData,
     lineWidthOffset : this.lineWidthOffset,
     offset : this.offset,
     foldChildren : this.foldChildren,
@@ -338,3 +333,17 @@ mindmaps.Node.prototype.isDescendant = function(other) {
 
   return test(this);
 };
+
+
+mindmaps.Node.prototype.getPluginData=function(pluginName,propertyName){
+    this.pluginData=this.pluginData || {}
+    this.pluginData[pluginName]=this.pluginData[pluginName]|| {}
+    return this.pluginData[pluginName][propertyName]
+}
+
+
+mindmaps.Node.prototype.setPluginData=function(pluginName,propertyName,value){
+    this.pluginData=this.pluginData || {}
+    this.pluginData[pluginName]=this.pluginData[pluginName]|| {}
+    this.pluginData[pluginName][propertyName]=value
+}

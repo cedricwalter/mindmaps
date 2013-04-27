@@ -1,128 +1,198 @@
-mindmaps.DrawView = function() {
-  var self = this;
-     
-  var $content = $("#template-draw").tmpl();
-  
+mindmaps.DrawView = function () {
+    var self = this;
 
-  
+    var $content = $("#template-draw").tmpl();
 
 
-  /**
-   * Returns a jquery object.
-   * 
-   * @returns {jQuery}
-   */
-   this.getContent = function() {
-    return $content;
-  };
-  
-  this.setCanvasSize=function(width,height){
-    $("#drawingCanvas",$content).attr("width",width).attr("height",height)
-    $("#overlay",$content).attr("width",width).attr("height",height)
-    $("#canvas-panel",$content).width(width).height(height)
-  }
-  
+    /**
+     * Returns a jquery object.
+     *
+     * @returns {jQuery}
+     */
+    this.getContent = function () {
+        return $content;
+    };
 
-  this.resize=function(width,height){
-    var w=width
-    var h=height-$(".ui-dialog-titlebar").height()
-    self.setCanvasSize(w,h)
-    window.drawCanvasW=w
-    window.drawCanvasH=h
 
-    //TODO set size for every part of this panel.
-  }
-  /**
-   * Initialise
-   */
-   this.init =  function() {
-    var imagesLoaded = $(document).toObservable("images-loaded");
-    var cursorsLoaded = $(document).toObservable("cursors-loaded");
+    this.resize = function (width, height) {
+        var w = width
+        var h = height - $(".ui-dialog-titlebar").height()
 
-    
+        self.can.isDrawingMode = false
+        self.can.calcOffset()
 
-    // initialize the canvas
-    initializeCanvas();
+        self.can.setWidth(w)
+        self.can.setHeight(h - 50)
+        self.can.renderAll()
+        //self.can.calcOffset()
+        self.can.calcOffset()
 
-    // load the images
-    loadImages();   
+        $("#canvas-panel", $content).width(w).height(h - 50)
 
-    initDrawPanel (this.imgDataSaving,this);
-    self.getContent().css("opacity",0.75);
-  };
+        self.can.isDrawingMode = true
 
-  
 
-  function loadImages() {
-    var images = ["images/tools_panel_colour_picker_button.png",
-    "images/tools_panel_delete_button.png",
-    "images/tools_panel_eraser_button.png",
-    "images/tools_panel_paint_button.png",
-    "images/tools_panel_pencil_button.png",
-    "images/tools_panel_spray_button.png"],
-    cursors = ["cursors/colour_picker_cursor.cur",
-    "cursors/eraser_cursor.cur",
-    "cursors/paint_cursor.cur",
-    "cursors/pencil_cursor.cur",
-    "cursors/spray_cursor.cur"];
+        //TODO set size for every part of this panel.
+    }
+    /**
+     * Initialise
+     */
+    this.init = function () {
 
-    // fire the images-loaded event when all images are loaded
-    Asset.images(images, {
-      onComplete: function () {
-        $(document).trigger("images-loaded");
-      }
-    });
+        self.can = new fabric.Canvas('drawingCanvas')
 
-    // fire the cursors-loaded event when all cursors are loaded
-    Asset.images(cursors, {
-      onComplete: function () {
-        $(document).trigger("cursors-loaded");
-      }
-    });
-  }
+        self.can.freeDrawingBrush = new fabric["PencilBrush"](self.can)
+        //self.can.freeDrawingBrush.color = "rgba(0,0,0,1)"
+        self.can.freeDrawingBrush.width = 5
+
+        initDrawPanel(this);
+        self.can.calcOffset()
+        self.can.on('path:created', function (e) {
+            self.onDrawChanged(self.can.toJSON())
+        })
+        self.getContent().css("opacity", 0.80);
+    };
+    this.setImgData = function (data) {
+        self.can.clear()
+        try {
+            self.can.loadFromJSON(data)
+        } catch (e) {
+        }
+    }
+    function initDrawPanel(view) {
+
+
+        $(".delete-tool").click(function () {
+            self.can.clear()
+            self.onDrawChanged(self.can.toJSON())
+        });
+
+        $(".pencil-tool").click(function () {
+            self.erasing = false
+            self.can.freeDrawingBrush.color = self.color || "000"
+            self.can.freeDrawingBrush.width = 5
+            $(".tool-button").removeClass("selected");
+            $(this).addClass("selected");
+        });
+
+
+        $(".eraser-tool").click(function () {
+            self.erasing = true
+            self.can.freeDrawingBrush.color = "fff"
+            self.can.freeDrawingBrush.width = 25
+            $(".tool-button").removeClass("selected");
+            $(this).addClass("selected");
+        });
+
+        $(".brush-color").colorPicker({pickerDefault: '000', colors: ['000', '#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd' , '#8c564b' , '#e377c2', '#7f7f7f', '#bcbd22', '#17becf']});
+        $(".brush-color").change(function () {
+            //console.log($(this).val())
+            currentColour = $(this).val()
+            self.color = currentColour
+            if (!self.erasing)
+                self.can.freeDrawingBrush.color = self.color || "fff"
+        })
+    }
+
 }
 
 
-mindmaps.DrawPresenter = function(eventBus, mindmapModel, commandRegistry, view) {
-  var self = this;
-
-  eventBus.subscribe(mindmaps.Event.NODE_SELECTED, function(node) {
-      updateView(node);
-    });
-
-  this.go = function() {
-    view.init();
-  };
-
-  function updateView(node){
-    self.setImgData(node.imgData)
-    //self.setRelationNavigate(node)
-  }
-
-
-  this.setImgData=function(dataURL){
-    clearDrawing();
-    if(dataURL==""){
-      return
+mindmaps.DrawPresenter = function (eventBus, mindmapModel, commandRegistry, view) {
+    var self = this;
+    var currentNode = null;
+    this.saveImage = function (data) {
+        if (currentNode) {
+            var action = new mindmaps.action.ChangeImgDataAction(
+                currentNode, data);
+            mindmapModel.executeAction(action);
+        }
     }
 
-    var canvas =drawingCanvas.get(0)
-    var context = canvas.getContext('2d');
+    eventBus.subscribe(mindmaps.Event.NODE_SELECTED, function (node) {
+        currentNode = node
+        updateView(node);
+    });
 
-    // load image from data url
-    var imageObj = new Image();
-    imageObj.onload = function() {
-      context.drawImage(this, 0, 0);
+    this.go = function () {
+        view.init();
+        view.onDrawChanged = this.saveImage
     };
 
-    imageObj.src = dataURL;
-  }
+    function updateView(node) {
+        if (node.pluginData.draw)
+            view.setImgData(node.getPluginData("draw", "imgData"))
+    }
 
 
-  view.imgDataSaving = function(data) {
-    var action = new mindmaps.action.ChangeImgDataAction(
-        mindmapModel.selectedNode, data);
-    mindmapModel.executeAction(action);
-  }
 };
+
+
+mindmaps.plugins["draw"] = {
+    startOrder: 1000,
+    onUIInit: function (eventBus, mindmapModel) {
+
+        mindmaps.Event.PLUGIN_NODE_IMGDATA_CHANGED = "NodeImgDataChangedEvent"
+
+
+        mindmaps.action.ChangeImgDataAction = function (node, text) {
+            this.execute = function () {
+                node.setPluginData("draw", "imgData", text)
+
+            };
+
+            this.event = [ mindmaps.Event.PLUGIN_NODE_IMGDATA_CHANGED, node ];
+        }
+
+        eventBus.subscribe(mindmaps.Event.PLUGIN_NODE_IMGDATA_CHANGED, function (node) {
+            mindmaps.ui.canvasView.updateNode(node);
+        });
+
+        // gesture
+        var gestureView = new mindmaps.GestureView();
+        var gesturePresenter = new mindmaps.GesturePresenter(eventBus, mindmapModel, mindmaps.ui.commandRegistry, gestureView)
+        gesturePresenter.go();
+        var gesturePanel = mindmaps.ui.floatPanelFactory.create("Gesture", gestureView.getContent());
+
+        gesturePanel.$widget.css("z-index", "20000");
+
+        //draw
+
+        var drawView = new mindmaps.DrawView();
+        drawView.panel = drawPanel;
+        window.drawPanel = drawPanel;
+        var drawPresenter = new mindmaps.DrawPresenter(eventBus,
+            mindmapModel, mindmaps.ui.commandRegistry, drawView);
+
+        var drawPanel = mindmaps.ui.floatPanelFactory.bigPanel("Draw", drawView.getContent(), drawView, function () {
+            mindmaps.mode.inHD = true;
+        }, function () {
+            mindmaps.mode.inHD = false;
+        });
+
+        drawPresenter.go();
+
+        mindmaps.ui.statusbarPresenter.addEntryN([drawPanel, gesturePanel], "Drawing");
+    },
+    onCreateNode: function (node) {
+        var $drawIcon = $("<div>", {
+            id: "node-drawIcon-" + node.id
+        })
+        if (node.getPluginData("draw", "imgData") && node.getPluginData("draw", "imgData").objects && node.getPluginData("draw", "imgData").objects.length > 0)
+            $drawIcon.append($('<i class="icon-edit"></i>'))
+        mindmaps.util.plugins.ui.addToPluginIcons($drawIcon, node)
+    },
+    onNodeUpdate: function (node) {
+        var $drawIcon = $("#node-drawIcon-" + node.id)
+        $drawIcon.empty()
+
+        if (node.getPluginData("draw", "imgData") && node.getPluginData("draw", "imgData").objects && node.getPluginData("draw", "imgData").objects.length > 0)
+            $drawIcon.append($('<i class="icon-edit"></i>'))
+
+
+    }
+
+
+}
+
+
 
