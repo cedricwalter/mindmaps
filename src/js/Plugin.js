@@ -49,10 +49,35 @@ mindmaps.util.plugins.ui.createOnNode = function ($div, node) {
     }
 }
 
-mindmaps.util.plugins.ui.addToPluginIcons = function ($div, node) {
-    var $icons = $("#node-pluginIcons-" + node.id)
-    $icons.append($div.css("float","left").css("margin","0.1em"))
+mindmaps.util.plugins.ui.addIcon = function (pluginName, node,iconName) {
+    var _addToPluginIcons = function ($div, node) {
+        var $icons = $("#node-pluginIcons-" + node.id)
+        $icons.append($div.css("float", "left").css("margin", "0.1em"))
+    }
+    var $icon=$("<div>", {
+        id: "node-" + pluginName + "-" + node.id
+    }).append($('<i>',{class:"icon-"+iconName})).hover(
+        function(){
+            $(this).stop().animate({ marginTop: "-0.2em" }, 100);
+        },
+        function(){
+            $(this).stop().animate({ marginTop: "0" }, 200);
+        })
+    _addToPluginIcons($icon, node)
+    mindmaps.util.plugins.ui.iconState(pluginName,node,"hide")
 }
+
+mindmaps.util.plugins.ui.iconState=function(pluginName,node,state){
+    var $icon = $("#node-"+pluginName+"-" + node.id)
+    if(state=="hide"){
+        $icon.hide()
+    }else if(state=="shine"){
+        $icon.css("color","#31A1DF").show()
+    }else if(state=="normal"){
+        $icon.css("color","#000").show()
+    }
+}
+
 mindmaps.util.plugins.ui.pluginIcons = function (node) {
     return $("#node-pluginIcons-" + node.id)
 }

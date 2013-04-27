@@ -177,9 +177,7 @@ mindmaps.DefaultCanvasView = function () {
         return $("#node-caption-" + node.id);
     }
 
-    function $getNodeUrls(node) {
-        return $("#node-urls-" + node.id);
-    }
+
 
     function drawLineCanvas($canvas, depth, offsetX, offsetY, $node, $parent, color) {
         var canvas = $canvas[0];
@@ -591,7 +589,10 @@ mindmaps.DefaultCanvasView = function () {
     this.highlightNode = function (node) {
         var $text = $getNodeCaption(node);
         $text.addClass("selected");
-        this.redrawNodeConnectors(node);
+        //this.redrawNodeConnectors(node);
+        this.updateNode(node)
+        $text.addClass("selected");
+
     };
 
     /**
@@ -601,8 +602,10 @@ mindmaps.DefaultCanvasView = function () {
      */
     this.unhighlightNode = function (node) {
         var $text = $getNodeCaption(node);
+        this.updateNode(node)
+
         $text.removeClass("selected");
-        this.redrawNodeConnectors(node);
+        //this.redrawNodeConnectors(node);
 
     };
 
@@ -784,6 +787,7 @@ mindmaps.DefaultCanvasView = function () {
      * @param {mindmaps.Node} node
      */
     this.updateNode = function (node) {
+        var isSelected=(this.selectedNode===node)
         var $node = $getNode(node);
         var $text = $getNodeCaption(node);
         var font = node.text.font;
@@ -813,7 +817,7 @@ mindmaps.DefaultCanvasView = function () {
 
 
         _.chain(mindmaps.plugins).sortBy("startOrder").each(function (v, k) {
-            v.onNodeUpdate(node)
+            v.onNodeUpdate(node,isSelected)
         })
 
         this.redrawNodeConnectors(node);
