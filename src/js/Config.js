@@ -14,8 +14,9 @@ mindmaps.Config = (function() {
     // Methods of attaching URLs to a node. Deactive all to disallow attaching
     // URLs to nodes.
     activateDirectUrlInput: true,
-    activateUrlsFromServerWithoutSearch: true,
-    activateUrlsFromServerWithSearch: true,
+      //TODO url from server is cool, think about how to use this.
+    activateUrlsFromServerWithoutSearch: false,
+    activateUrlsFromServerWithSearch: false,
 
     // Can multiple URLs be attached to a node?
     allowMultipleUrls: true,
