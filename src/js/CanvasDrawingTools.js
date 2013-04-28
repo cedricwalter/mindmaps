@@ -308,8 +308,9 @@ mindmaps.TextMetrics = (function() {
     getTextMetrics : function(node, zoomFactor, text) {
       zoomFactor = zoomFactor || 1;
       text = text || node.getCaption();
-      var font = node.text.font;
-      var minWidth = node.isRoot() ? this.ROOT_CAPTION_MIN_WIDTH
+       var font=node.getPluginData("style","font")
+
+        var minWidth = node.isRoot() ? this.ROOT_CAPTION_MIN_WIDTH
           : this.NODE_CAPTION_MIN_WIDTH;
       var maxWidth = this.NODE_CAPTION_MAX_WIDTH;
 

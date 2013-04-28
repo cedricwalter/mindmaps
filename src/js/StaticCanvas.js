@@ -29,7 +29,7 @@ mindmaps.StaticCanvasRenderer = function() {
   function drawBranch(node, $parent) {
     ctx.save();
     branchDrawer.render(ctx, node.getDepth(), node.offset.x, node.offset.y,
-        node, $parent, node.branchColor, zoomFactor);
+        node, $parent, node.getPluginData("style","branchColor"), zoomFactor);
     ctx.restore();
   }
 
@@ -213,7 +213,7 @@ mindmaps.StaticCanvasRenderer = function() {
 
       // bottom border
       if (!node.isRoot()) {
-        ctx.fillStyle = node.branchColor;
+        ctx.fillStyle = node.getPluginData("style","branchColor");
         var tm = node.textMetrics;
         ctx.fillRect(0, tm.height + padding, tm.width, node.lineWidth);
       }
@@ -238,7 +238,7 @@ mindmaps.StaticCanvasRenderer = function() {
 
       var tm = node.textMetrics;
       var caption = node.getCaption();
-      var font = node.text.font;
+      var font = node.getPluginData("style","font")
 
       // ctx.strokeStyle = "#CCC";
       // ctx.strokeRect(0, 0, tm.width, tm.height);

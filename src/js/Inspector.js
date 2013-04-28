@@ -357,13 +357,13 @@ mindmaps.InspectorPresenter = function (eventBus, mindmapModel, commandRegistry,
      * @param {mindmaps.Node} node
      */
     function updateView(node) {
-        var font = node.text.font;
+        var font = node.getPluginData("style","font")
         view.setBoldCheckboxState(font.weight === "bold");
         view.setItalicCheckboxState(font.style === "italic");
         view.setUnderlineCheckboxState(font.decoration === "underline");
         view.setLinethroughCheckboxState(font.decoration === "line-through");
         view.setFontColorPickerColor(font.color);
-        view.setBranchColorPickerColor(node.branchColor);
+        view.setBranchColorPickerColor(node.getPluginData("style","branchColor"));
 
 
     }
