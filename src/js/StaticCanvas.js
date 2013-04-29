@@ -28,7 +28,7 @@ mindmaps.StaticCanvasRenderer = function() {
 
   function drawBranch(node, $parent) {
     ctx.save();
-    branchDrawer.render(ctx, node.getDepth(), node.offset.x, node.offset.y,
+    branchDrawer.render(ctx, node.getDepth(), node.getPluginData("layout", "offset").x, node.getPluginData("layout", "offset").y,
         node, $parent, node.getPluginData("style","branchColor"), zoomFactor);
     ctx.restore();
   }
@@ -202,8 +202,8 @@ mindmaps.StaticCanvasRenderer = function() {
      */
     function drawLines(node, parent) {
       ctx.save();
-      var x = node.offset.x;
-      var y = node.offset.y;
+      var x = node.getPluginData("layout", "offset").x;
+      var y = node.getPluginData("layout", "offset").y;
       ctx.translate(x, y);
 
       // branch
@@ -232,8 +232,8 @@ mindmaps.StaticCanvasRenderer = function() {
      */
     function drawCaptions(node) {
       ctx.save();
-      var x = node.offset.x;
-      var y = node.offset.y;
+      var x = node.getPluginData("layout", "offset").x;
+      var y = node.getPluginData("layout", "offset").y;
       ctx.translate(x, y);
 
       var tm = node.textMetrics;

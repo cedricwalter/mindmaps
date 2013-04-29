@@ -130,7 +130,7 @@ mindmaps.action.CreateAutoPositionedNodeAction = function (parent, mindmap) {
     var node = new mindmaps.Node();
     node.setPluginData("style","branchColor", branchColor);
     node.shouldEditCaption = true;
-    node.setPluginData("layout","offset", mindmaps.Point(x, y));
+    node.setPluginData("layout","offset", new mindmaps.Point(x, y));
 
     return new mindmaps.action.CreateNodeAction(node, parent, mindmap);
 };

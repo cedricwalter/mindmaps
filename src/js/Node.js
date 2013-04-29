@@ -22,8 +22,8 @@ mindmaps.Node = function () {
         color: "#000000"
     })
     this.setPluginData("style", "lineWidthOffset", 0)
-    this.setPluginData("style","branchColor","#000000")
-    this.setPluginData("layout","offset",new mindmaps.Point());
+    this.setPluginData("style", "branchColor", "#000000")
+    this.setPluginData("layout", "offset", new mindmaps.Point());
     this.foldChildren = false;
 };
 
@@ -71,8 +71,14 @@ mindmaps.Node.fromObject = function (obj) {
     var node = new mindmaps.Node();
     node.id = obj.id;
     node.text = obj.text;
-    node.pluginData = obj.pluginData || {}
-
+    if (obj.pluginData) {
+        node.pluginData = obj.pluginData
+    }
+    _(mindmaps.migrations).each(function (m) {
+        if (m.onNode) {
+            m.onNode(node,obj)
+        }
+    })
     // extract all children from array of objects
     obj.children.forEach(function (child) {
         var childNode = mindmaps.Node.fromObject(child);
@@ -107,7 +113,6 @@ mindmaps.Node.prototype.toJSON = function () {
         parentId: this.parent ? this.parent.id : null,
         text: this.text,
         pluginData: this.pluginData,
-        offset: this.offset,
         children: children
     };
 
@@ -191,11 +196,11 @@ mindmaps.Node.prototype.getRoot = function () {
  * @returns {mindmaps.Point}
  */
 mindmaps.Node.prototype.getPosition = function () {
-    var pos = this.getPluginData("layout","offset").clone();
+    var pos = this.getPluginData("layout", "offset").clone();
     var node = this.parent;
 
     while (node) {
-        pos.add(node.getPluginData("layout","offset"));
+        pos.add(node.getPluginData("layout", "offset"));
         node = node.parent;
     }
     return pos;
@@ -327,7 +332,13 @@ mindmaps.Node.prototype.getPluginData = function (pluginName, propertyName) {
 
 
 mindmaps.Node.prototype.setPluginData = function (pluginName, propertyName, value) {
+    var old = $.extend(true, {}, this.pluginData)
     this.pluginData = this.pluginData || {}
     this.pluginData[pluginName] = this.pluginData[pluginName] || {}
     this.pluginData[pluginName][propertyName] = value
+    if (!this.getPluginData("style", "font")) {
+
+        console.log("not here")
+        console.log(old)
+    }
 }

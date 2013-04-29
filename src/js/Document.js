@@ -74,7 +74,8 @@ mindmaps.Document.prototype.toJSON = function () {
         dates.modified = this.dates.modified.getTime();
     }
     var pluginData={}
-    var pureMindMap= $.extend(true,{},this.mindmap)
+    var pureMindMap= mindmaps.MindMap.fromJSON(this.mindmap.serialize())
+
     pureMindMap.nodes.each(function(n){
         _(n.pluginData).each(function(d,pluginName){
             pluginData[pluginName]=pluginData[pluginName] ||{}

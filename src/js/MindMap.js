@@ -28,6 +28,9 @@ mindmaps.MindMap = function(root) {
   this.addNode(this.root);
 };
 
+
+
+
 /**
  * Creates a new mind map object from JSON String.
  * 

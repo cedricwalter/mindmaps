@@ -119,7 +119,7 @@ mindmaps.DrawPresenter = function (eventBus, mindmapModel, commandRegistry, view
     };
 
     function updateView(node) {
-        if (node.pluginData.draw)
+        if (node.getPluginData("draw", "imgData"))
             view.setImgData(node.getPluginData("draw", "imgData"))
     }
 

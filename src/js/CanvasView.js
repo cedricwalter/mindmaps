@@ -416,8 +416,9 @@ mindmaps.DefaultCanvasView = function () {
         var parent = node.getParent();
         var $parent = $parent || $getNode(parent);
         var depth = depth || node.getDepth();
-        var offsetX = node.getPluginData("layout","offset").x;
-        var offsetY = node.getPluginData("layout","offset").y;
+        var offset=node.getPluginData("layout","offset")
+        var offsetX = offset?offset.x:0;
+        var offsetY = offset?offset.y:0;
 
         // div node container
         var $node = $("<div/>", {
@@ -786,6 +787,7 @@ mindmaps.DefaultCanvasView = function () {
     this.updateNode = function (node) {
         var isSelected = (this.selectedNode === node)
         var $node = $getNode(node);
+        if(!($node).length) return ;
         var $text = $getNodeCaption(node);
         var font = node.getPluginData("style","font")
 
@@ -872,8 +874,8 @@ mindmaps.DefaultCanvasView = function () {
             var bWidth = self.getLineWidth($node, depth);
 
             $node.css({
-                left: zoomFactor * node.offset.x,
-                top: zoomFactor * node.offset.y,
+                left: zoomFactor * node.getPluginData("layout", "offset").x,
+                top: zoomFactor * node.getPluginData("layout", "offset").y,
                 "border-bottom-width": bWidth
             });
 
