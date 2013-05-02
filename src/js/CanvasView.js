@@ -696,6 +696,7 @@ mindmaps.DefaultCanvasView = function () {
         var $text = $getNodeCaption(node);
         var metrics = textMetrics.getTextMetrics(node, this.zoomFactor, value);
         $text.css(metrics).text(value);
+        mindmaps.util.plugins.ui.placeOnNode(mindmaps.util.plugins.ui.pluginIcons(node),node)
     };
 
     /**
@@ -807,13 +808,14 @@ mindmaps.DefaultCanvasView = function () {
         }).css(metrics);
 
 
-        var $pluginIcons = $("node-pluginIcons-" + node.id)
-        mindmaps.util.plugins.ui.placeOnNode($pluginIcons, node);
-
-
         _.chain(mindmaps.plugins).sortBy("startOrder").each(function (v, k) {
             v.onNodeUpdate(node, isSelected)
         })
+
+        var $pluginIcons = $("#node-pluginIcons-" + node.id)
+
+        mindmaps.util.plugins.ui.placeOnNode($pluginIcons, node);
+
 
         this.redrawNodeConnectors(node);
     };
@@ -884,7 +886,6 @@ mindmaps.DefaultCanvasView = function () {
 
             var metrics = textMetrics.getTextMetrics(node, self.zoomFactor);
             $text.css(metrics);
-            //TODO redraw for plugin's divs
 
             var $pluginIcons = $("#node-pluginIcons-" + node.id)
             mindmaps.util.plugins.ui.placeOnNode($pluginIcons, node);
