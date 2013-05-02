@@ -559,8 +559,6 @@ mindmaps.DefaultCanvasView = function () {
         _.chain(mindmaps.plugins).sortBy("startOrder").each(function (v, k) {
             v.onCreateNode(node)
         })
-
-
     };
 
     /**

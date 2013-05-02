@@ -10,7 +10,7 @@ mindmaps.Node = function () {
     this.pluginData = {}
 
     this.text = {
-        caption: "New Idea"
+        caption: this.id.substr(0,8)
 
     };
     this.setPluginData("style", "font", {
@@ -24,7 +24,7 @@ mindmaps.Node = function () {
     this.setPluginData("style", "lineWidthOffset", 0)
     this.setPluginData("style", "branchColor", "#000000")
     this.setPluginData("layout", "offset", new mindmaps.Point());
-    this.foldChildren = false;
+    this.setPluginData("layout","foldChildren",false)
 };
 
 /**
