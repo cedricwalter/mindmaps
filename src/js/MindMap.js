@@ -22,7 +22,7 @@ mindmaps.MindMap = function(root) {
       }
    this.root.setPluginData("style","font",font)
 
-      this.root.text.caption = "Central Idea";
+      //this.root.text.caption = "Central Idea";
   }
 
   this.addNode(this.root);

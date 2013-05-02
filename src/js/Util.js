@@ -79,12 +79,8 @@ mindmaps.Util.getId = function () {
  * @returns {String} color in hex format
  */
 mindmaps.Util.randomColor = function () {
-
-    return mindmaps.Util.colors20[
-        Math.round(Math.random() * 20)
-        ]
+    return mindmaps.Util.colors20[Math.round(Math.random() * 20)]
 };
-
 
 mindmaps.Util.getUrlParams = function () {
     // http://stackoverflow.com/questions/901115/get-query-string-values-in-javascript/2880929#2880929
