@@ -96,7 +96,7 @@ EventEmitter.mixin(mindmaps.Command);
  */
 mindmaps.CreateNodeCommand = function() {
   this.id = "CREATE_NODE_COMMAND";
-  this.shortcut = "tab";
+  this.shortcut = ["tab","insert"];
   this.label = "Child";
   this.icon = "ui-icon-plus";
   this.description = "Creates a new node";
@@ -111,7 +111,7 @@ mindmaps.CreateNodeCommand.prototype = new mindmaps.Command();
  */
 mindmaps.CreateSiblingNodeCommand = function() {
   this.id = "CREATE_SIBLING_NODE_COMMAND";
-  this.shortcut = "shift+tab";
+  this.shortcut = "return";
   this.label = "Silibing";
   this.icon = "ui-icon-plus";
   this.description = "Creates a new sibling node";
@@ -186,7 +186,7 @@ mindmaps.DeleteNodeCommand.prototype = new mindmaps.Command();
  */
 mindmaps.EditNodeCaptionCommand = function() {
   this.id = "EDIT_NODE_CAPTION_COMMAND";
-  this.shortcut = ["F2", "return"];
+  this.shortcut = ["F2"];
   this.label = "Edit node caption";
   this.description = "Edits the node text";
 };
