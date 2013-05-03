@@ -200,6 +200,7 @@ mindmaps.ToolBarButton.prototype.asJquery = function () {
  * @param {String} icon
  */
 mindmaps.ToolBarMenu = function (title, icon) {
+    this.title=title
     var self = this;
     this.buttons = [];
     this.$menuWrapper = $("<span/>", {
