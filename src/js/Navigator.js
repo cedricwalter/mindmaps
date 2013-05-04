@@ -174,10 +174,10 @@ mindmaps.NavigatorView = function () {
             if (!node.collapseChildren) {
                 node.forEachChild(function (child) {
                     ctx.beginPath();
-                    ctx.strokeStyle = child.branchColor;
+                    ctx.strokeStyle = child.getPluginData("style","branchColor")
                     ctx.moveTo(0, 0);
-                    var posX = scale(child.offset.x);
-                    var posY = scale(child.offset.y);
+                    var posX = scale(child.getPluginData("layout","offset").x);
+                    var posY = scale(child.getPluginData("layout","offset").y);
                     // var textWidth =
                     // ctx.measureText(child.getCaption()).width;
                     var textWidth = 5;

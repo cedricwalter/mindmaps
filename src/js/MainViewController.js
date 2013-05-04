@@ -130,6 +130,7 @@ mindmaps.MainViewController = function (eventBus, mindmapModel, commandRegistry)
 
         // toolbar
         var toolbar = new mindmaps.ToolBarView();
+        mindmaps.ui.toolbarView=toolbar
         var toolbarPresenter = new mindmaps.ToolBarPresenter(eventBus,
             commandRegistry, toolbar, mindmapModel, canvasContainer);
         toolbarPresenter.go();

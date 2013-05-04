@@ -67,15 +67,15 @@ mindmaps.LocalDocumentStorage = (function () {
          * @returns {Boolean} true if save was successful, false otherwise.
          */
         saveDocument: function (doc) {
-            try {
+            //try {
                 localStorage.setItem(prefix + doc.id, doc.serialize());
                 return true;
-            } catch (error) {
-                // QUOTA_EXCEEDED
-                console.error("Error while saving document to local storage",
-                    error);
-                return false;
-            }
+//            } catch (error) {
+//                // QUOTA_EXCEEDED
+//                console.error("Error while saving document to local storage",
+//                    error);
+//                return false;
+//            }
         },
 
         /**

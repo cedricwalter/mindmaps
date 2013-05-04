@@ -16,13 +16,20 @@ mindmaps.MindMap = function(root) {
     this.root = root;
   } else {
     this.root = new mindmaps.Node();
-    this.root.text.font.size = 20;
-    this.root.text.font.weight = "bold";
-    this.root.text.caption = "Central Idea";
+      var font={
+          size:20,
+          weight:"bold"
+      }
+   this.root.setPluginData("style","font",font)
+
+      //this.root.text.caption = "Central Idea";
   }
 
   this.addNode(this.root);
 };
+
+
+
 
 /**
  * Creates a new mind map object from JSON String.

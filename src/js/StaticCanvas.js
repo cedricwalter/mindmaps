@@ -28,8 +28,8 @@ mindmaps.StaticCanvasRenderer = function() {
 
   function drawBranch(node, $parent) {
     ctx.save();
-    branchDrawer.render(ctx, node.getDepth(), node.offset.x, node.offset.y,
-        node, $parent, node.branchColor, zoomFactor);
+    branchDrawer.render(ctx, node.getDepth(), node.getPluginData("layout", "offset").x, node.getPluginData("layout", "offset").y,
+        node, $parent, node.getPluginData("style","branchColor"), zoomFactor);
     ctx.restore();
   }
 
@@ -202,8 +202,8 @@ mindmaps.StaticCanvasRenderer = function() {
      */
     function drawLines(node, parent) {
       ctx.save();
-      var x = node.offset.x;
-      var y = node.offset.y;
+      var x = node.getPluginData("layout", "offset").x;
+      var y = node.getPluginData("layout", "offset").y;
       ctx.translate(x, y);
 
       // branch
@@ -213,7 +213,7 @@ mindmaps.StaticCanvasRenderer = function() {
 
       // bottom border
       if (!node.isRoot()) {
-        ctx.fillStyle = node.branchColor;
+        ctx.fillStyle = node.getPluginData("style","branchColor");
         var tm = node.textMetrics;
         ctx.fillRect(0, tm.height + padding, tm.width, node.lineWidth);
       }
@@ -232,13 +232,13 @@ mindmaps.StaticCanvasRenderer = function() {
      */
     function drawCaptions(node) {
       ctx.save();
-      var x = node.offset.x;
-      var y = node.offset.y;
+      var x = node.getPluginData("layout", "offset").x;
+      var y = node.getPluginData("layout", "offset").y;
       ctx.translate(x, y);
 
       var tm = node.textMetrics;
       var caption = node.getCaption();
-      var font = node.text.font;
+      var font = node.getPluginData("style","font")
 
       // ctx.strokeStyle = "#CCC";
       // ctx.strokeRect(0, 0, tm.width, tm.height);

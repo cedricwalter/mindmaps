@@ -34,7 +34,6 @@
 <link rel="stylesheet" href="css/font-awesome.min.css">
 
 
-
 <script id="template-float-panel" type="text/x-jquery-tmpl">
     <div class="ui-widget ui-dialog ui-corner-all ui-widget-content float-panel no-select">
         <div class="ui-dialog-titlebar ui-widget-header ui-helper-clearfix">
@@ -167,8 +166,6 @@
         <td><a class="delete" href="#">delete</a></td>
     </tr>
 </script>
-
-
 
 
 <script id="template-urls-multi-url-display" type="text/x-jquery-tmpl">
@@ -356,8 +353,20 @@
 </script>
 
 <script id="template-gesture" type="text/x-jquery-tmpl">
-    <div id="gesture-div">
-        Gesture
+    <div id="gesture-div" height="80%">
+        Gestures supported -
+        <ul>
+            <li ><i class="icon-arrow-right"/><i class="icon-arrow-down"/>Create Child</li>
+            <li><i class="icon-arrow-down"/><i class="icon-arrow-left"/>Create Sibling</li>
+            <li><i class="icon-arrow-right"/>Move Right</li>
+            <li><i class="icon-arrow-down"/>Move Down</li>
+            <li><i class="icon-arrow-left"/>Move Left</li>
+            <li><i class="icon-arrow-up"/>Move Up</li>
+        </ul>
+
+    </div>
+    <div id="gesture-log">
+
     </div>
 
 </script>
@@ -452,8 +461,6 @@
 </script>
 
 
-
-
 <script src="js/libs/dragscrollable.js"></script>
 <script src="js/libs/jquery.hotkeys.js"></script>
 <script src="js/libs/jquery.mousewheel.js"></script>
@@ -474,7 +481,7 @@
 
 
 <script src="js/Util.js"></script>
-
+<script src="js/Geometry.js"></script>
 
 <script src="js/Config.js"></script>
 <script src="js/Command.js"></script>
@@ -482,6 +489,7 @@
 <script src="js/Action.js"></script>
 <script src="js/Point.js"></script>
 <script src="js/Document.js"></script>
+<script src="js/Migration.js"></script>
 <script src="js/MindMap.js"></script>
 <script src="js/Node.js"></script>
 <script src="js/NodeMap.js"></script>
@@ -494,7 +502,6 @@
 <script src="js/FloatPanel.js"></script>
 <script src="js/Navigator.js"></script>
 <script src="js/Inspector.js"></script>
-
 
 
 <script src="js/ToolBar.js"></script>
@@ -524,8 +531,7 @@
 
 
 <script src="js/EditURLs.js"></script>
-
-
+<script src="js/Layout.js"></script>
 
 
 <script src="js/ApplicationController.js"></script>

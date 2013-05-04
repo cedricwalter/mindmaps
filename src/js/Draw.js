@@ -119,8 +119,11 @@ mindmaps.DrawPresenter = function (eventBus, mindmapModel, commandRegistry, view
     };
 
     function updateView(node) {
-        if (node.pluginData.draw)
+        if (node.getPluginData("draw", "imgData")){
             view.setImgData(node.getPluginData("draw", "imgData"))
+        } else{
+            view.can.clear()
+        }
     }
 
 
@@ -174,20 +177,14 @@ mindmaps.plugins["draw"] = {
         mindmaps.ui.statusbarPresenter.addEntryN([drawPanel, gesturePanel], "Drawing");
     },
     onCreateNode: function (node) {
-        var $drawIcon = $("<div>", {
-            id: "node-drawIcon-" + node.id
-        })
-        if (node.getPluginData("draw", "imgData") && node.getPluginData("draw", "imgData").objects && node.getPluginData("draw", "imgData").objects.length > 0)
-            $drawIcon.append($('<i class="icon-edit"></i>'))
-        mindmaps.util.plugins.ui.addToPluginIcons($drawIcon, node)
+        mindmaps.util.plugins.ui.addIcon("draw",node,"edit")
     },
-    onNodeUpdate: function (node) {
-        var $drawIcon = $("#node-drawIcon-" + node.id)
-        $drawIcon.empty()
-
-        if (node.getPluginData("draw", "imgData") && node.getPluginData("draw", "imgData").objects && node.getPluginData("draw", "imgData").objects.length > 0)
-            $drawIcon.append($('<i class="icon-edit"></i>'))
-
+    onNodeUpdate: function (node,selected) {
+        var state=selected?"normal":"hide"
+        if (node.getPluginData("draw", "imgData") && node.getPluginData("draw", "imgData").objects && node.getPluginData("draw", "imgData").objects.length > 0){
+            state="shine"
+        }
+        mindmaps.util.plugins.ui.iconState("draw",node,state)
 
     }
 

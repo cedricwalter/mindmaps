@@ -106,7 +106,7 @@ mindmaps.EditURLsView = function () {
     });
 
     this.setUrls = function (urls) {
-        urls=urls||[]
+        urls = urls || []
         if (mindmaps.Config.allowMultipleUrls) {
             $multiUrlListBody.empty();
 
@@ -350,21 +350,16 @@ mindmaps.plugins["url"] = {
 
 
     onCreateNode: function (node) {
-        var $url = $("<div>", {
-            id: "node-urlIcon-" + node.id
-        })
-        var urls = node.getPluginData("url", "urls")
-        if (urls && urls.length > 0)
-            $url.append($('<i class="icon-link"></i>'))
-        mindmaps.util.plugins.ui.addToPluginIcons($url, node)
+        mindmaps.util.plugins.ui.addIcon("url", node, "link")
 
     },
-    onNodeUpdate: function (node) {
-        var $url = $("#node-urlIcon-" + node.id)
-        $url.empty()
+    onNodeUpdate: function (node,selected) {
+        var state = selected ? "normal" : "hide"
         var urls = node.getPluginData("url", "urls")
-        if (urls && urls.length > 0)
-            $url.append($('<i class="icon-link"></i>'))
+        if (urls && urls.length > 0) {
+            state = "shine"
+        }
+        mindmaps.util.plugins.ui.iconState("url", node, state)
     },
 
     inspectorAdviser: {

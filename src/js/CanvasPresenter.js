@@ -60,6 +60,7 @@ mindmaps.CanvasPresenter = function (eventBus, commandRegistry, mindmapModel, vi
      * @param {mindmaps.Node} oldSelectedNode
      */
     var selectNode = function (selectedNode, oldSelectedNode) {
+        view.selectedNode=selectedNode
 
         // deselect old node
         if (oldSelectedNode) {
@@ -67,6 +68,7 @@ mindmaps.CanvasPresenter = function (eventBus, commandRegistry, mindmapModel, vi
             view.unhighlightNode(oldSelectedNode);
         }
         view.highlightNode(selectedNode);
+
     };
 
     // listen to events from view
@@ -181,7 +183,7 @@ mindmaps.CanvasPresenter = function (eventBus, commandRegistry, mindmapModel, vi
     creator.dragStarted = function (node) {
         // set edge color for new node. inherit from parent or random when root
         var color = node.isRoot() ? mindmaps.Util.randomColor()
-            : node.branchColor;
+            : node.getPluginData("style","branchColor")
         return color;
     };
 
@@ -198,8 +200,8 @@ mindmaps.CanvasPresenter = function (eventBus, commandRegistry, mindmapModel, vi
 
         // update the model
         var node = new mindmaps.Node();
-        node.branchColor = creator.lineColor;
-        node.offset = new mindmaps.Point(offsetX, offsetY);
+        node.setPluginData("style","branchColor", creator.lineColor);;
+        node.setPluginData("layout","offset", new mindmaps.Point(offsetX, offsetY));
         // indicate that we want to set this nodes caption after creation
         node.shouldEditCaption = true;
 
@@ -312,7 +314,7 @@ mindmaps.CanvasPresenter = function (eventBus, commandRegistry, mindmapModel, vi
                     // open parent node when creating a new child and the other
                     // children are hidden
                     var parent = node.getParent();
-                    if (parent.foldChildren) {
+                    if (parent.getPluginData("layout","foldChildren")) {
                         var action = new mindmaps.action.OpenNodeAction(parent);
                         mindmapModel.executeAction(action);
                     }
@@ -325,7 +327,7 @@ mindmaps.CanvasPresenter = function (eventBus, commandRegistry, mindmapModel, vi
                 }
             } else {
                 var parent = node.getParent();
-                if (parent.foldChildren) {
+                if (parent.getPluginData("layout","foldChildren")) {
                     var action = new mindmaps.action.OpenNodeAction(parent);
                     mindmapModel.executeAction(action);
                 }
