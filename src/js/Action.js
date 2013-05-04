@@ -116,16 +116,19 @@ mindmaps.action.CreateAutoPositionedNodeAction = function (parent, mindmap) {
 
         // calculate position
         var leftRight = parent.getPluginData("layout","offset").x > 0 ? 1 : -1;
-        var x = leftRight * (150 + Math.random() * 10);
-
-        // put into random height when child nodes are there
-        if (parent.isLeaf()) {
-            var max = 5, min = -5;
-        } else {
-            var max = 150, min = -150;
-        }
-
-        var y = Math.floor(Math.random() * (max - min + 1) + min);
+//        var x = leftRight * (150 + Math.random() * 10);
+//
+//        // put into random height when child nodes are there
+//        if (parent.isLeaf()) {
+//            var max = 5, min = -5;
+//        } else {
+//            var max = 150, min = -150;
+//        }
+//
+//        var y = Math.floor(Math.random() * (max - min + 1) + min);
+        var c=mindmaps.ui.geometry.newChildPosition(parent)
+        var x= Math.abs(c.x)*leftRight
+        var y= c.y
     }
     var node = new mindmaps.Node();
     node.setPluginData("style","branchColor", branchColor);

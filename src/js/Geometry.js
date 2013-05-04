@@ -1,7 +1,6 @@
 mindmaps.Geometry = function (mindmapModel) {
-    var nodes = mindmapModel.getMindMap().nodes.nodes
     var dots = function (fun) {
-        return _.chain(nodes).map(function (node) {
+        return _.chain(mindmapModel.getMindMap().nodes.nodes).map(function (node) {
             return [node.id, dot(node, fun)]
         }).object().value()
     }
@@ -26,7 +25,7 @@ mindmaps.Geometry = function (mindmapModel) {
                 return [pair[0], fun(pair[1])]
             }).object().value()
     }
-    var isUpper = function (dot_node, dot_bnode,dir) {
+    var isUpper = function (dot_node, dot_bnode, dir) {
         return dot_bnode[dir].y <= dot_node.c.y
     }
     var toAngle = function (p, bp) {
@@ -66,24 +65,24 @@ mindmaps.Geometry = function (mindmapModel) {
         var inSectorId = _.chain(dotsMap).pairs().filter(function (id_dot) {
             var id = id_dot[0]
             var dot = id_dot[1]
-            return id !== node.id && isUpper(thisDot, dot,dir) && inUpSector(thisDot, dot)
+            return id !== node.id && isUpper(thisDot, dot, dir) && inUpSector(thisDot, dot)
         })
         var closeId = inSectorId.sortBy(function (entry) {
             return  -entry[1].n.y + thisDot.n.y
         }).head().value()
-        return(closeId ? nodes[closeId[0]] : null)
+        return(closeId ? mindmapModel.getMindMap().nodes.nodes[closeId[0]] : null)
     }
-    var funcs={
-        "s":function (p) {
+    var funcs = {
+        "s": function (p) {
             return{"x": p.x, "y": p.y}
         },
-        "n":function (p) {
+        "n": function (p) {
             return{"x": p.x, "y": -p.y}
         },
-        "e":function (p) {
+        "e": function (p) {
             return{"x": p.y, "y": p.x}
         },
-        "w":function (p) {
+        "w": function (p) {
             return{"x": -p.y, "y": -p.x}
         }
     }
@@ -107,5 +106,34 @@ mindmaps.Geometry = function (mindmapModel) {
     }
     var pow_ = function (a, b) {
         return Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2)
+    }
+
+
+    this.newChildPosition = function (node) {
+        var STEP = 50
+
+
+        function average(list) {
+            return _.reduce(list, function (memo, num) {
+                return memo + num;
+            }, 0) / list.length
+        }
+
+        var centers = _.chain(node.children.nodes).map(function (n) {
+            var $node = $("#node-" + n.id)
+            var $cap = $("#node-caption-" + n.id)
+            return {"y": $node.position().top , "x": $node.position().left }
+
+        }).value()
+        if (centers.length == 0) {
+            return({"x": 150, "y": -STEP})
+        } else if (centers.length == 1) {
+            var cen = centers[0]
+            return({"x": cen.x, "y": cen.y + STEP})
+        } else {
+            var xs = _(centers).pluck("x")
+            var ys = _(centers).pluck("y")
+            return({"x": average(xs), "y": _(ys).max() + STEP})
+        }
     }
 }
