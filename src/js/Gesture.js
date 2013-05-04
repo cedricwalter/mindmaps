@@ -33,10 +33,9 @@ mindmaps.GestureView = function () {
         _(self.gestures).each(function (v) {
             gstr.addGesture(v.seq, function (error) {
                 if (error < 0.3) {
-                    console.log(v.command.id + " - " + error)
                     if (v.command.enabled) {
                         v.command.execute()
-                        console.log(v.command.id + " - executed")
+                        logit(v.description + " - executed")
                     }
                 }
                 else
@@ -44,7 +43,10 @@ mindmaps.GestureView = function () {
             })
         })
 
-
+        var logit=function(s){
+            $("#gesture-log").append($("<div></div>").text(s))
+            $("#gesture-log").animate({ scrollTop: $('#gesture-log')[0].scrollHeight}, 1000);
+        }
         var probe = new Moousture.MouseProbe(this.getContent().get(0));
         var recorder = new Moousture.Recorder({maxSteps: 20, matcher: gstr});
         var monitor = new Moousture.Monitor(30, 2);
@@ -68,11 +70,38 @@ mindmaps.GesturePresenter = function (eventBus, mindmapModel, commandRegistry, v
         view.gestures = [
             {
                 seq: [0, 2],
-                command: commandRegistry.get(mindmaps.CreateNodeCommand)
+                command: commandRegistry.get(mindmaps.CreateNodeCommand),
+                description:"Create Child"
             },
             {
                 seq: [2, 4],
-                command: commandRegistry.get(mindmaps.CreateSiblingNodeCommand)
+                command: commandRegistry.get(mindmaps.CreateSiblingNodeCommand),
+                description:"Create Sibling"
+            },
+            {
+                seq:[0],
+                command: commandRegistry.get(mindmaps.SelectRightNodeCommand),
+                description:"Move Right"
+            }
+            ,
+            {
+                seq:[2],
+                command: commandRegistry.get(mindmaps.SelectDownNodeCommand),
+                description:"Move Down"
+            }
+            ,
+            {
+                seq:[4],
+                command: commandRegistry.get(mindmaps.SelectLeftNodeCommand),
+                description:"Move Left"
+
+            }
+            ,
+            {
+                seq:[6],
+                command: commandRegistry.get(mindmaps.SelectUpNodeCommand),
+                description:"Move Up"
+
             }
         ]
         view.init()
