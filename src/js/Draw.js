@@ -119,8 +119,11 @@ mindmaps.DrawPresenter = function (eventBus, mindmapModel, commandRegistry, view
     };
 
     function updateView(node) {
-        if (node.getPluginData("draw", "imgData"))
+        if (node.getPluginData("draw", "imgData")){
             view.setImgData(node.getPluginData("draw", "imgData"))
+        } else{
+            view.can.clear()
+        }
     }
 
 

@@ -12,6 +12,9 @@ mindmaps.ApplicationController = function () {
     mindmaps.ui.commandRegistry=commandRegistry;
     var undoController = new mindmaps.UndoController(eventBus, commandRegistry);
     var mindmapModel = new mindmaps.MindMapModel(eventBus, commandRegistry, undoController);
+
+    var geo=new mindmaps.Geometry(mindmapModel)
+    mindmaps.ui.geometry=geo
     var clipboardController = new mindmaps.ClipboardController(eventBus,
         commandRegistry, mindmapModel);
     var helpController = new mindmaps.HelpController(eventBus, commandRegistry);
