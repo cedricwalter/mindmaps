@@ -3,6 +3,7 @@ mindmaps.plugins["layout"] = {
 
 
     onUIInit: function (eventBus, mindmapModel) {
+
         mindmaps.SelectUpNodeCommand = function () {
             this.id = "SELECT_UP_NODE_COMMAND";
             this.shortcut = "up";
@@ -14,8 +15,7 @@ mindmaps.plugins["layout"] = {
 
         var selectUpNodeCommand = mindmaps.ui.commandRegistry.get(mindmaps.SelectUpNodeCommand);
         selectUpNodeCommand.setHandler(function () {
-            var geo = new mindmaps.Geometry(mindmapModel)
-            var node = geo.up(mindmapModel.selectedNode)
+            var node = mindmaps.ui.geometry.up(mindmapModel.selectedNode)
             if (node)
                 mindmapModel.selectNode(node)
         });
@@ -31,8 +31,7 @@ mindmaps.plugins["layout"] = {
 
         var selectDownNodeCommand = mindmaps.ui.commandRegistry.get(mindmaps.SelectDownNodeCommand);
         selectDownNodeCommand.setHandler(function () {
-            var geo = new mindmaps.Geometry(mindmapModel)
-            var node = geo.down(mindmapModel.selectedNode)
+            var node = mindmaps.ui.geometry.down(mindmapModel.selectedNode)
             if (node)
                 mindmapModel.selectNode(node)
         });
@@ -49,8 +48,7 @@ mindmaps.plugins["layout"] = {
 
         var selectLeftNodeCommand = mindmaps.ui.commandRegistry.get(mindmaps.SelectLeftNodeCommand);
         selectLeftNodeCommand.setHandler(function () {
-            var geo = new mindmaps.Geometry(mindmapModel)
-            var node = geo.left(mindmapModel.selectedNode)
+            var node = mindmaps.ui.geometry.left(mindmapModel.selectedNode)
             if (node)
                 mindmapModel.selectNode(node)
         });
@@ -67,8 +65,7 @@ mindmaps.plugins["layout"] = {
 
         var selectRightNodeCommand = mindmaps.ui.commandRegistry.get(mindmaps.SelectRightNodeCommand);
         selectRightNodeCommand.setHandler(function () {
-            var geo = new mindmaps.Geometry(mindmapModel)
-            var node = geo.right(mindmapModel.selectedNode)
+            var node = mindmaps.ui.geometry.right(mindmapModel.selectedNode)
             if (node)
                 mindmapModel.selectNode(node)
         });
