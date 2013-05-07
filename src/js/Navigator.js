@@ -101,7 +101,7 @@ mindmaps.NavigatorView = function () {
         $("#button-navi-zoom-in", $content).button({
             text: false,
             icons: {
-                primary: "ui-icon-zoomin"
+                primary: "icon-zoom-in"
             }
         }).click(function () {
                 if (self.buttonZoomInClicked) {
@@ -112,7 +112,7 @@ mindmaps.NavigatorView = function () {
         $("#button-navi-zoom-out", $content).button({
             text: false,
             icons: {
-                primary: "ui-icon-zoomout"
+                primary: "icon-zoom-out"
             }
         }).click(function () {
                 if (self.buttonZoomOutClicked) {
