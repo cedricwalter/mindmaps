@@ -391,7 +391,7 @@ html,body {
 }
 
 .float-panel.ui-dialog .ui-dialog-titlebar-close span.ui-icon {
-  background: url("Aristo/images/ui-icons_222222_256x240.png") -48px
+  background: url("custom-theme/images/ui-icons_222222_256x240.png") -48px
     -128px;
 }
 
