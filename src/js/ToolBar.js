@@ -221,7 +221,7 @@ mindmaps.ToolBarMenu = function (title, icon) {
         label: title,
         icons: {
             primary: icon,
-            secondary: "ui-icon-triangle-1-s"
+            secondary: "icon-chevron-down"
         }
     }).appendTo(this.$menuWrapper);
 
@@ -294,7 +294,7 @@ mindmaps.ToolBarPresenter = function (eventBus, commandRegistry, view, mindmapMo
 
 
 
-    var navigateMenu=new mindmaps.ToolBarMenu("Nodes", "ui-icon-document");
+    var navigateMenu=new mindmaps.ToolBarMenu("Nodes", "icon-plus");
     var navigateCommands=[ mindmaps.CreateNodeCommand, mindmaps.CreateSiblingNodeCommand, mindmaps.DeleteNodeCommand,mindmaps.SelectParentNodeCommand, mindmaps.SelectChildFirstNodeCommand, mindmaps.SelectSiblingNextNodeCommand, mindmaps.SelectSiblingPrevNodeCommand  ];
     var navigateButtons = commandsToButtons(navigateCommands);
     navigateMenu.add(navigateButtons);
@@ -302,7 +302,7 @@ mindmaps.ToolBarPresenter = function (eventBus, commandRegistry, view, mindmapMo
 
 
 
-    var editMenu=new mindmaps.ToolBarMenu("Edit", "ui-icon-document");
+    var editMenu=new mindmaps.ToolBarMenu("Edit", "icon-copy");
     var editCommands=[ mindmaps.UndoCommand, mindmaps.RedoCommand ,mindmaps.CopyNodeCommand,
         mindmaps.CutNodeCommand, mindmaps.PasteNodeCommand ];
     var editButtons = commandsToButtons(editCommands);
@@ -310,7 +310,7 @@ mindmaps.ToolBarPresenter = function (eventBus, commandRegistry, view, mindmapMo
     view.addMenu(editMenu);
 
     // file menu
-    var fileMenu = new mindmaps.ToolBarMenu("Document", "ui-icon-document");
+    var fileMenu = new mindmaps.ToolBarMenu("Document", "icon-file");
     var fileCommands = [ mindmaps.NewDocumentCommand,
         mindmaps.OpenDocumentCommand, mindmaps.SaveDocumentCommand,
         mindmaps.ExportCommand, mindmaps.PrintCommand,

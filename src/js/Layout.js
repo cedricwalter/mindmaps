@@ -8,7 +8,7 @@ mindmaps.plugins["layout"] = {
             this.id = "SELECT_UP_NODE_COMMAND";
             this.shortcut = "up";
             this.label = "Up";
-            this.icon = "ui-icon-arrowthick-1-n";
+            this.icon = "icon-arrow-up";
             this.description = "Go to up node";
         };
         mindmaps.SelectUpNodeCommand.prototype = new mindmaps.Command();
@@ -24,7 +24,7 @@ mindmaps.plugins["layout"] = {
             this.id = "SELECT_DOWN_NODE_COMMAND";
             this.shortcut = "down";
             this.label = "Down";
-            this.icon = "ui-icon-arrowthick-1-s";
+            this.icon = "icon-arrow-down";
             this.description = "Go to down node";
         };
         mindmaps.SelectDownNodeCommand.prototype = new mindmaps.Command();
@@ -41,7 +41,7 @@ mindmaps.plugins["layout"] = {
             this.id = "SELECT_LEFT_NODE_COMMAND";
             this.shortcut = "left";
             this.label = "Left";
-            this.icon = "ui-icon-arrowthick-1-w";
+            this.icon = "icon-arrow-left";
             this.description = "Go to left node";
         };
         mindmaps.SelectLeftNodeCommand.prototype = new mindmaps.Command();
@@ -58,7 +58,7 @@ mindmaps.plugins["layout"] = {
             this.id = "SELECT_RIGHT_NODE_COMMAND";
             this.shortcut = "right";
             this.label = "Right";
-            this.icon = "ui-icon-arrowthick-1-e";
+            this.icon = "icon-arrow-right";
             this.description = "Go to right node";
         };
         mindmaps.SelectRightNodeCommand.prototype = new mindmaps.Command();
