@@ -4,17 +4,19 @@
  * @constructor
  */
 mindmaps.ApplicationController = function () {
-    var eventBus = new mindmaps.EventBus();
-    var shortcutController = new mindmaps.ShortcutController();
-    var commandRegistry = new mindmaps.CommandRegistry(shortcutController);
     mindmaps.ui = mindmaps.ui || {}
 
-    mindmaps.ui.commandRegistry=commandRegistry;
+    var eventBus = new mindmaps.EventBus();
+    mindmaps.ui.eventBus = eventBus
+    var shortcutController = new mindmaps.ShortcutController();
+    var commandRegistry = new mindmaps.CommandRegistry(shortcutController);
+
+    mindmaps.ui.commandRegistry = commandRegistry;
     var undoController = new mindmaps.UndoController(eventBus, commandRegistry);
     var mindmapModel = new mindmaps.MindMapModel(eventBus, commandRegistry, undoController);
-
-    var geo=new mindmaps.Geometry(mindmapModel)
-    mindmaps.ui.geometry=geo
+    mindmaps.ui.mindmapModel = mindmapModel
+    var geo = new mindmaps.Geometry(mindmapModel)
+    mindmaps.ui.geometry = geo
     var clipboardController = new mindmaps.ClipboardController(eventBus,
         commandRegistry, mindmapModel);
     var helpController = new mindmaps.HelpController(eventBus, commandRegistry);
@@ -73,7 +75,6 @@ mindmaps.ApplicationController = function () {
     }
 
 
-
     /**
      * Initializes the controller, registers for all commands and subscribes to
      * event bus.
@@ -101,7 +102,6 @@ mindmaps.ApplicationController = function () {
         exportCommand.setHandler(doExportDocument);
 
 
-
         eventBus.subscribe(mindmaps.Event.DOCUMENT_CLOSED, function () {
             saveDocumentCommand.setEnabled(false);
             closeDocumentCommand.setEnabled(false);
@@ -125,9 +125,8 @@ mindmaps.ApplicationController = function () {
 
 
         _.chain(mindmaps.plugins).sortBy("startOrder").each(function (v, k) {
-            v.onUIInit(eventBus, mindmapModel)
+            v.onUIInit()
         })
-
 
 
         doNewDocument();

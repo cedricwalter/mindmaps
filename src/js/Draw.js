@@ -132,7 +132,7 @@ mindmaps.DrawPresenter = function (eventBus, mindmapModel, commandRegistry, view
 
 mindmaps.plugins["draw"] = {
     startOrder: 1000,
-    onUIInit: function (eventBus, mindmapModel) {
+    onUIInit: function () {
 
         mindmaps.Event.PLUGIN_NODE_IMGDATA_CHANGED = "NodeImgDataChangedEvent"
 
@@ -146,13 +146,13 @@ mindmaps.plugins["draw"] = {
             this.event = [ mindmaps.Event.PLUGIN_NODE_IMGDATA_CHANGED, node ];
         }
 
-        eventBus.subscribe(mindmaps.Event.PLUGIN_NODE_IMGDATA_CHANGED, function (node) {
+        mindmaps.ui.eventBus.subscribe(mindmaps.Event.PLUGIN_NODE_IMGDATA_CHANGED, function (node) {
             mindmaps.ui.canvasView.updateNode(node);
         });
 
         // gesture
         var gestureView = new mindmaps.GestureView();
-        var gesturePresenter = new mindmaps.GesturePresenter(eventBus, mindmapModel, mindmaps.ui.commandRegistry, gestureView)
+        var gesturePresenter = new mindmaps.GesturePresenter(mindmaps.ui.eventBus, mindmaps.ui.mindmapModel, mindmaps.ui.commandRegistry, gestureView)
         gesturePresenter.go();
         var gesturePanel = mindmaps.ui.floatPanelFactory.create("Gesture", gestureView.getContent());
 
@@ -163,8 +163,8 @@ mindmaps.plugins["draw"] = {
         var drawView = new mindmaps.DrawView();
         drawView.panel = drawPanel;
         window.drawPanel = drawPanel;
-        var drawPresenter = new mindmaps.DrawPresenter(eventBus,
-            mindmapModel, mindmaps.ui.commandRegistry, drawView);
+        var drawPresenter = new mindmaps.DrawPresenter(mindmaps.ui.eventBus,
+            mindmaps.ui. mindmapModel, mindmaps.ui.commandRegistry, drawView);
 
         var drawPanel = mindmaps.ui.floatPanelFactory.bigPanel("Draw", drawView.getContent(), drawView, function () {
             mindmaps.mode.inHD = true;

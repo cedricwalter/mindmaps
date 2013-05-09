@@ -557,6 +557,7 @@ mindmaps.DefaultCanvasView = function () {
         });
 
         _.chain(mindmaps.plugins).sortBy("startOrder").each(function (v, k) {
+            if(v.onCreateNode)
             v.onCreateNode(node)
         })
     };
@@ -809,6 +810,7 @@ mindmaps.DefaultCanvasView = function () {
 
 
         _.chain(mindmaps.plugins).sortBy("startOrder").each(function (v, k) {
+            if(v.onNodeUpdate)
             v.onNodeUpdate(node, isSelected)
         })
 
