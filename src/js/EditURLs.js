@@ -260,12 +260,12 @@ mindmaps.plugins["url"] = {
     startOrder: 1001,
 
 
-    onUIInit: function (eventBus, mindmapModel) {
+    onUIInit: function () {
 
 
         function doEditURLs() {
-            var presenter = new mindmaps.EditURLsPresenter(eventBus,
-                mindmapModel, new mindmaps.EditURLsView());
+            var presenter = new mindmaps.EditURLsPresenter(mindmaps.ui.eventBus,
+                mindmaps.ui.mindmapModel, new mindmaps.EditURLsView());
             presenter.go();
         }
 
@@ -334,15 +334,15 @@ mindmaps.plugins["url"] = {
 
         mindmaps.Event.NODE_URLS_REMOVED = "NodeURLsRemovedEvent"
 
-        eventBus.subscribe(mindmaps.Event.NODE_URLS_CHANGED, function (node) {
+        mindmaps.ui.eventBus.subscribe(mindmaps.Event.NODE_URLS_CHANGED, function (node) {
             mindmaps.ui.canvasView.updateNode(node);
         });
 
-        eventBus.subscribe(mindmaps.Event.NODE_URLS_ADDED, function (node) {
+        mindmaps.ui.eventBus.subscribe(mindmaps.Event.NODE_URLS_ADDED, function (node) {
             mindmaps.ui.canvasView.updateNode(node);
         });
 
-        eventBus.subscribe(mindmaps.Event.NODE_URLS_REMOVED, function (node) {
+        mindmaps.ui.eventBus.subscribe(mindmaps.Event.NODE_URLS_REMOVED, function (node) {
             mindmaps.ui.canvasView.updateNode(node);
         });
 
