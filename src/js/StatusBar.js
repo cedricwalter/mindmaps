@@ -7,7 +7,7 @@
  */
 mindmaps.StatusBarView = function () {
     var self = this;
-    var $statusbar = $("#statusbar");
+    var $statusbar = $("#bottombar");
 
     this.init = function () {
     };
@@ -20,15 +20,27 @@ mindmaps.StatusBarView = function () {
      * @returns {jQuery}
      */
     this.createButton = function (id, text) {
-        return $("<button/>", {
-            id: "statusbar-button-" + id
-        }).button({
-                label: text
-            }).click(function () {
+        return $('<li>').append($('<a></a>')
+            .click(function(e){
                 if (self.buttonClicked) {
                     self.buttonClicked(id);
                 }
-            }).prependTo($statusbar.find(".buttons"));
+            })
+            .attr("id","statusbar-button-" + id)
+            .text(text)).prependTo($statusbar.find(".nav"))
+            //.prepend($('<i>').addClass(b.command.icon)))
+//        return $("<button/>", {
+//            id:
+//        }).button({
+//                label: text
+//            }).click(function () {
+//                if (self.buttonClicked) {
+//                    self.buttonClicked(id);
+//                }
+//            }).prependTo($statusbar.find(".buttons"));
+
+
+
     };
 
     /**

@@ -133,13 +133,6 @@ html,body {
   color: #1C4257;
 }
 
-#bottombar {
-  position: fixed; /* absolute caused scroll bar, depending on border */
-  width: 100%;
-  bottom: 0;
-  background: #EEE;
-  border-top: 1px solid #AAA;
-}
 
 #statusbar {
   height: 32px;

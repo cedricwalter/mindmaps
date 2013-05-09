@@ -25,6 +25,6 @@ mindmaps.plugins["search"] = {
         //var $div = $('<div>').text('Search').append($('<i>').addClass('icon-search')).append($text)
 
         //mindmaps.ui.toolbarView.alignLeft($div)
-        $('.navbar-inner').append($control)
+        $('#topbar  .navbar-inner').append($control)
     }
 }
