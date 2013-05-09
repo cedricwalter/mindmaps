@@ -19,8 +19,8 @@
 */
 html,body {
   height: 100%; /* needed for container min-height */
-  font-family: sans-serif;
-  font-size: 10px; /*conform with jquery-ui em settings */
+  /*font-family: sans-serif;*/
+  /*font-size: 16px; *//*conform with jquery-ui em settings */
 }
 
 #container {
@@ -29,11 +29,6 @@ html,body {
   min-height: 100%;
 }
 
-#topbar {
-  border-bottom: 1px solid #AAA;
-  overflow: hidden; /* causes container to stretch vertically */
-  width: 100%;
-}
 
 .logo-bg {
   background: #31A1DF; /* Old browsers */
@@ -849,16 +844,3 @@ html,body {
   color: gray;
 }
 
-
-/* to override jqueryui icons for font icons */
-[class^="icon-"],
-[class*=" icon-"] {
-    background: none !important;
-    background-image: none !important;
-    text-indent: 0 !important;
-    padding: .2em 0 0 .2em !important;
-}
-
-li [class^="icon-"], .nav li [class^="icon-"], li [class*=" icon-"], .nav li [class*=" icon-"]{
-    display: inline;
-}

@@ -19,13 +19,13 @@
 
 
 
-
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="css/bootstrap-responsive.min.css">
+<link rel="stylesheet" href="css/font-awesome.min.css">
 
 <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Schoolbell:regular"/>
 <link rel="stylesheet" type="text/css" href="css/custom-theme/jquery-ui-1.9.2.custom.css"/>
-<link rel="stylesheet" href="css/font-awesome.min.css">
+
 
 <link rel="stylesheet" type="text/css" href="css/colorpicker.css"/>
 
@@ -396,21 +396,20 @@
 <div id="debug-warning">Running in DEBUG mode.</div>
 <!-- /DEBUG -->
 <div id="container">
-    <div id="topbar">
-        <div id="toolbar">
-            <div id="logo" class="logo-bg">
-                <span>mindmaps</span>
-            </div>
+    <div class="navbar" id="topbar">
+        <div class="navbar-inner">
+            <a class="brand logo-bg " href="#" >MindMap</a>
+            <ul class="nav">
 
-            <div class="buttons">
-                <span class="buttons-left"> </span> <span class="buttons-right">
-          </span>
-            </div>
+            </ul>
+
         </div>
     </div>
+
     <div id="canvas-container">
         <div id="drawing-area" class="no-select"></div>
     </div>
+
     <div id="bottombar">
         <div id="about">
             <a href="about.html" target="_blank">About mindmaps</a> <span
@@ -476,6 +475,7 @@
 <script src="js/libs/downloadify.min.js"></script>
 <script src="js/libs/events.js"></script>
 <script src="js/libs/jquery.ie.cors.js"></script>
+<script src="js/libs/bootstrap.min.js"></script>
 
 <script src="js/MindMaps.js"></script>
 
