@@ -2,7 +2,7 @@ mindmaps.plugins["layout"] = {
     startOrder: 100,
 
 
-    onUIInit: function (eventBus, mindmapModel) {
+    onUIInit: function () {
 
         mindmaps.SelectUpNodeCommand = function () {
             this.id = "SELECT_UP_NODE_COMMAND";
@@ -15,9 +15,9 @@ mindmaps.plugins["layout"] = {
 
         var selectUpNodeCommand = mindmaps.ui.commandRegistry.get(mindmaps.SelectUpNodeCommand);
         selectUpNodeCommand.setHandler(function () {
-            var node = mindmaps.ui.geometry.up(mindmapModel.selectedNode)
+            var node = mindmaps.ui.geometry.up(mindmaps.ui. mindmapModel.selectedNode)
             if (node)
-                mindmapModel.selectNode(node)
+                mindmaps.ui. mindmapModel.selectNode(node)
         });
 
         mindmaps.SelectDownNodeCommand = function () {
@@ -31,9 +31,9 @@ mindmaps.plugins["layout"] = {
 
         var selectDownNodeCommand = mindmaps.ui.commandRegistry.get(mindmaps.SelectDownNodeCommand);
         selectDownNodeCommand.setHandler(function () {
-            var node = mindmaps.ui.geometry.down(mindmapModel.selectedNode)
+            var node = mindmaps.ui.geometry.down(mindmaps.ui. mindmapModel.selectedNode)
             if (node)
-                mindmapModel.selectNode(node)
+                mindmaps.ui. mindmapModel.selectNode(node)
         });
 
 
@@ -48,9 +48,9 @@ mindmaps.plugins["layout"] = {
 
         var selectLeftNodeCommand = mindmaps.ui.commandRegistry.get(mindmaps.SelectLeftNodeCommand);
         selectLeftNodeCommand.setHandler(function () {
-            var node = mindmaps.ui.geometry.left(mindmapModel.selectedNode)
+            var node = mindmaps.ui.geometry.left(mindmaps.ui. mindmapModel.selectedNode)
             if (node)
-                mindmapModel.selectNode(node)
+                mindmaps.ui. mindmapModel.selectNode(node)
         });
 
 
@@ -65,9 +65,9 @@ mindmaps.plugins["layout"] = {
 
         var selectRightNodeCommand = mindmaps.ui.commandRegistry.get(mindmaps.SelectRightNodeCommand);
         selectRightNodeCommand.setHandler(function () {
-            var node = mindmaps.ui.geometry.right(mindmapModel.selectedNode)
+            var node = mindmaps.ui.geometry.right(mindmaps.ui. mindmapModel.selectedNode)
             if (node)
-                mindmapModel.selectNode(node)
+                mindmaps.ui. mindmapModel.selectNode(node)
         });
 
         _(mindmaps.ui.toolbarView.menus).find(function (menu) {
@@ -76,7 +76,7 @@ mindmaps.plugins["layout"] = {
 
 
 
-        eventBus.subscribe(mindmaps.Event.DOCUMENT_CLOSED, function () {
+        mindmaps.ui.eventBus.subscribe(mindmaps.Event.DOCUMENT_CLOSED, function () {
             selectUpNodeCommand.setEnabled(false);
             selectDownNodeCommand.setEnabled(false);
             selectLeftNodeCommand.setEnabled(false);
@@ -84,7 +84,7 @@ mindmaps.plugins["layout"] = {
 
         });
 
-        eventBus.subscribe(mindmaps.Event.DOCUMENT_OPENED, function () {
+        mindmaps.ui.eventBus.subscribe(mindmaps.Event.DOCUMENT_OPENED, function () {
             selectUpNodeCommand.setEnabled(true);
             selectDownNodeCommand.setEnabled(true);
             selectLeftNodeCommand.setEnabled(true);
