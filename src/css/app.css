@@ -260,7 +260,6 @@ html,body {
   background-image: url("../img/plus-minus.png");
   background-repeat: no-repeat;
   position: absolute;
-  z-index: 1000;
   cursor: pointer;
 }
 
@@ -353,7 +352,7 @@ html,body {
 .on-top{
     z-index: 20000;
 }
-.float-panel.ui-dialog {
+.float-panel {
   min-width: 200px;
   min-height: 150px;
   position: fixed !important;

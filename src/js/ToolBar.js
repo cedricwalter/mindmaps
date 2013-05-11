@@ -30,7 +30,7 @@ mindmaps.ToolBarView = function () {
 
         function fromButton(b){
 
-            return $('<li>').append($('<a></a>').click(function(e){b.command.execute()}).text(b.getTitle()).prepend($('<i>').addClass(b.command.icon)))
+            return $('<a></a>').attr("data-toggle","button").addClass("btn","btn-toggle").click(function(e){b.command.execute()}).text(b.getTitle()).prepend($('<i>').addClass(b.command.icon).addClass("pull-left"))
         }
         $("ul.nav",$("#topbar")).append(fromButton(button))
 
@@ -176,11 +176,10 @@ mindmaps.ToolBarMenu = function (title, icon) {
     this.title=title
     var self = this;
     this.buttons = [];
-    var control='\
-    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Dropdown trigger</a>\
+    var control='<li><div>\
+    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">Dropdown trigger</a>\
         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">\
-        </ul>\
-    </li>'
+        </ul></div></li>'
     var itemControl='<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>'
 
     //TODO split responsive aspect out.
@@ -191,7 +190,7 @@ mindmaps.ToolBarMenu = function (title, icon) {
 //        })
 //    }
     var $control=$(control)
-    $("a",$control).text(self.title).prepend($('<i>').addClass(icon)).append($('<i>').addClass("icon-angle-down"))
+    $("a",$control).text(self.title).prepend($('<i>').addClass(icon).addClass("pull-left")).append($('<i>').addClass("icon-angle-down").addClass("pull-right"))
     this.$menu = $control
 
     /**
@@ -203,7 +202,7 @@ mindmaps.ToolBarMenu = function (title, icon) {
     this.add = function (buttons) {
         function fromButton(b){
             var $ic =$(itemControl)
-            $("a",$ic).text(b.getTitle()).click(function(){b.command.execute()}).prepend($('<i>').addClass(b.command.icon))
+            $("a",$ic).text(b.getTitle()).click(function(){b.command.execute()}).prepend($('<i>').addClass(b.command.icon).addClass("pull-eft"))
             return $ic
         }
         if (!Array.isArray(buttons)) {

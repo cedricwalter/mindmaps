@@ -68,7 +68,10 @@ mindmaps.InspectorView = function () {
      * @param {Boolean} checked
      */
     this.setBoldCheckboxState = function (checked) {
-        $boldCheckbox.prop("checked", checked).button("refresh");
+        if(checked)
+            $boldCheckbox.addClass("active")
+        else
+            $boldCheckbox.removeClass("active")
     };
 
     /**
@@ -77,7 +80,10 @@ mindmaps.InspectorView = function () {
      * @param {Boolean} checked
      */
     this.setItalicCheckboxState = function (checked) {
-        $italicCheckbox.prop("checked", checked).button("refresh");
+        if(checked)
+            $italicCheckbox.addClass("active")
+        else
+            $italicCheckbox.removeClass("active")
     };
 
     /**
@@ -86,7 +92,10 @@ mindmaps.InspectorView = function () {
      * @param {Boolean} checked
      */
     this.setUnderlineCheckboxState = function (checked) {
-        $underlineCheckbox.prop("checked", checked).button("refresh");
+        if(checked)
+            $underlineCheckbox.addClass("active")
+        else
+            $underlineCheckbox.removeClass("active")
     };
 
     /**
@@ -95,7 +104,10 @@ mindmaps.InspectorView = function () {
      * @param {Boolean} checked
      */
     this.setLinethroughCheckboxState = function (checked) {
-        $linethroughCheckbox.prop("checked", checked).button("refresh");
+        if(checked)
+            $linethroughCheckbox.addClass("active")
+        else
+            $linethroughCheckbox.removeClass("active")
     };
 
     /**
@@ -150,30 +162,40 @@ mindmaps.InspectorView = function () {
 
         $boldCheckbox.click(function () {
             if (self.fontBoldCheckboxClicked) {
-                var checked = $(this).prop("checked");
+                var checked = !$(this).hasClass("active");
                 self.fontBoldCheckboxClicked(checked);
             }
+            $(this).toggleClass("active")
+
         });
 
         $italicCheckbox.click(function () {
             if (self.fontItalicCheckboxClicked) {
-                var checked = $(this).prop("checked");
+                var checked = !$(this).hasClass("active");
                 self.fontItalicCheckboxClicked(checked);
             }
+            $(this).toggleClass("active")
+
         });
 
         $underlineCheckbox.click(function () {
             if (self.fontUnderlineCheckboxClicked) {
-                var checked = $(this).prop("checked");
+                var checked = !$(this).hasClass("active");
                 self.fontUnderlineCheckboxClicked(checked);
+
             }
+            $(this).toggleClass("active")
+
         });
 
         $linethroughCheckbox.click(function () {
             if (self.fontLinethroughCheckboxClicked) {
-                var checked = $(this).prop("checked");
+                var checked = !$(this).hasClass("active");
                 self.fontLinethroughCheckboxClicked(checked);
+
             }
+            $(this).toggleClass("active")
+
         });
 
 

@@ -20,14 +20,14 @@ mindmaps.StatusBarView = function () {
      * @returns {jQuery}
      */
     this.createButton = function (id, text) {
-        return $('<li>').append($('<a></a>')
+        return $('<a></a>')
             .click(function(e){
                 if (self.buttonClicked) {
                     self.buttonClicked(id);
                 }
-            })
+            }).addClass("btn").addClass("pull-right").attr("data-toggle","button")
             .attr("id","statusbar-button-" + id)
-            .text(text)).prependTo($statusbar.find(".nav"))
+            .text(text).prependTo($statusbar.find(".nav"))
             //.prepend($('<i>').addClass(b.command.icon)))
 //        return $("<button/>", {
 //            id:
