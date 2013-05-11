@@ -17,21 +17,23 @@
 <title>mindmaps</title>
 <link rel="icon" type="image/png" href="img/favicon.png"/>
 
+<link rel="stylesheet" type="text/css" href="css/custom-theme/jquery-ui-1.9.2.custom.css"/>
+
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/bootstrap-responsive.min.css">
 <link rel="stylesheet" href="css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="css/main.css"/>
 
-<link rel="stylesheet" type="text/css" href="css/layout.css"/>
+<!--<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Schoolbell:regular"/>-->
 
-<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Schoolbell:regular"/>
-<link rel="stylesheet" type="text/css" href="css/jquery-ui-1.9.1.custom.min.css"/>
+
+
 <link rel="stylesheet" type="text/css" href="css/colorpicker.css"/>
 
 
-<link rel="stylesheet" href="css/common.css">
-<link rel="stylesheet" href="css/app.css">
-<link rel="stylesheet" href="css/Aristo/jquery-ui-1.8.7.custom.css"/>
-<link rel="stylesheet" href="css/minicolors/jquery.miniColors.css">
 
+<link rel="stylesheet" href="css/app.css">
+
+<link rel="stylesheet" type="text/css" href="css/drawing.css"/>
 
 
 
@@ -39,7 +41,7 @@
 
 <script id="template-float-panel" type="text/x-jquery-tmpl">
     <div class="ui-widget ui-dialog ui-corner-all ui-widget-content float-panel no-select">
-        <div class="ui-dialog-titlebar ui-widget-header ui-helper-clearfix">
+        <div class=" ui-dialog-titlebar ui-widget-header ui-helper-clearfix">
             <span class="ui-dialog-title">${title}</span>
             <a class="ui-dialog-titlebar-close ui-corner-all" href="#" role="button">
                 <span class="ui-icon"></span>
@@ -233,13 +235,7 @@
                     <canvas id="navi-canvas"></canvas>
                     <div id="navi-canvas-overlay"></div>
                 </div>
-                <div id="navi-controls">
-                    <span id="navi-zoom-level"></span>
 
-                    <div class="button-zoom" id="button-navi-zoom-out"></div>
-                    <div id="navi-slider"></div>
-                    <div class="button-zoom" id="button-navi-zoom-in"></div>
-                </div>
             </div>
         </div>
         <div class="inactive">
@@ -256,38 +252,24 @@
                     <td>Font size:</td>
                     <td>
                         <div
-                                class="buttonset buttons-very-small buttons-less-padding">
-                            <button id="inspector-button-font-size-decrease">A-</button>
-                            <button id="inspector-button-font-size-increase">A+</button>
+                                class="buttonset buttons-very-small buttons-less-padding btn-group">
+                            <div id="inspector-button-font-size-decrease" class="btn btn-small"><i class="icon-minus"></i></div>
+                            <div id="inspector-button-font-size-increase" class="btn btn-small"><i class="icon-plus"></i></div>
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td>Font style:</td>
                     <td>
-                        <div
-                                class="font-styles buttonset buttons-very-small buttons-less-padding">
-                            <input type="checkbox" id="inspector-checkbox-font-bold"/>
-                            <label
-                                    for="inspector-checkbox-font-bold" id="inspector-label-font-bold">B</label>
-
-                            <input type="checkbox" id="inspector-checkbox-font-italic"/>
-                            <label
-                                    for="inspector-checkbox-font-italic" id="inspector-label-font-italic">I</label>
-
-                            <input
-                                    type="checkbox" id="inspector-checkbox-font-underline"/>
-                            <label
-                                    for="inspector-checkbox-font-underline"
-                                    id="inspector-label-font-underline">U</label>
-
-                            <input
-                                    type="checkbox" id="inspector-checkbox-font-linethrough"/>
-                            <label
-                                    for="inspector-checkbox-font-linethrough"
-                                    id="inspector-label-font-linethrough">S</label>
+                        <div class="btn-group" data-toggle="buttons-checkbox">
+                            <div type="button" id="inspector-checkbox-font-bold" class="btn btn-small"><i class="icon-bold"></i></div>
+                            <div type="button" id="inspector-checkbox-font-italic" class="btn btn-small"><i class="icon-italic"></i></div>
+                            <div type="button" id="inspector-checkbox-font-underline" class="btn btn-small"><i class="icon-underline"></i></div>
+                            <div type="button" id="inspector-checkbox-font-linethrough" class="btn btn-small"><i class="icon-strikethrough"></i></div>
                         </div>
+
                     </td>
+
                 </tr>
                 <tr>
                     <td>Font color:</td>
@@ -297,18 +279,18 @@
                     <td>Line width:</td>
                     <td>
                         <div
-                                class="buttonset buttons-very-small buttons-less-padding">
-                            <button id="inspector-button-line-width-decrease">-</button>
-                            <button id="inspector-button-line-width-increase">+</button>
+                                class="buttonset buttons-very-small buttons-less-padding btn-group">
+                            <div id="inspector-button-line-width-decrease" class="btn btn-small"><i class="icon-minus"></i></div>
+                            <div id="inspector-button-line-width-increase" class="btn btn-small"><i class="icon-plus"></i> </div>
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td>Branch color:</td>
                     <td><input type="text" id="inspector-branch-color-picker"/>
-                        <button id="inspector-button-branch-color-children" title="Apply branch color to all children"
-                                class="right buttons-small buttons-less-padding">Inherit
-                        </button>
+                        <div id="inspector-button-branch-color-children" title="Apply branch color to all children"
+                                class="btn btn-small pull-right">Inherit
+                        </div>
                     </td>
                 </tr>
 
@@ -333,30 +315,24 @@
 
         </div>
         <div id="bottom-panel">
-            <div id="tools-panel" class="block">
-                <ul>
-                    <li class="tool-panel-button tool-button pencil-tool selected ">
-                        <i class="icon-pencil icon-3x"></i>
-                    </li>
-                    <li class="tool-panel-button tool-button eraser-tool">
-                        <i class="icon-tint icon-3x"></i>
-                    </li>
+            <div id="tools-panel" class="btn-group">
+                <div class="pencil-tool tool-button btn active"><i class="icon-pencil icon-large"></i></div>
+                <div class="eraser-tool tool-button btn "><i class="icon-tint icon-large"></i></div>
 
-                    <li class="tool-panel-button tool-button delete-tool">
-                        <i class="icon-trash icon-3x"></i>
-                    </li>
+                <div class="delete-tool btn "><i class="icon-trash icon-large"></i></div>
 
-                    <li class="tool-panel-button tool-button">
-                        <input class="brush-color"/>
-                    </li>
-                </ul>
+                <div class="btn">
+                <input class="brush-color"/>
+                </div>
+
             </div>
+
         </div>
     </div>
 </script>
 
 <script id="template-gesture" type="text/x-jquery-tmpl">
-    <div id="gesture-div" height="80%">
+    <div id="gesture-div" class="unselectable" height="80%">
         Gestures supported -
         <ul>
             <li ><i class="icon-arrow-right"/><i class="icon-arrow-down"/>Create Child</li>
@@ -391,40 +367,33 @@
         mind map menu</p>
 </div>
 <!-- DEBUG -->
-<div id="debug-warning">Running in DEBUG mode.</div>
+<div id="debug-warning">D.</div>
 <!-- /DEBUG -->
 <div id="container">
-    <div id="topbar">
-        <div id="toolbar">
-            <div id="logo" class="logo-bg">
-                <span>mindmaps</span>
-            </div>
+    <div class="navbar" id="topbar">
+        <div class="navbar-inner">
+            <a class="brand logo-bg " href="#" >MindMap</a>
+            <ul class="nav">
 
-            <div class="buttons">
-                <span class="buttons-left"> </span> <span class="buttons-right">
-          </span>
-            </div>
+            </ul>
+
         </div>
     </div>
+
     <div id="canvas-container">
         <div id="drawing-area" class="no-select"></div>
     </div>
-    <div id="bottombar">
-        <div id="about">
-            <a href="about.html" target="_blank">About mindmaps</a> <span
-                style="padding: 0 4px;">|</span> <a style="font-weight: bold"
-                                                    href="https://spreadsheets.google.com/a/drichard.org/spreadsheet/viewform?formkey=dEE3VzFWOFp6ZV9odEhhczVBUUdzc2c6MQ"
-                                                    target="_blank">Feedback</a>
-        </div>
-        <div id="statusbar">
-            <div
-                    class="buttons buttons-right buttons-small buttons-less-padding"></div>
+    <div class="navbar navbar-fixed-bottom" id="bottombar">
+        <div class="navbar-inner">
+
+            <ul class="nav">
+
+            </ul>
+
         </div>
     </div>
 </div>
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
-<script src="//api.filepicker.io/v0/filepicker.js"></script>
 
 <!-- DEBUG -->
 <!-- set debug flag for all scripts. Will be removed in production -->
@@ -474,6 +443,7 @@
 <script src="js/libs/downloadify.min.js"></script>
 <script src="js/libs/events.js"></script>
 <script src="js/libs/jquery.ie.cors.js"></script>
+<script src="js/libs/bootstrap.min.js"></script>
 
 <script src="js/MindMaps.js"></script>
 

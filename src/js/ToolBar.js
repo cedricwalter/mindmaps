@@ -11,13 +11,13 @@ mindmaps.ToolBarView = function () {
 
     };
     this.ensureResponsive = function () {
-        var short = mindmaps.responsive.isMiddleDevice()
-        self.buttons.forEach(function (bu) {
-            bu.setSmall(short)
-        })
-        self.menus.forEach(function (menu) {
-            menu.setSmall(short)
-        })
+//        var short = mindmaps.responsive.isMiddleDevice()
+//        self.buttons.forEach(function (bu) {
+//            bu.setSmall(short)
+//        })
+//        self.menus.forEach(function (menu) {
+//            menu.setSmall(short)
+//        })
     }
 
     /**
@@ -26,28 +26,16 @@ mindmaps.ToolBarView = function () {
      * @param {mindmaps.ToolBarButton} button
      * @param {Function} alignFunc
      */
-    this.addButton = function (button, alignFunc) {
-        // var $button = this.createButton(button);
-        self.buttons.push(button)
-        alignFunc(button.asJquery());
+    this.addButton = function (button) {
+
+        function fromButton(b){
+
+            return $('<a></a>').attr("data-toggle","button").addClass("btn","btn-toggle").click(function(e){b.command.execute()}).text(b.getTitle()).prepend($('<i>').addClass(b.command.icon).addClass("pull-left"))
+        }
+        $("ul.nav",$("#topbar")).append(fromButton(button))
+
     };
 
-    /**
-     * Adds a set of buttons grouped together to the toolbar.
-     *
-     * @param {mindmaps.ToolBarButton[]} buttons
-     * @param {Function} alignFunc
-     */
-    this.addButtonGroup = function (buttons, alignFunc) {
-        var $buttonset = $("<span/>");
-        buttons.forEach(function (button) {
-            // var $button = self.createButton(button);
-            self.buttons.push(button)
-            $buttonset.append(button.asJquery());
-        });
-        $buttonset.buttonset();
-        alignFunc($buttonset);
-    };
 
     /**
      * Adds a menu to the toolbar.
@@ -56,26 +44,11 @@ mindmaps.ToolBarView = function () {
      */
     this.addMenu = function (menu) {
         this.menus.push(menu);
-        this.alignRight(menu.getContent());
+        //this.alignRight(menu.getContent());
+        $("ul.nav",$("#topbar")).append(menu.$menu)
     };
 
-    /**
-     * Adds the element to the left side of the toolbar.
-     *
-     * @param {jQuery} $el
-     */
-    this.alignLeft = function ($el) {
-        $el.appendTo("#toolbar .buttons-left");
-    };
 
-    /**
-     * Adds the element to the right side of the toolbar.
-     *
-     * @param {jQuery} $el
-     */
-    this.alignRight = function ($el) {
-        $el.appendTo("#toolbar .buttons-right");
-    };
 };
 
 /**
@@ -203,33 +176,22 @@ mindmaps.ToolBarMenu = function (title, icon) {
     this.title=title
     var self = this;
     this.buttons = [];
-    this.$menuWrapper = $("<span/>", {
-        "class": "menu-wrapper"
-    }).hover(function () {
-            self.$menu.show();
-        }, function () {
-            self.$menu.hide();
-        });
-    //TODO split responsive aspect out.
-    this.setSmall = function (small) {
-        self.$menuButton.button({label: small ? title.substr(0, 1) : title})
-        self.buttons.forEach(function (bu) {
-            bu.setSmall(small)
-        })
-    }
-    this.$menuButton = $("<button/>").button({
-        label: title,
-        icons: {
-            primary: icon,
-            secondary: "icon-chevron-down"
-        }
-    }).appendTo(this.$menuWrapper);
+    var control='<li><div>\
+    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">Dropdown trigger</a>\
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">\
+        </ul></div></li>'
+    var itemControl='<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>'
 
-    this.$menu = $("<div/>", {
-        "class": "menu"
-    }).click(function () {
-            self.$menu.hide();
-        }).appendTo(this.$menuWrapper);
+    //TODO split responsive aspect out.
+//    this.setSmall = function (small) {
+//        self.$menuButton.button({label: small ? title.substr(0, 1) : title})
+//        self.buttons.forEach(function (bu) {
+//            bu.setSmall(small)
+//        })
+//    }
+    var $control=$(control)
+    $("a",$control).text(self.title).prepend($('<i>').addClass(icon).addClass("pull-left")).append($('<i>').addClass("icon-angle-down").addClass("pull-right"))
+    this.$menu = $control
 
     /**
      * Adds a new button entry to the menu.
@@ -238,20 +200,17 @@ mindmaps.ToolBarMenu = function (title, icon) {
      *            single button or an array of buttons
      */
     this.add = function (buttons) {
+        function fromButton(b){
+            var $ic =$(itemControl)
+            $("a",$ic).text(b.getTitle()).click(function(){b.command.execute()}).prepend($('<i>').addClass(b.command.icon).addClass("pull-eft"))
+            return $ic
+        }
         if (!Array.isArray(buttons)) {
             buttons = [ buttons ];
         }
-
-        buttons.forEach(function (button) {
-            var $button = button.asJquery().removeClass("ui-corner-all")
-                .addClass("menu-item");
-            this.$menu.append($button);
-            this.buttons.push(button)
-        }, this);
-
-        // last item gets rounded corners
-        this.$menu.children().last().addClass("ui-corner-bottom").prev()
-            .removeClass("ui-corner-bottom");
+        _.chain(buttons).each(function(b){
+            $("ul",self.$menu).append(fromButton(b))
+        })
     };
 
     /**
@@ -260,7 +219,7 @@ mindmaps.ToolBarMenu = function (title, icon) {
      * @returns {jQuery}
      */
     this.getContent = function () {
-        return this.$menuWrapper;
+        return this.$menu;
     };
 };
 
@@ -320,7 +279,7 @@ mindmaps.ToolBarPresenter = function (eventBus, commandRegistry, view, mindmapMo
     view.addMenu(fileMenu);
 
     // help button
-    view.addButton(commandToButton(mindmaps.HelpCommand), view.alignRight);
+    view.addButton(commandToButton(mindmaps.HelpCommand));
 
     this.go = function () {
         view.init();

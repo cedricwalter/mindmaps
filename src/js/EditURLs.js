@@ -367,9 +367,9 @@ mindmaps.plugins["url"] = {
             var tr = '  <tr id="inspector-urls-row"> \
                         <td>URLs:</td> \
                         <td> \
-                            <button id="inspector-button-urls" title="Open URL dialog" \
-                            class="buttons-small buttons-less-padding">Edit URLs \
-                            </button> \
+                            <div id="inspector-button-urls" title="Open URL dialog" \
+                            class="btn btn-small"><i class="icon-edit"/>Edit URLs \
+                            </div> \
                         </td> \
                     </tr>'
             $inspectorTable.append($(tr))

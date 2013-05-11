@@ -19,8 +19,8 @@
 */
 html,body {
   height: 100%; /* needed for container min-height */
-  font-family: sans-serif;
-  font-size: 10px; /*conform with jquery-ui em settings */
+  /*font-family: sans-serif;*/
+  /*font-size: 16px; *//*conform with jquery-ui em settings */
 }
 
 #container {
@@ -29,11 +29,6 @@ html,body {
   min-height: 100%;
 }
 
-#topbar {
-  border-bottom: 1px solid #AAA;
-  overflow: hidden; /* causes container to stretch vertically */
-  width: 100%;
-}
 
 .logo-bg {
   background: #31A1DF; /* Old browsers */
@@ -138,13 +133,6 @@ html,body {
   color: #1C4257;
 }
 
-#bottombar {
-  position: fixed; /* absolute caused scroll bar, depending on border */
-  width: 100%;
-  bottom: 0;
-  background: #EEE;
-  border-top: 1px solid #AAA;
-}
 
 #statusbar {
   height: 32px;
@@ -272,7 +260,6 @@ html,body {
   background-image: url("../img/plus-minus.png");
   background-repeat: no-repeat;
   position: absolute;
-  z-index: 1000;
   cursor: pointer;
 }
 
@@ -365,7 +352,7 @@ html,body {
 .on-top{
     z-index: 20000;
 }
-.float-panel.ui-dialog {
+.float-panel {
   min-width: 200px;
   min-height: 150px;
   position: fixed !important;
@@ -391,7 +378,7 @@ html,body {
 }
 
 .float-panel.ui-dialog .ui-dialog-titlebar-close span.ui-icon {
-  background: url("Aristo/images/ui-icons_222222_256x240.png") -48px
+  background: url("custom-theme/images/ui-icons_222222_256x240.png") -48px
     -128px;
 }
 
@@ -467,7 +454,7 @@ html,body {
 }
 
 #inspector-table td {
-  padding: 4px 0px;
+  padding: 4px 5px 0px;
   border-bottom: 1px solid #E5E5E5;
 }
 
@@ -848,3 +835,4 @@ html,body {
   font-weight: bold;
   color: gray;
 }
+
