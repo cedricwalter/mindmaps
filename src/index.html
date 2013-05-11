@@ -269,30 +269,7 @@
                         </div>
 
                     </td>
-                    <!--<td>-->
-                        <!--<div-->
-                                <!--class="font-styles buttonset buttons-very-small buttons-less-padding">-->
-                            <!--<input type="checkbox" id="inspector-checkbox-font-bold"/>-->
-                            <!--<label-->
-                                    <!--for="inspector-checkbox-font-bold" id="inspector-label-font-bold">B</label>-->
 
-                            <!--<input type="checkbox" id="inspector-checkbox-font-italic"/>-->
-                            <!--<label-->
-                                    <!--for="inspector-checkbox-font-italic" id="inspector-label-font-italic">I</label>-->
-
-                            <!--<input-->
-                                    <!--type="checkbox" id="inspector-checkbox-font-underline"/>-->
-                            <!--<label-->
-                                    <!--for="inspector-checkbox-font-underline"-->
-                                    <!--id="inspector-label-font-underline">U</label>-->
-
-                            <!--<input-->
-                                    <!--type="checkbox" id="inspector-checkbox-font-linethrough"/>-->
-                            <!--<label-->
-                                    <!--for="inspector-checkbox-font-linethrough"-->
-                                    <!--id="inspector-label-font-linethrough">S</label>-->
-                        <!--</div>-->
-                    <!--</td>-->
                 </tr>
                 <tr>
                     <td>Font color:</td>
@@ -312,7 +289,7 @@
                     <td>Branch color:</td>
                     <td><input type="text" id="inspector-branch-color-picker"/>
                         <div id="inspector-button-branch-color-children" title="Apply branch color to all children"
-                                class="btn btn-small">Inherit
+                                class="btn btn-small pull-right">Inherit
                         </div>
                     </td>
                 </tr>
@@ -338,24 +315,18 @@
 
         </div>
         <div id="bottom-panel">
-            <div id="tools-panel" class="block">
-                <ul>
-                    <li class="tool-panel-button tool-button pencil-tool selected ">
-                        <i class="icon-pencil icon-3x"></i>
-                    </li>
-                    <li class="tool-panel-button tool-button eraser-tool">
-                        <i class="icon-tint icon-3x"></i>
-                    </li>
+            <div id="tools-panel" class="btn-group">
+                <div class="pencil-tool tool-button btn active"><i class="icon-pencil icon-large"></i></div>
+                <div class="eraser-tool tool-button btn "><i class="icon-tint icon-large"></i></div>
 
-                    <li class="tool-panel-button tool-button delete-tool">
-                        <i class="icon-trash icon-3x"></i>
-                    </li>
+                <div class="delete-tool btn "><i class="icon-trash icon-large"></i></div>
 
-                    <li class="tool-panel-button tool-button">
-                        <input class="brush-color"/>
-                    </li>
-                </ul>
+                <div class="btn">
+                <input class="brush-color"/>
+                </div>
+
             </div>
+
         </div>
     </div>
 </script>

@@ -1,6 +1,6 @@
 div.colorPicker-picker {
-  height: 28px;
-  width: 28px;
+  height: 1em;
+  width: 1em;
   padding: 0 !important;
   border: 2px solid #ccc;
   /*background: url(arrow.gif) no-repeat top right;*/
@@ -31,8 +31,8 @@ div.colorPicker-swatch {
 }
 
 #inspector-table div.colorPicker-picker {
-    height: 22px;
-    width: 22px;
+    height: 1.2em;
+    width: 1.2em;
     padding: 0 !important;
     border: 2px solid #ccc;
     line-height: 16px;
