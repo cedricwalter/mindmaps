@@ -40,6 +40,7 @@ mindmaps.ShortcutController = function() {
     var self = this;
     shortcuts.forEach(function(shortcut) {
       type = getType(shortcut, type);
+      $(document).unbind(type)
       $(document).bind(type, shortcut, function(e) {
         // try best to cancel default actions on shortcuts like ctrl+n
         e.stopImmediatePropagation();
