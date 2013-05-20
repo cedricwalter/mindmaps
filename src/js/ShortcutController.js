@@ -11,6 +11,9 @@ mindmaps.ShortcutController = function() {
    */
   this.shortcuts = {};
 
+    //TODO shutdown bootstrap keydown
+  $(document).off("keydown.dropdown")
+
   /**
    * Set the event type and add namespace for later removal.
    * 
@@ -36,11 +39,11 @@ mindmaps.ShortcutController = function() {
     if (!Array.isArray(shortcuts)) {
       shortcuts = [shortcuts];
     }
-
     var self = this;
     shortcuts.forEach(function(shortcut) {
       type = getType(shortcut, type);
-      $(document).bind(type, shortcut, function(e) {
+      //$(document).unbind(type)
+      $(document).on(type,null,shortcut,function(e) {
         // try best to cancel default actions on shortcuts like ctrl+n
         e.stopImmediatePropagation();
         e.stopPropagation();
@@ -60,7 +63,7 @@ mindmaps.ShortcutController = function() {
    */
   this.unregister = function(shortcut, type) {
     type = getType(shortcut, type);
-    $(document).unbind(type);
+    $(document).off(type);
     delete this.shortcuts[type];
   };
 
@@ -68,8 +71,8 @@ mindmaps.ShortcutController = function() {
    * Removes all shortcuts.
    */
   this.unregisterAll = function() {
-    for ( var shortcut in shortcuts) {
-      $(document).unbind(shortcut);
+    for ( var shortcut in self.shortcut) {
+      $(document).off(shortcut);
     }
   };
 };
