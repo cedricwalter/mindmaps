@@ -5,6 +5,7 @@ mindmaps.Geometry = function (mindmapModel) {
         }).object().value()
     }
     var dot = function (node, fun) {
+        fun=fun || funcs.s
         var $node = $("#node-" + node.id)
         var $cap = $("#node-caption-" + node.id)
         var top = $node.offset().top
@@ -60,6 +61,10 @@ mindmaps.Geometry = function (mindmapModel) {
     }
 
     var _select = function (node, dir) {
+        function isRelationShip(nodea,nodeb){
+            return nodea.isParentOf(nodeb) || nodeb.isParentOf(nodea) || (nodea.parent && nodea.parent.isParentOf(nodeb))
+        }
+
         var dotsMap = dots(funcs[dir])
         var thisDot = dotsMap[node.id]
         var inSectorId = _.chain(dotsMap).pairs().filter(function (id_dot) {
@@ -68,7 +73,7 @@ mindmaps.Geometry = function (mindmapModel) {
             return id !== node.id && isUpper(thisDot, dot, dir) && inUpSector(thisDot, dot)
         })
         var closeId = inSectorId.sortBy(function (entry) {
-            return  -entry[1].n.y + thisDot.n.y
+            return  (-entry[1].n.y + thisDot.n.y)-(isRelationShip(mindmapModel.getMindMap().nodes.nodes[entry[0]],node)?10000:0)
         }).head().value()
         return(closeId ? mindmapModel.getMindMap().nodes.nodes[closeId[0]] : null)
     }

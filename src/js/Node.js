@@ -175,6 +175,13 @@ mindmaps.Node.prototype.getParent = function () {
     return this.parent;
 };
 
+
+mindmaps.Node.prototype.isParentOf = function (node) {
+    if(!node) return false;
+    if(!node.parent) return false;
+    return this.id==node.parent.id
+};
+
 /**
  * Returns the root if this node is part of a tree structure, otherwise it
  * returns itself.
