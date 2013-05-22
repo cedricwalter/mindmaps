@@ -1,10 +1,12 @@
 mindmaps.Geometry = function (mindmapModel) {
-    var dots = function (fun) {
+    var self=this
+    this.dots = function (fun) {
+        fun=fun || funcs.s
         return _.chain(mindmapModel.getMindMap().nodes.nodes).map(function (node) {
-            return [node.id, dot(node, fun)]
+            return [node.id, self.dot(node, fun)]
         }).object().value()
     }
-    var dot = function (node, fun) {
+    this.dot = function (node, fun) {
         fun=fun || funcs.s
         var $node = $("#node-" + node.id)
         var $cap = $("#node-caption-" + node.id)
@@ -65,7 +67,7 @@ mindmaps.Geometry = function (mindmapModel) {
             return nodea.isParentOf(nodeb) || nodeb.isParentOf(nodea) || (nodea.parent && nodea.parent.isParentOf(nodeb))
         }
 
-        var dotsMap = dots(funcs[dir])
+        var dotsMap = self.dots(funcs[dir])
         var thisDot = dotsMap[node.id]
         var inSectorId = _.chain(dotsMap).pairs().filter(function (id_dot) {
             var id = id_dot[0]
@@ -130,15 +132,29 @@ mindmaps.Geometry = function (mindmapModel) {
             return {"y": $node.position().top , "x": $node.position().left }
 
         }).value()
+        var re={}
         if (centers.length == 0) {
-            return({"x": 150, "y": -STEP})
+            re=({"x": 150, "y": -STEP})
         } else if (centers.length == 1) {
             var cen = centers[0]
-            return({"x": cen.x, "y": cen.y + STEP})
+            re=({"x": cen.x, "y": cen.y + STEP})
         } else {
             var xs = _(centers).pluck("x")
             var ys = _(centers).pluck("y")
-            return({"x": average(xs), "y": _(ys).max() + STEP})
+            re=({"x": average(xs), "y": _(ys).max() + STEP})
         }
+        return re;
     }
+
+    this.rectOverlap=function(A, B){
+        function valueInRange(value, min, max){
+            return (value <= max) && (value >= min);
+        }
+        var xOverlap = valueInRange(A.wn.x, B.wn.x, B.en.x) ||
+            valueInRange(B.wn.x, A.wn.x, A.en.x);
+        var yOverlap = valueInRange(A.wn.y, B.wn.y, B.ws.y) ||
+            valueInRange(B.wn.y, A.wn.y, A.ws.y);
+        return xOverlap && yOverlap;
+    }
+
 }

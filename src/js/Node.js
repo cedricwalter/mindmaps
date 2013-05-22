@@ -339,13 +339,8 @@ mindmaps.Node.prototype.getPluginData = function (pluginName, propertyName) {
 
 
 mindmaps.Node.prototype.setPluginData = function (pluginName, propertyName, value) {
-    var old = $.extend(true, {}, this.pluginData)
     this.pluginData = this.pluginData || {}
     this.pluginData[pluginName] = this.pluginData[pluginName] || {}
     this.pluginData[pluginName][propertyName] = value
-    if (!this.getPluginData("style", "font")) {
 
-        console.log("not here")
-        console.log(old)
-    }
 }
