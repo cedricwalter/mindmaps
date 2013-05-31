@@ -301,7 +301,7 @@ mindmaps.DefaultCanvasView = function () {
 
                         var offsetX = l / self.zoomFactor;
                         var offsetY = t / self.zoomFactor;
-                        var color = node.getPluginData("style","branchColor")
+                        var color = node.getPluginData("style", "branchColor")
                         var $canvas = $getNodeCanvas(node);
                         var depth = node.getDepth();
 
@@ -416,9 +416,9 @@ mindmaps.DefaultCanvasView = function () {
         var parent = node.getParent();
         var $parent = $parent || $getNode(parent);
         var depth = depth || node.getDepth();
-        var offset=node.getPluginData("layout","offset")
-        var offsetX = offset?offset.x:0;
-        var offsetY = offset?offset.y:0;
+        var offset = node.getPluginData("layout", "offset")
+        var offsetX = offset ? offset.x : 0;
+        var offsetY = offset ? offset.y : 0;
 
         // div node container
         var $node = $("<div/>", {
@@ -427,7 +427,7 @@ mindmaps.DefaultCanvasView = function () {
         }).data({
                 node: node
             }).css({
-                "font-size":     node.getPluginData("style","font").size
+                "font-size": node.getPluginData("style", "font").size
 
             });
         $node.appendTo($parent);
@@ -440,7 +440,7 @@ mindmaps.DefaultCanvasView = function () {
         if (!node.isRoot()) {
             // draw border and position manually only non-root nodes
             var bThickness = this.getLineWidth($node, depth);
-            var bColor = node.getPluginData("style","branchColor");
+            var bColor = node.getPluginData("style", "branchColor");
             var bb = bThickness + "px solid " + bColor;
 
             $node.css({
@@ -467,7 +467,7 @@ mindmaps.DefaultCanvasView = function () {
                         // reposition and draw canvas while dragging
                         var offsetX = ui.position.left / self.zoomFactor;
                         var offsetY = ui.position.top / self.zoomFactor;
-                        var color = node.getPluginData("style","branchColor");
+                        var color = node.getPluginData("style", "branchColor");
                         var $canvas = $getNodeCanvas(node);
 
                         drawLineCanvas($canvas, depth, offsetX, offsetY, $node,
@@ -495,7 +495,7 @@ mindmaps.DefaultCanvasView = function () {
 
 
         // text caption
-        var font = node.getPluginData("style","font")
+        var font = node.getPluginData("style", "font")
         var $text = $("<div/>", {
             id: "node-caption-" + node.id,
             "class": "node-caption node-text-behaviour",
@@ -529,7 +529,7 @@ mindmaps.DefaultCanvasView = function () {
 
         if (!node.isRoot()) {
             // toggle visibility
-            if (parent.getPluginData("layout","foldChildren")) {
+            if (parent.getPluginData("layout", "foldChildren")) {
                 $node.hide();
             } else {
                 $node.show();
@@ -543,7 +543,7 @@ mindmaps.DefaultCanvasView = function () {
 
             // position and draw connection
             drawLineCanvas($canvas, depth, offsetX, offsetY, $node, $parent,
-                node.getPluginData("style","branchColor"));
+                node.getPluginData("style", "branchColor"));
             $canvas.appendTo($node);
         }
 
@@ -557,8 +557,8 @@ mindmaps.DefaultCanvasView = function () {
         });
 
         _.chain(mindmaps.plugins).sortBy("startOrder").each(function (v, k) {
-            if(v.onCreateNode)
-            v.onCreateNode(node)
+            if (v.onCreateNode)
+                v.onCreateNode(node)
         })
     };
 
@@ -638,8 +638,8 @@ mindmaps.DefaultCanvasView = function () {
      * @param {mindmaps.Node} node
      */
     this.createFoldButton = function (node) {
-        var position = node.getPluginData("layout","offset").x > 0 ? " right" : " left";
-        var openClosed = node.getPluginData("layout","foldChildren") ? " closed" : " open";
+        var position = node.getPluginData("layout", "offset").x > 0 ? " right" : " left";
+        var openClosed = node.getPluginData("layout", "foldChildren") ? " closed" : " open";
         var $foldButton = $("<div/>", {
             "class": "button-fold no-select" + openClosed + position
         }).click(function (e) {
@@ -697,7 +697,7 @@ mindmaps.DefaultCanvasView = function () {
         var $text = $getNodeCaption(node);
         var metrics = textMetrics.getTextMetrics(node, this.zoomFactor, value);
         $text.css(metrics).text(value);
-        mindmaps.util.plugins.ui.placeOnNode(mindmaps.util.plugins.ui.pluginIcons(node),node)
+        mindmaps.util.plugins.ui.placeOnNode(mindmaps.util.plugins.ui.pluginIcons(node), node)
     };
 
     /**
@@ -727,9 +727,9 @@ mindmaps.DefaultCanvasView = function () {
     function drawNodeCanvas(node, color) {
         var parent = node.getParent();
         var depth = node.getDepth();
-        var offsetX = node.getPluginData("layout","offset").x;
-        var offsetY = node.getPluginData("layout","offset").y;
-        color = color || node.getPluginData("style","branchColor");
+        var offsetX = node.getPluginData("layout", "offset").x;
+        var offsetY = node.getPluginData("layout", "offset").y;
+        color = color || node.getPluginData("style", "branchColor");
 
         var $node = $getNode(node);
         var $parent = $getNode(parent);
@@ -787,16 +787,16 @@ mindmaps.DefaultCanvasView = function () {
     this.updateNode = function (node) {
         var isSelected = (this.selectedNode === node)
         var $node = $getNode(node);
-        if(!($node).length) return ;
+        if (!($node).length) return;
         var $text = $getNodeCaption(node);
-        var font = node.getPluginData("style","font")
+        var font = node.getPluginData("style", "font")
 
         var lineWidth = this.getLineWidth($node, node.getDepth())
 
         $node.css({
             "font-size": font.size,
             "border-bottom-width": lineWidth,
-            "border-bottom-color": node.getPluginData("style","branchColor")
+            "border-bottom-color": node.getPluginData("style", "branchColor")
         });
 
         var metrics = textMetrics.getTextMetrics(node, this.zoomFactor);
@@ -810,8 +810,8 @@ mindmaps.DefaultCanvasView = function () {
 
 
         _.chain(mindmaps.plugins).sortBy("startOrder").each(function (v, k) {
-            if(v.onNodeUpdate)
-            v.onNodeUpdate(node, isSelected)
+            if (v.onNodeUpdate)
+                v.onNodeUpdate(node, isSelected)
         })
 
         var $pluginIcons = $("#node-pluginIcons-" + node.id)
@@ -832,39 +832,47 @@ mindmaps.DefaultCanvasView = function () {
         // TODO try animate
         // position
         $node.css({
-            left: this.zoomFactor * node.getPluginData("layout","offset").x,
-            top: this.zoomFactor * node.getPluginData("layout","offset").y
+            left: this.zoomFactor * node.getPluginData("layout", "offset").x,
+            top: this.zoomFactor * node.getPluginData("layout", "offset").y
         });
 
         // redraw canvas to parent
         drawNodeCanvas(node);
     };
 
+
     /**
      * Redraws the complete map to adapt to a new zoom factor.
      */
-    this.scaleMap = function () {
+    this.scaleMap = function (final) {
+
         var zoomFactor = this.zoomFactor;
         var $root = this.$getDrawingArea().children().first();
         var root = $root.data("node");
-
-        var w = this.getLineWidth($root, 0);
-        $root.css("border-bottom-width", w);
+        if (final) {
+            var w = this.getLineWidth($root, 0);
+            $root.css("border-bottom-width", w);
+        }
 
         // handle root differently
         var $text = $getNodeCaption(root);
-        var metrics = textMetrics.getTextMetrics(root, this.zoomFactor);
-        $text.css(
-            {
-                "font-size": zoomFactor * 100 + "%",
-                "left": zoomFactor
-                    * -mindmaps.TextMetrics.ROOT_CAPTION_MIN_WIDTH / 2
-            }).css(metrics);
-        var $pluginIcons = $("#node-pluginIcons-" + root.id)
-        mindmaps.util.plugins.ui.placeOnNode($pluginIcons, root);
-        $pluginIcons.css({
-            "font-size": zoomFactor * 100 + "%"
-        });
+        $text.css({
+            "left": zoomFactor
+                * -mindmaps.TextMetrics.ROOT_CAPTION_MIN_WIDTH / 2
+        })
+        if (final) {
+            var metrics = textMetrics.getTextMetrics(root, this.zoomFactor);
+            $text.css(
+                {
+                    "font-size": zoomFactor * 100 + "%",
+
+                }).css(metrics);
+            var $pluginIcons = $("#node-pluginIcons-" + root.id)
+            mindmaps.util.plugins.ui.placeOnNode($pluginIcons, root);
+            $pluginIcons.css({
+                "font-size": zoomFactor * 100 + "%"
+            });
+        }
         root.forEachChild(function (child) {
             scale(child, 1);
         });
@@ -873,32 +881,41 @@ mindmaps.DefaultCanvasView = function () {
             var $node = $getNode(node);
 
             // draw border and position manually
-            var bWidth = self.getLineWidth($node, depth);
 
             $node.css({
                 left: zoomFactor * node.getPluginData("layout", "offset").x,
                 top: zoomFactor * node.getPluginData("layout", "offset").y,
-                "border-bottom-width": bWidth
-            });
 
-            var $text = $getNodeCaption(node);
-            $text.css({
-                "font-size": zoomFactor * 100 + "%"
             });
+            if (final) {
+                var bWidth = self.getLineWidth($node, depth);
+                $node.css({
+                    "border-bottom-width": bWidth
+                })
 
-            var metrics = textMetrics.getTextMetrics(node, self.zoomFactor);
-            $text.css(metrics);
+                var $text = $getNodeCaption(node);
+                $text.css({
+                    "font-size": zoomFactor * 100 + "%"
+                });
 
-            var $pluginIcons = $("#node-pluginIcons-" + node.id)
-            mindmaps.util.plugins.ui.placeOnNode($pluginIcons, node);
-            $pluginIcons.css({
-                "font-size": zoomFactor * 100 + "%"
-            });
+                var metrics = textMetrics.getTextMetrics(node, self.zoomFactor);
+                $text.css(metrics);
+
+                var $pluginIcons = $("#node-pluginIcons-" + node.id)
+                mindmaps.util.plugins.ui.placeOnNode($pluginIcons, node);
+                $pluginIcons.css({
+                    "font-size": zoomFactor * 100 + "%"
+                });
+            }
 
 
             // redraw canvas to parent
-            drawNodeCanvas(node);
-
+            if (!final)
+                $getNodeCanvas(node).hide()
+            if (final) {
+                drawNodeCanvas(node);
+                $getNodeCanvas(node).show()
+            }
             // redraw all child canvases
             if (!node.isLeaf()) {
                 node.forEachChild(function (child) {
@@ -1112,9 +1129,9 @@ mindmaps.DefaultCanvasView = function () {
 
             // position the nub correctly
             $wrapper.removeClass("left right");
-            if (node.getPluginData("layout","offset").x > 0) {
+            if (node.getPluginData("layout", "offset").x > 0) {
                 $wrapper.addClass("right");
-            } else if (node.getPluginData("layout","offset").x < 0) {
+            } else if (node.getPluginData("layout", "offset").x < 0) {
                 $wrapper.addClass("left");
             }
 

@@ -78,10 +78,12 @@ mindmaps.CanvasPresenter = function (eventBus, commandRegistry, mindmapModel, vi
      * @ignore
      */
     view.mouseWheeled = function (delta) {
+
         view.stopEditNodeCaption();
 
         if (delta > 0) {
             zoomController.zoomIn(0.1);
+            //window.setTimeout(zoomController.zoomIn(),1000)
         } else if(delta<0){
             zoomController.zoomOut(0.1);
         }
@@ -90,6 +92,7 @@ mindmaps.CanvasPresenter = function (eventBus, commandRegistry, mindmapModel, vi
 
     view.pinch = function (scale) {
         view.stopEditNodeCaption();
+
         zoomController.zoomByScale(scale)
     };
 
@@ -378,10 +381,10 @@ mindmaps.CanvasPresenter = function (eventBus, commandRegistry, mindmapModel, vi
             view.updateBranchColor(node, color)
         });
 
-        eventBus.subscribe(mindmaps.Event.ZOOM_CHANGED, function (zoomFactor) {
+        eventBus.subscribe(mindmaps.Event.ZOOM_CHANGED, function (zoomFactor,final) {
             view.setZoomFactor(zoomFactor);
             view.applyViewZoom();
-            view.scaleMap();
+            view.scaleMap(final);
         });
     }
 
